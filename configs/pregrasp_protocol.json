@@ -1,0 +1,20 @@
+{
+  "schema_version": 2,
+  "protocol_id": "k1-pregrasp-hold-v1",
+  "support_mode": "pregrasp",
+  "task_schema": "pregrasp-hold-v1",
+  "observation_schema": "k1-load-state-97-v1",
+  "task": "chest_height_load_holding",
+  "training_mass_fractions": [0.0, 0.025, 0.05],
+  "evaluation_mass_fractions": [0.0125, 0.0375, 0.075],
+  "stress_test_mass_fractions": [0.075],
+  "training_seeds": [11, 22, 33],
+  "evaluation_seeds": [1011, 1022, 1033],
+  "episodes_per_seed_condition": 50,
+  "episode_seconds": 20.0,
+  "success": {"max_payload_tilt_deg_exclusive": 10.0, "max_abs_height_error_m_exclusive": 0.05, "allow_corrective_steps": true},
+  "mass_observation_variants": ["conditioned", "blind"],
+  "minimum_payload_mass_kg": 0.001,
+  "members": ["Cici Liu", "MC Gu", "Tony Zhao", "Zhe Zheng"],
+  "notes": ["Legacy two-CONNECT task; not comparable to free forearm support.", "No-push baseline. Zero requested load uses a 1 gram numerical proxy.", "Quick runs are not formal 50-episode/20-second evaluations. No achieved success rate is implied."]
+}

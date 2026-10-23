@@ -1,0 +1,2 @@
+# Keep source fingerprints identical across Windows and Linux checkouts.
+* text=auto eol=lf

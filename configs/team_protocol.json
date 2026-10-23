@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "protocol_id": "k1-forearms-contact-v1",
+  "support_mode": "forearms",
+  "task_schema": "forearms-contact-v1",
+  "observation_schema": "k1-load-state-97-v1",
+  "task": "free_box_forearm_support",
+  "training_mass_fractions": [0.0, 0.025, 0.05],
+  "evaluation_mass_fractions": [0.0125, 0.0375, 0.075],
+  "stress_test_mass_fractions": [0.075],
+  "training_seeds": [11, 22, 33],
+  "evaluation_seeds": [1011, 1022, 1033],
+  "episodes_per_seed_condition": 50,
+  "episode_seconds": 20.0,
+  "success": {
+    "max_payload_tilt_deg_exclusive": 10.0,
+    "max_abs_height_error_m_exclusive": 0.05,
+    "allow_corrective_steps": true,
+    "contact_grace_seconds": 0.12,
+    "support_requirement": "both exact forearm cylinder colliders in contact and each upward force > 1e-6 N; at most 0.12 seconds continuous contact loss including startup (not two additive windows). Hand-end spheres may touch as auxiliary contact but do not count as forearm support",
+    "disallowed_support": "any payload contact with floor, torso or other robot geometry fails immediately; only the two forearm cylinders and their left/right_hand_end_collision spheres are permitted"
+  },
+  "mass_observation_variants": ["conditioned", "blind"],
+  "minimum_payload_mass_kg": 0.001,
+  "members": ["Cici Liu", "MC Gu", "Tony Zhao", "Zhe Zheng"],
+  "notes": [
+    "All members run the same seeds and conditions. Member labels do not change physics.",
+    "Zero requested load uses a documented 1 gram positive-inertia numerical proxy.",
+    "Mass changes require a new environment; never change only a label or stale inertial tensor.",
+    "This is the no-push baseline protocol. Add a versioned protocol before claiming disturbance-recovery results.",
+    "A quick smoke evaluation is not the 50-episode/20-second proposal evaluation.",
+    "The 80 percent goal in the proposal is not an achieved result."
+  ]
+}
