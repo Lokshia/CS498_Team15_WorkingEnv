@@ -104,7 +104,15 @@ Linux：
 - `--resume` 默认沿用 checkpoint 里记录的这些设置，命令行显式给出的参数才会覆盖；`experiment.json` 的 `randomization` 和 `mass.mass_range_fraction` 记录实际使用值。
 - 带推力评测用 `configs/team_protocol_push.json`（3–5 s 一次、0.3 m/s）：`evaluate --protocol configs/team_protocol_push.json --checkpoint ...`。它与无推力协议分开报告，不能合并成功率。箱子后沿离躯干 1 cm，摩擦 μ=0.7 能追回的相对速度约 v=√(2μgd)≈0.37 m/s，再大的向前踢会先把箱子撞进躯干、按接触判据直接失败，与平衡能力无关。
 
-这些只改变训练分布和评测条件，不改变观测/动作/成功判据，所以 `task_schema` 仍是 `forearms-contact-v1`，checkpoint 可以在有无随机化的环境间互相加载；报告结果时要写明训练用的随机化范围和评测协议。零动作 PD 基线本身在 0.5 kg 下约 0.16 s 后箱子就会后滑碰到躯干，这不是随机化造成的。
+这些只改变训练分布和评测条件，不改变观测/动作/成功判据，所以 `task_schema` 仍是 `forearms-contact-v1`，checkpoint 可以在有无随机化的环境间互相加载；报告结果时要写明训练用的随机化范围和评测协议。零动作 PD 基线本身在 0.5 kg 下约 0.16 s 后箱子就会后滑碰到躯干，这不是随机化造成的；机器人本体在零动作下也会在 1.5 s 内前倾倒地（踝/髋是软 PD，没有策略就没有平衡），所以任何策略都要先学会站。
+
+**三个基线 run 一次跑完**（站+托 1 g 箱子、顺序质量课程、每局随机质量，各自接协议评测，固定文件夹名，最后打印成功率表和该分享的 checkpoint 路径）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\milestones.ps1 -Device cuda -NumEnvs 512 -Iterations 500
+```
+
+`-Iterations` 是每个 run（课程为每阶段）的 PPO 更新数；加 `-Quick` 只验证流程。不含推力和负载随机化。
 
 ## 4. 四个人如何保持一致
 
