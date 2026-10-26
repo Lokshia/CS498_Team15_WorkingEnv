@@ -83,9 +83,14 @@ checkpoint 校验模式、schema、质量观测类型与 seed；不同任务不�
 故意拒绝不同 checkpoint，不用于比较两个策略谁更好。策略比较应看各负载
 `condition_summaries` 和逐 episode 记录，插值与压力测试分开。
 
-本版是**无外力扰动、无持物姿态随机化**的基线。未来加 push、质量随机化或
-初始位置变化，需增加版本化实验，不可直接宣称具有扰动恢复能力。不同硬件
-不承诺逐位一致。仿真成功不证明真机安全，见 `SIM_TO_REAL_ZH.md`。
+`team_protocol.json` 仍是**无外力扰动、固定质量**的基线评测。训练可以按
+`README` 第 3 节加上按环境的质量/重心随机化、箱子位姿抖动和推力；这些不改
+判据和 `task_schema`，但必须在报告里写明训练范围。带推力的评测用
+`configs/team_protocol_push.json`（`k1-forearms-contact-v1-push`：判据、
+负载、seed、episode 数与基线相同，另加每 3–5 s 一次、每轴 ±0.3 m/s 的基座速度
+踢），成功率与基线分开列，不能合并，也不能只报有利的一种。重心偏移评测需
+另建带 `randomization.payload_com_offset_m` 的版本化协议。不同硬件不承诺逐位
+一致。仿真成功不证明真机安全，见 `SIM_TO_REAL_ZH.md`。
 
 ## 5. 开发验证与正式实验分开
 

@@ -53,6 +53,43 @@ schema、观测 schema 与质量观测变体。旧无 schema 权重只作为显�
 `scripts/check_training.py` 是有界流程验收，不是学习性能测试。旧 v0.2.0/v0.3.0
 ZIP 保持不变；团队必须重新解压 v0.4.0 或同步到新 commit。
 
+### 可选随机化：按环境的质量/重心、箱子位姿抖动、推力
+
+`make_env_cfg` 的这些参数默认关闭，关闭时编译出的模型、事件和观测与上文完全一致：
+
+- **按环境质量与重心**（`payload_mass_range_kg`、`payload_com_offset_m`）：
+  一个 `mode="reset"` 事件 `mdp.randomize_payload_inertial` 对被 reset 的环境
+  直接写 Warp 模型的 `body_mass` / `body_ipos` / `body_inertia`（`payload/box`
+  那一行）。事件用 `@requires_model_fields(..., recompute=set_const)` 声明，
+  mjlab 会在建环境时把这些字段及其派生量（`body_subtreemass`、
+  `*_invweight0` 等）扩展成每个 world 一份，并在事件触发后调用
+  `mjwarp.set_const` 重算派生常量（保存并恢复 qpos，不改状态）。质量在区间内
+  均匀抽样，低于 1 g 仍取 1 g；惯量始终是"以新重心为中心、按抽样质量缩放的
+  均匀箱惯量"，即把偏心配重近似为重心平移而不改变主轴。每次有 reset 事件触发
+  都会对全部 world 重算一次常量，开销大致相当于一次 forward；用 reset 而不是
+  step 模式就是为了控制这个成本。
+- 观测第 94 项改为从 Warp 模型读该环境的实际箱体质量（无随机化时就是编译值，
+  数值不变），`mass_blind` 仍置零。重心偏移**不**进入观测：mass-conditioned
+  策略知道重量但不知道配重在哪，mass-blind 两者都要从动力学推断。
+- **箱子位姿抖动**（`payload_xy_jitter_m`、`payload_yaw_jitter_rad`）在
+  `reset_pregrasp` 里只作用于箱子，在共同 yaw 之前叠加：x 只向前取 `[0, j]`，
+  因为名义位置的箱子后沿距躯干碰撞体只有 1 cm；y、yaw 对称。yaw 后箱底最多比名义
+  静止高度高 0.3 mm，所以统一抬 0.2 mm 起步。用 64 环境 × 3 次 reset 的零动作
+  测试确定边界：1 cm / 0.03 rad 以内所有起步都在 3 步内获得双圆柱承托；2 cm 时
+  13–20% 的起步落在末端球上，6 步内拿不到承托。若同时把重心横向偏移到 4 cm 以上，
+  仍有 5–10% 的起步只压住一侧圆柱，这是 v1 判据（必须双圆柱受力）与
+  单接触点近似共同造成的，训练时请自行权衡偏移幅度。
+- **推力**（`push_interval_s`、`push_velocity_m_s`）直接使用 mjlab 的
+  `push_by_setting_velocity`：`mode="interval"`，每个环境独立计时、reset 时重抽，
+  触发时给机器人根连杆的世界系 x/y 速度各加一个 ±V 的均匀增量。这是瞬时、与质量
+  无关的速度踢，不是力；箱子不被踢，只通过前臂接触跟随。由于箱子与躯干只有 1 cm
+  间隙而摩擦系数为 0.7，相对速度超过 √(2·0.7·9.81·0.01) ≈ 0.37 m/s 时箱子来不及
+  被摩擦带走就会撞进躯干并被接触判据判失败，所以推力协议取 0.3 m/s。
+- 这些都只改变训练分布/评测条件，不改观测、动作或成功判据，`task_schema`
+  保持 `forearms-contact-v1`；实际使用的范围写在 `experiment.json` 的
+  `randomization` 与 `mass.mass_range_fraction`，续训默认沿用。带推力评测用
+  `configs/team_protocol_push.json`，结果单独报告。
+
 ## Legacy pregrasp：以下原设计仅用于旧模式
 
 This retained design describes **holding an attached load at chest height

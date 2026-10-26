@@ -28,7 +28,7 @@ bash scripts/bootstrap.sh cu130
 
 无 NVIDIA 显卡时同样改成 `cpu`。已有运行环境在 Windows RTX 5090 上使用；这不等于新前臂模式已经通过平衡或真机验证。**Linux 安装和显示尚未在 Linux 实机验证**。此发行版不支持 macOS / ARM。
 
-脚本会安装固定的 Python 3.13.14 和 `uv.lock` 中的依赖，创建当前项目自己的 `.venv`，最后检查 CPU/GPU。无需安装旧 HW3，也不用手动激活环境。CUDA 13.0 配置需要兼容的 NVIDIA 驱动；检查失败不会偷偷切换 CPU。首次下载会比较大，ZIP 本身不包含依赖和机器人资产。
+脚本会安装固定的 Python 3.13.14 和 `uv.lock` 中的依赖，创建当前项目自己的 `.venv`，最后检查 CPU/GPU。无需安装旧 HW3，也不用手动激活环境。CUDA 13.0 配置需要兼容的 NVIDIA 驱动（R580 及以上；`nvidia-smi` 右上角 CUDA Version 低于 13.0 时 `cu130` 的 doctor 会直接失败，先升驱动或改用 `cpu`）；检查失败不会偷偷切换 CPU。首次下载会比较大，ZIP 本身不包含依赖和机器人资产。`uv.lock` 只解析 Windows x86-64 和 Linux x86-64；GH200 这类 aarch64 节点需要另行解锁依赖，不要在那里直接跑本脚本。
 
 ## 2. 打开机器人（每次使用）
 
@@ -90,6 +90,21 @@ Linux：
 盲质量 checkpoint 的续训、评测和回放都加 `--mass-blind`。`--quick` 仅 6 个两秒 episode，不能算 proposal 正式结果。正式评测去掉 `--quick` 并另换输出名：每个 checkpoint 在 3 种负载下各测 50 个 20 秒 episode。
 
 默认协议为 `configs/team_protocol.json`，任务版本 `forearms-contact-v1`：不仅检查姿态和高度，还检查双侧前臂真实接触、连续失去承托、箱体与地面/其他机器人部位接触。前臂末端球可辅助接触，但不算有效前臂承托。具体阈值和边界见 [团队协议](docs/TEAM_PROTOCOL.md)。奖励是可调整的起点，不保证收敛；修改判据或物理后须更新任务版本并重新验证。
+
+**可选：训练时随机化负载和加扰动**（默认全部关闭，不加这些参数就是上面的固定质量任务）：
+
+```powershell
+.\.venv\Scripts\python.exe -m lifting_lab train --device cuda --num-envs 512 --seed 11 --iterations 300 --mass-range-fraction 0 0.05 --com-offset-m 0.02 0.03 0 --payload-xy-jitter-m 0.01 --payload-yaw-jitter-rad 0.02 --push-interval-s 3 5 --push-velocity-m-s 0.3 --output outputs/forearms_dr_seed11
+```
+
+- `--mass-range-fraction LOW HIGH`：每个环境每次 reset 在该区间（机器人质量比例）均匀抽一个箱子质量，直接写进该环境的 Warp 模型（质量 + 均匀箱惯量一起改），不重建环境。与 `--mass` / `--mass-fraction` / `--curriculum` 互斥；元数据里的 nominal 质量是区间中点。观测第 94 项仍是该环境的真实质量比，`--mass-blind` 照旧置零。
+- `--com-offset-m X Y Z`：重心在箱体坐标系内均匀偏移的半幅（米），相当于配重没放正；碰撞箱不变，偏移必须小于半边长。
+- `--payload-xy-jitter-m` / `--payload-yaw-jitter-rad`：reset 时只移动箱子相对前臂的位置：x 只向前（箱子后沿离躯干只有 1 cm），y 和 yaw 对称。已验证上限 0.01 m / 0.03 rad，超过后箱子会落在末端球上、起步就失去双前臂承托。
+- `--push-interval-s LOW HIGH` + `--push-velocity-m-s V`：每个环境按自己的计时器每隔 LOW–HIGH 秒给机器人基座水平速度各加一个 ±V 的随机增量（Isaac Lab 同款速度踢），箱子只通过接触受影响。两个参数必须同时给。
+- `--resume` 默认沿用 checkpoint 里记录的这些设置，命令行显式给出的参数才会覆盖；`experiment.json` 的 `randomization` 和 `mass.mass_range_fraction` 记录实际使用值。
+- 带推力评测用 `configs/team_protocol_push.json`（3–5 s 一次、0.3 m/s）：`evaluate --protocol configs/team_protocol_push.json --checkpoint ...`。它与无推力协议分开报告，不能合并成功率。箱子后沿离躯干 1 cm，摩擦 μ=0.7 能追回的相对速度约 v=√(2μgd)≈0.37 m/s，再大的向前踢会先把箱子撞进躯干、按接触判据直接失败，与平衡能力无关。
+
+这些只改变训练分布和评测条件，不改变观测/动作/成功判据，所以 `task_schema` 仍是 `forearms-contact-v1`，checkpoint 可以在有无随机化的环境间互相加载；报告结果时要写明训练用的随机化范围和评测协议。零动作 PD 基线本身在 0.5 kg 下约 0.16 s 后箱子就会后滑碰到躯干，这不是随机化造成的。
 
 ## 4. 四个人如何保持一致
 
