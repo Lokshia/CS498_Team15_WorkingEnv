@@ -235,6 +235,7 @@ def run_interactive(args, output, env_factory, policy_factory):
             updated = copy(local)
             updated.mass = viewer.requested_mass_kg
             updated.mass_fraction = None
+            updated.mass_range_fraction = None
             try:
                 new_env, new_mass, new_policy, new_wrapper = prepare_world(updated, env_factory, policy_factory)
             except Exception as exc:

@@ -10,29 +10,54 @@ import math
 import torch
 from mjlab.utils.lab_api.math import quat_apply_inverse, quat_apply, quat_from_euler_xyz, quat_mul
 from mjlab.envs.mdp.events import reset_scene_to_default, resolve_env_ids
+from mjlab.managers.event_manager import RecomputeLevel, requires_model_fields
 
-from .model import GRIP_SITES, HAND_SITES, robot_mass_kg
+from .model import GRIP_SITES, HAND_SITES, MIN_PAYLOAD_MASS_KG, robot_mass_kg
+
+# The nominal box rests 1 cm in front of the trunk collider, so jitter only
+# moves it forward in x (uniform [0, j]) and sideways/yawed symmetrically.
+# A yawed box meets the forearm cylinders up to 0.3 mm above the nominal rest
+# height (mj_geomDistance, default box). A 0.2 mm lift keeps that initial
+# overlap within the contact softness; a larger drop lets an off-centre box
+# land on one cylinder and rock onto the hand balls instead of both cylinders.
+PAYLOAD_JITTER_LIFT_M = 0.0002
+
+
+def _uniform(n, scale, device, columns=None):
+    shape = (n,) if columns is None else (n, columns)
+    return (2 * torch.rand(shape, device=device) - 1) * scale
 
 
 def reset_pregrasp(env, env_ids, xy_range: float = 0.05,
-                  yaw_range: float = 0.05, speed_range: float = 0.02):
+                  yaw_range: float = 0.05, speed_range: float = 0.02,
+                  payload_xy_jitter: float = 0.0, payload_yaw_jitter: float = 0.0):
     """Seeded common transform/velocity preserves the initial relative geometry.
 
-    All joints retain the exact initial pregrasp. No independent arm jitter,
-    mass randomization or pushes. The tiny common XY velocity varies episodes.
-    Set all three ranges to zero for a completely identical reset baseline.
+    All joints retain the exact initial pregrasp; there is no independent arm
+    jitter. The tiny common XY velocity varies episodes. Set all three ranges
+    to zero for a completely identical reset baseline. The optional payload
+    jitter moves only the box, in the yawed robot frame, so the policy does
+    not see one fixed box placement on the forearms.
     """
     env_ids = resolve_env_ids(env, env_ids)
     reset_scene_to_default(env, env_ids)
     n = len(env_ids)
-    xy = (2 * torch.rand(n, 2, device=env.device) - 1) * xy_range
-    yaw = (2 * torch.rand(n, device=env.device) - 1) * yaw_range
+    xy = _uniform(n, xy_range, env.device, 2)
+    yaw = _uniform(n, yaw_range, env.device)
     zero = torch.zeros_like(yaw)
     rotation = quat_from_euler_xyz(zero, zero, yaw)
-    velocity = (2 * torch.rand(n, 2, device=env.device) - 1) * speed_range
+    velocity = _uniform(n, speed_range, env.device, 2)
+    jittered = payload_xy_jitter > 0 or payload_yaw_jitter > 0
     for name in ("robot", "payload"):
         entity = env.scene[name]
         state = entity.data.default_root_state[env_ids].clone()
+        if name == "payload" and jittered:
+            shift = torch.cat((torch.rand(n, 1, device=env.device) * payload_xy_jitter,
+                               _uniform(n, payload_xy_jitter, env.device, 1),
+                               torch.full((n, 1), PAYLOAD_JITTER_LIFT_M, device=env.device)), dim=-1)
+            state[:, :3] += shift
+            state[:, 3:7] = quat_mul(quat_from_euler_xyz(zero, zero, _uniform(n, payload_yaw_jitter, env.device)),
+                                     state[:, 3:7])
         state[:, :3] = quat_apply(rotation, state[:, :3])
         state[:, :3] += env.scene.env_origins[env_ids]
         state[:, :2] += xy
@@ -41,6 +66,46 @@ def reset_pregrasp(env, env_ids, xy_range: float = 0.05,
         entity.write_root_state_to_sim(state, env_ids)
     if getattr(env.cfg, "support_mode", "pregrasp") == "forearms":
         reset_support_state(env, env_ids)
+
+
+def _payload_body_id(env):
+    if not hasattr(env, "_lifting_payload_body_id"):
+        env._lifting_payload_body_id = int(env.scene["payload"].indexing.body_ids[0])
+    return env._lifting_payload_body_id
+
+
+def payload_mass_kg(env):
+    """Per-environment simulated box mass, read back from the Warp model."""
+    masses = env.sim.model.body_mass[:, _payload_body_id(env)]
+    return masses.expand(env.num_envs) if masses.shape[0] == 1 else masses
+
+
+@requires_model_fields("body_mass", "body_ipos", "body_inertia", recompute=RecomputeLevel.set_const)
+def randomize_payload_inertial(env, env_ids, mass_range_kg=None, com_offset_m=(0.0, 0.0, 0.0)):
+    """Draw each reset environment's box mass and centre of mass.
+
+    The collision box is unchanged; only the inertial parameters of
+    ``payload/box`` are written per world, like a ballast placed off-centre.
+    Mass is uniform in ``mass_range_kg`` (nominal mass when None, 1 g floor),
+    the inertial origin is uniform within ``+-com_offset_m`` in the box frame,
+    and the inertia tensor stays the homogeneous-box value about that origin,
+    scaled by the drawn mass. The event manager then runs ``set_const`` so
+    subtree masses and constraint inverse weights match the new values.
+    """
+    env_ids = resolve_env_ids(env, env_ids)
+    n = len(env_ids)
+    if mass_range_kg is None:
+        mass = torch.full((n,), env.cfg.actual_payload_mass_kg, device=env.device)
+    else:
+        low, high = mass_range_kg
+        mass = (torch.rand(n, device=env.device) * (high - low) + low).clamp_min(MIN_PAYLOAD_MASS_KG)
+    x, y, z = env.cfg.payload_half_size_m
+    unit_inertia = mass.new_tensor((y * y + z * z, x * x + z * z, x * x + y * y)) / 3
+    body = _payload_body_id(env)
+    model = env.sim.model
+    model.body_mass[env_ids, body] = mass
+    model.body_ipos[env_ids, body] = _uniform(n, mass.new_tensor(com_offset_m), env.device, 3)
+    model.body_inertia[env_ids, body] = mass[:, None] * unit_inertia
 
 
 def _ids(env):
@@ -114,14 +179,17 @@ def task_observation(env, mass_observed: bool = True):
     velocity_b = quat_apply_inverse(q, payload.root_link_lin_vel_w - robot.root_link_lin_vel_w)
     angular_b = quat_apply_inverse(q, payload.root_link_ang_vel_w)
     grip_b = quat_apply_inverse(q[:, None, :].expand(-1, 2, -1), grip_displacement(env))
-    observed_mass = env.cfg.actual_payload_mass_kg / robot_mass_kg() if mass_observed else 0.0
+    if mass_observed:
+        observed_mass = (payload_mass_kg(env) / robot_mass_kg()).to(q.dtype)[:, None]
+    else:
+        observed_mass = torch.zeros((env.num_envs, 1), device=env.device, dtype=q.dtype)
     return torch.cat((
         robot.root_link_ang_vel_b, robot.projected_gravity_b,
         robot.joint_pos - robot.default_joint_pos, robot.joint_vel,
         env.action_manager.action, robot.root_link_lin_vel_b,
         position_b, velocity_b, payload.projected_gravity_b, angular_b,
         height_error(env)[:, None], grip_b.flatten(1),
-        torch.full((env.num_envs, 1), observed_mass, device=env.device),
+        observed_mass,
         (robot.root_link_pos_w[:, 2] - env.scene.env_origins[:, 2])[:, None],
         payload_height(env)[:, None],
     ), dim=-1)

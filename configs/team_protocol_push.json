@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "protocol_id": "k1-forearms-contact-v1-push",
+  "support_mode": "forearms",
+  "task_schema": "forearms-contact-v1",
+  "observation_schema": "k1-load-state-97-v1",
+  "task": "free_box_forearm_support",
+  "training_mass_fractions": [0.0, 0.025, 0.05],
+  "evaluation_mass_fractions": [0.0125, 0.0375, 0.075],
+  "stress_test_mass_fractions": [0.075],
+  "training_seeds": [11, 22, 33],
+  "evaluation_seeds": [1011, 1022, 1033],
+  "episodes_per_seed_condition": 50,
+  "episode_seconds": 20.0,
+  "success": {
+    "max_payload_tilt_deg_exclusive": 10.0,
+    "max_abs_height_error_m_exclusive": 0.05,
+    "allow_corrective_steps": true,
+    "contact_grace_seconds": 0.12,
+    "support_requirement": "both exact forearm cylinder colliders in contact and each upward force > 1e-6 N; at most 0.12 seconds continuous contact loss including startup (not two additive windows). Hand-end spheres may touch as auxiliary contact but do not count as forearm support",
+    "disallowed_support": "any payload contact with floor, torso or other robot geometry fails immediately; only the two forearm cylinders and their left/right_hand_end_collision spheres are permitted"
+  },
+  "disturbance": {
+    "push_interval_s": [3.0, 5.0],
+    "push_velocity_m_s": 0.3,
+    "description": "Every 3-5 s (per environment, timer restarts at reset) the robot root link velocity gains a uniform delta in [-0.3, 0.3] m/s on each horizontal axis. Instantaneous, mass-independent kick on the robot only; the box is disturbed through contact."
+  },
+  "mass_observation_variants": ["conditioned", "blind"],
+  "minimum_payload_mass_kg": 0.001,
+  "members": ["Cici Liu", "MC Gu", "Tony Zhao", "Zhe Zheng"],
+  "notes": [
+    "Same task, success criteria, masses, seeds and episode counts as team_protocol.json; only the pushes are added.",
+    "Report these success rates separately from the no-push baseline; never merge the two protocols.",
+    "The first push can land as early as 3 s, so a policy must already be settled by then.",
+    "The kick magnitude is an evaluation convention, not a measured real-world disturbance.",
+    "The box starts 1 cm in front of the trunk and friction (mu 0.7) can only close a relative speed v over v^2/(2 mu g) of slip, about 0.37 m/s for 1 cm. Larger forward kicks push the box into the trunk before any policy can react and are failed by the contact rule, not by balance."
+  ]
+}

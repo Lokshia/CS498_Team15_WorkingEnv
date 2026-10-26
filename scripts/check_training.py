@@ -104,19 +104,44 @@ def main():
         run("blind", ["train", *common, "--seed", "11", "--iterations", "2", "--mass-blind",
                       "--output", str(output / "blind")])
         checkpoint("blind", 1)
-        for label, model, blind in (("eval_conditioned", "resumed/policy.pt", False),
-                                    ("eval_blind", "blind/policy.pt", True),
-                                    ("eval_pd_baseline", None, False)):
+        randomized = ["--mass-range-fraction", "0", "0.05", "--com-offset-m", "0.02", "0.03", "0",
+                      "--payload-xy-jitter-m", "0.01", "--payload-yaw-jitter-rad", "0.02",
+                      "--push-interval-s", "0.5", "1.0", "--push-velocity-m-s", "0.3"]
+        run("randomized", ["train", *common, "--seed", "11", "--iterations", "2", *randomized,
+                           "--output", str(output / "randomized")])
+        saved = checkpoint("randomized", 1)
+        meta = json.loads((output / "randomized" / "experiment.json").read_text(encoding="utf-8"))
+        assert meta["mass"]["mass_range_fraction"] == [0.0, 0.05]
+        assert meta["randomization"]["push_velocity_m_s"] == 0.3
+        assert meta["task_schema"] == "forearms-contact-v1"
+        run("randomized_resumed", ["train", *common, "--seed", "11", "--iterations", "1",
+                                   "--resume", str(output / "randomized/policy.pt"),
+                                   "--output", str(output / "randomized_resumed")])
+        checkpoint("randomized_resumed", 2)
+        meta = json.loads((output / "randomized_resumed" / "experiment.json").read_text(encoding="utf-8"))
+        assert meta["randomization"]["push_interval_s"] == [0.5, 1.0], "resume lost the push settings"
+        assert meta["mass"]["mass_range_fraction"] == [0.0, 0.05], "resume lost the mass range"
+        report["randomized_training"] = {"iterations": 3, "randomization": meta["randomization"],
+                                         "finite_tensors": len(saved["actor_state_dict"])}
+        for label, model, blind, protocol in (("eval_conditioned", "resumed/policy.pt", False, None),
+                                              ("eval_blind", "blind/policy.pt", True, None),
+                                              ("eval_pd_baseline", None, False, None),
+                                              ("eval_push", "randomized_resumed/policy.pt", False,
+                                               ROOT / "configs" / "team_protocol_push.json")):
             command = ["evaluate", *common, "--quick", "--output", str(output / label)]
             if model:
                 command += ["--checkpoint", str(output / model)]
             if blind:
                 command += ["--mass-blind"]
+            if protocol:
+                command += ["--protocol", str(protocol)]
             run(label, command)
             evaluation = json.loads((output / label / "evaluation.json").read_text(encoding="utf-8"))
             assert evaluation["support_mode"] == "forearms" and evaluation["quick_smoke_only"]
             assert evaluation["episodes"] == 6 and evaluation["episode_seconds"] == 2.0
+            assert (evaluation["disturbance"] is not None) == (protocol is not None)
             report[label] = {"episodes": evaluation["episodes"], "success_rate": evaluation["success_rate"],
+                             "protocol_id": evaluation["protocol"]["protocol_id"],
                              "policy_quality_claim": False}
         run("cpu_checkpoint_demo", ["demo", "--support-mode", "forearms", "--device", "cpu", "--seconds", "1",
                                     "--checkpoint", str(output / "resumed/policy.pt"),

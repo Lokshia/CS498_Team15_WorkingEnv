@@ -35,6 +35,10 @@ def _positive_int(text):
     return value
 
 
+RANDOMIZATION_KEYS = ("mass_range_fraction", "com_offset_m", "payload_xy_jitter_m",
+                      "payload_yaw_jitter_rad", "push_interval_s", "push_velocity_m_s")
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description="Booster K1 load-support simulation lab (not a real-robot controller).")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -53,6 +57,19 @@ def build_parser():
         p.add_argument("--threads", type=_positive_int, default=4)
         p.add_argument("--support-mode", choices=("forearms", "pregrasp"), default="forearms",
                        help="forearms: free contact task; pregrasp: legacy CONNECT task")
+        if name != "evaluate":
+            mass.add_argument("--mass-range-fraction", type=_nonnegative, nargs=2, metavar=("LOW", "HIGH"),
+                              help="Per-environment uniform payload mass as fractions of robot mass, redrawn every reset")
+            p.add_argument("--com-offset-m", type=_nonnegative, nargs=3, metavar=("X", "Y", "Z"),
+                           help="Half-ranges of a uniform centre-of-mass shift inside the box (box frame)")
+            p.add_argument("--payload-xy-jitter-m", type=_nonnegative,
+                           help="Box-only uniform XY offset on the forearms at reset")
+            p.add_argument("--payload-yaw-jitter-rad", type=_nonnegative,
+                           help="Box-only uniform yaw offset at reset")
+            p.add_argument("--push-interval-s", type=_positive, nargs=2, metavar=("LOW", "HIGH"),
+                           help="Per-environment interval between horizontal root-velocity pushes on the robot")
+            p.add_argument("--push-velocity-m-s", type=_nonnegative,
+                           help="Push magnitude: each of the robot's XY root velocities gains a uniform delta in +-V")
         if name == "smoke":
             p.add_argument("--steps", type=_positive_int, default=100)
         elif name == "demo":
@@ -85,11 +102,51 @@ def _output(args, label):
 def _mass(args):
     from .model import robot_mass_kg
     robot_mass = robot_mass_kg()
-    requested = args.mass if args.mass is not None else (args.mass_fraction if args.mass_fraction is not None else 0.025) * robot_mass
+    fraction_range = getattr(args, "mass_range_fraction", None)
+    if args.mass is not None:
+        requested = args.mass
+    elif args.mass_fraction is not None:
+        requested = args.mass_fraction * robot_mass
+    elif fraction_range is not None:
+        requested = sum(fraction_range) / 2 * robot_mass
+    else:
+        requested = 0.025 * robot_mass
     return {"robot_mass_kg": robot_mass, "requested_payload_mass_kg": requested,
             "actual_payload_mass_kg": max(requested, 0.001),
             "requested_mass_fraction": requested / robot_mass,
-            "zero_load_uses_1g_proxy": requested < 0.001}
+            "zero_load_uses_1g_proxy": requested < 0.001,
+            "mass_range_fraction": None if fraction_range is None else [float(v) for v in fraction_range],
+            "mass_range_kg": None if fraction_range is None else [float(v) * robot_mass for v in fraction_range],
+            "nominal_mass_is_range_midpoint": fraction_range is not None}
+
+
+def _randomization(args):
+    """Training-distribution settings; they do not change the policy contract."""
+    values = {key: getattr(args, key, None) for key in RANDOMIZATION_KEYS}
+    interval, speed = values["push_interval_s"], values["push_velocity_m_s"]
+    if interval is not None and not speed:
+        raise ValueError("--push-interval-s needs a positive --push-velocity-m-s")
+    if interval is None and speed:
+        raise ValueError("--push-velocity-m-s needs --push-interval-s")
+    return {
+        "mass_range_fraction": None if values["mass_range_fraction"] is None
+                               else [float(v) for v in values["mass_range_fraction"]],
+        "com_offset_m": [float(v) for v in (values["com_offset_m"] or (0.0, 0.0, 0.0))],
+        "payload_xy_jitter_m": float(values["payload_xy_jitter_m"] or 0.0),
+        "payload_yaw_jitter_rad": float(values["payload_yaw_jitter_rad"] or 0.0),
+        "push_interval_s": None if interval is None else [float(v) for v in interval],
+        "push_velocity_m_s": float(speed) if interval is not None else 0.0,
+    }
+
+
+def _inherit_randomization(args, metadata):
+    """Resume keeps the checkpoint's pushes/jitter/COM unless a flag overrides them."""
+    old = metadata.get("randomization", {})
+    if args.push_interval_s is None and args.push_velocity_m_s is None and old.get("push_interval_s"):
+        args.push_interval_s, args.push_velocity_m_s = old["push_interval_s"], old["push_velocity_m_s"]
+    for key in ("com_offset_m", "payload_xy_jitter_m", "payload_yaw_jitter_rad"):
+        if getattr(args, key) is None and old.get(key) is not None:
+            setattr(args, key, old[key])
 
 
 def task_contract(args):
@@ -137,10 +194,18 @@ def _env(args, *, seconds=20.0, render=False, auto_reset=True, num_envs=None):
     device = resolve_device(args.device)
     torch.set_num_threads(args.threads)
     mass = _mass(args)
+    randomization = _randomization(args)
     cfg = make_env_cfg(payload_mass_kg=mass["requested_payload_mass_kg"],
                        num_envs=num_envs or args.num_envs, episode_length_s=seconds,
                        mass_observed=not args.mass_blind,
-                       support_mode=getattr(args, "support_mode", "pregrasp"))
+                       support_mode=getattr(args, "support_mode", "pregrasp"),
+                       payload_mass_range_kg=None if mass.get("mass_range_kg") is None else tuple(mass["mass_range_kg"]),
+                       payload_com_offset_m=tuple(randomization["com_offset_m"]),
+                       payload_xy_jitter_m=randomization["payload_xy_jitter_m"],
+                       payload_yaw_jitter_rad=randomization["payload_yaw_jitter_rad"],
+                       push_interval_s=None if randomization["push_interval_s"] is None
+                                       else tuple(randomization["push_interval_s"]),
+                       push_velocity_m_s=randomization["push_velocity_m_s"])
     cfg.seed = args.seed
     cfg.auto_reset = auto_reset
     if (getattr(args, "viewer", False)
@@ -214,7 +279,7 @@ def smoke(args):
             torch.cuda.synchronize()
         elapsed = time.perf_counter() - start
         result = {"passed": True, "scope": "finite physics/API smoke, NOT trained-policy success",
-                  "runtime": runtime_info(env.device), "mass": mass,
+                  "runtime": runtime_info(env.device), "mass": mass, "randomization": _randomization(args),
                   "support_mode": getattr(env.cfg, "support_mode", "pregrasp"),
                   "policy": "zero-action joint-position PD; no trained balancing policy",
                   "num_envs": env.num_envs, "steps_per_env": args.steps, "seed": args.seed,
@@ -246,7 +311,7 @@ def demo(args):
         policy = _policy(env, args)
         # Wrappers may reset during construction. Apply the agreed seed last.
         obs, _ = env.reset(seed=args.seed)
-        metadata = {"runtime": runtime_info(env.device), "mass": mass,
+        metadata = {"runtime": runtime_info(env.device), "mass": mass, "randomization": _randomization(args),
                     "support_mode": getattr(env.cfg, "support_mode", "pregrasp"),
                     "seed": args.seed, "mass_observed": not args.mass_blind,
                     "policy": "checkpoint" if args.checkpoint else "zero-action joint-position PD; no trained balancing policy",
@@ -289,11 +354,15 @@ def train(args):
     for phase, fraction in enumerate(fractions):
         stage_args = copy(args)
         if fraction is not None:
-            stage_args.mass, stage_args.mass_fraction = None, fraction
-        elif old and args.mass is None and args.mass_fraction is None:
+            stage_args.mass, stage_args.mass_fraction, stage_args.mass_range_fraction = None, fraction, None
+        elif old and args.mass is None and args.mass_fraction is None and args.mass_range_fraction is None:
             # Ordinary resume keeps its previous load unless explicitly changed.
-            stage_args.mass = old["mass"]["requested_payload_mass_kg"]
+            stage_args.mass_range_fraction = old["mass"].get("mass_range_fraction")
+            if stage_args.mass_range_fraction is None:
+                stage_args.mass = old["mass"]["requested_payload_mass_kg"]
             stage_args.mass_fraction = None
+        if old:
+            _inherit_randomization(stage_args, old)
         stage = output / f"phase_{phase}" if args.curriculum else output
         stage.mkdir(parents=True, exist_ok=True)
         # Internal curriculum phases resume the preceding phase, not the original.
@@ -313,6 +382,7 @@ def train(args):
             cfg["save_interval"] = min(50, args.iterations)
             phase_steps = args.iterations * cfg["num_steps_per_env"] * env.num_envs
             metadata = {"runtime": runtime_info(env.device), "mass": mass, "seed": args.seed,
+                        "randomization": _randomization(stage_args),
                         **task_contract(args), "checkpoint_metadata_schema": 2, "runner": cfg,
                         "episode_seconds": 20, "num_envs": env.num_envs,
                         "phase_start_iteration": start_iteration,
@@ -416,7 +486,26 @@ def _evaluation_protocol(args):
         grace = protocol["success"].get("contact_grace_seconds")
         if not isinstance(grace, (float, int)) or not math.isclose(grace, 0.12, rel_tol=0, abs_tol=1e-12):
             raise ValueError("forearms-contact-v1 requires contact_grace_seconds=0.12 (6 control steps)")
+    _protocol_conditions(protocol)
     return protocol_path, protocol
+
+
+def _protocol_conditions(protocol):
+    """Optional protocol blocks that configure pushes or off-centre loads during evaluation."""
+    disturbance = protocol.get("disturbance") or {}
+    randomization = protocol.get("randomization") or {}
+    unknown = (set(disturbance) - {"push_interval_s", "push_velocity_m_s", "description"}
+               | set(randomization) - {"payload_com_offset_m", "payload_xy_jitter_m",
+                                       "payload_yaw_jitter_rad", "description"})
+    if unknown:
+        raise ValueError(f"Unsupported protocol condition keys: {sorted(unknown)}")
+    if ("push_interval_s" in disturbance) != ("push_velocity_m_s" in disturbance):
+        raise ValueError("Protocol disturbance needs both push_interval_s and push_velocity_m_s")
+    return {"push_interval_s": disturbance.get("push_interval_s"),
+            "push_velocity_m_s": disturbance.get("push_velocity_m_s"),
+            "com_offset_m": randomization.get("payload_com_offset_m"),
+            "payload_xy_jitter_m": randomization.get("payload_xy_jitter_m"),
+            "payload_yaw_jitter_rad": randomization.get("payload_yaw_jitter_rad")}
 
 
 def evaluate(args):
@@ -435,6 +524,7 @@ def evaluate(args):
     seeds = [protocol["evaluation_seeds"][protocol["training_seeds"].index(training_seed)]]
     seconds = 2.0 if args.quick else protocol["episode_seconds"]
     count = 2 if args.quick else protocol["episodes_per_seed_condition"]
+    conditions = _protocol_conditions(protocol)
     records = []
     for fraction in fractions:
         for seed in seeds:
@@ -443,6 +533,8 @@ def evaluate(args):
                 batch = min(args.num_envs, count - completed)
                 local = copy(args)
                 local.mass, local.mass_fraction, local.seed = None, fraction, seed + completed
+                for key, value in conditions.items():
+                    setattr(local, key, value)
                 env, mass = _env(local, seconds=seconds, auto_reset=False, num_envs=batch)
                 try:
                     policy = _policy(env, local)
@@ -493,7 +585,10 @@ def evaluate(args):
               "mass_observed": not args.mass_blind, "episodes": len(flags),
               "success_rate": float(np.mean(flags)), "conditions": records,
               "condition_summaries": summaries,
-              "limitations": "No-push simulation baseline. Not physical-robot safety validation. Compare same batch size, source fingerprint, protocol and runtime; cross-GPU bitwise equality is not guaranteed."}
+              "disturbance": protocol.get("disturbance"), "randomization": protocol.get("randomization"),
+              "limitations": ("Pushed-episode protocol; report separately from the no-push baseline. "
+                              if conditions["push_interval_s"] else "No-push simulation baseline. ")
+                             + "Not physical-robot safety validation. Compare same batch size, source fingerprint, protocol and runtime; cross-GPU bitwise equality is not guaranteed."}
     write_json(output / "evaluation.json", result)
     print(f"Evaluation saved: {output}; success={sum(flags)}/{len(flags)}; quick={args.quick}")
 
@@ -502,12 +597,14 @@ def main():
     args = build_parser().parse_args()
     try:
         _validate_checkpoint_support(args)
+        _randomization(args)
     except ValueError as exc:
         raise SystemExit(str(exc)) from exc
     if args.command == "demo" and args.paused and not args.viewer:
         raise SystemExit("--paused requires --viewer")
-    if args.command == "train" and args.curriculum and (args.mass is not None or args.mass_fraction is not None):
-        raise SystemExit("--curriculum selects masses; do not also specify --mass/--mass-fraction")
+    if args.command == "train" and args.curriculum and (
+            args.mass is not None or args.mass_fraction is not None or args.mass_range_fraction is not None):
+        raise SystemExit("--curriculum selects masses; do not also specify --mass/--mass-fraction/--mass-range-fraction")
     if args.command == "evaluate" and (args.mass is not None or args.mass_fraction is not None):
         raise SystemExit("Evaluation masses come from --protocol; do not override them with --mass")
     os.environ.setdefault("WANDB_MODE", "offline")
