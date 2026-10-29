@@ -1,0 +1,23 @@
+{
+  "schema_version": 2,
+  "protocol_id": "forearms-fixed-load-diagnostic-8x20s-v1",
+  "support_mode": "forearms",
+  "task_schema": "forearms-contact-v1",
+  "observation_schema": "k1-load-state-97-v1",
+  "evaluation_mass_fractions": [0.025],
+  "training_seeds": [11, 22, 33],
+  "evaluation_seeds": [1011, 1022, 1033],
+  "episodes_per_seed_condition": 8,
+  "episode_seconds": 20.0,
+  "success": {
+    "max_payload_tilt_deg_exclusive": 10.0,
+    "max_abs_height_error_m_exclusive": 0.05,
+    "allow_corrective_steps": true,
+    "contact_grace_seconds": 0.12
+  },
+  "notes": [
+    "Diagnostic only: eight independent reset draws at one training mass, not the formal held-out-load protocol.",
+    "Always report smoothness diagnostics alongside original task success; survival alone does not imply steady holding.",
+    "No pushes or box-pose jitter. Compare equal training steps, seed, mass and evaluation batch size."
+  ]
+}

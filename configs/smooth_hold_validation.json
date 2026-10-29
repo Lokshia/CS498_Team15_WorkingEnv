@@ -1,0 +1,26 @@
+{
+  "schema_version": 2,
+  "protocol_id": "forearms-smooth-validation-5loads-50x20s-v1",
+  "support_mode": "forearms",
+  "task_schema": "forearms-contact-v1",
+  "observation_schema": "k1-load-state-97-v1",
+  "evaluation_mass_fractions": [0.0125, 0.025, 0.0375, 0.05, 0.075],
+  "stress_test_mass_fractions": [0.075],
+  "training_seeds": [11, 22, 33],
+  "evaluation_seeds": [5011, 5022, 5033],
+  "episodes_per_seed_condition": 50,
+  "episode_seconds": 20.0,
+  "success": {
+    "max_payload_tilt_deg_exclusive": 10.0,
+    "max_abs_height_error_m_exclusive": 0.05,
+    "allow_corrective_steps": true,
+    "contact_grace_seconds": 0.12
+  },
+  "notes": [
+    "No pushes, COM offsets or box-pose jitter; unchanged forearms-contact-v1 physics and task criteria.",
+    "For a seed-11 checkpoint, evaluate with seed 5011 after tuning with seed 1011. Each load has 50 reset draws.",
+    "Includes the nominal training load, the teammate 5-percent load, and the three original team-protocol evaluation loads.",
+    "A checkpoint from one training seed is not evidence of repeatability across independent training runs.",
+    "Report original task success and smoothness separately; the six-step contact grace permits intermittent support."
+  ]
+}

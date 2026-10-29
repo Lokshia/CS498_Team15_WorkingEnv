@@ -228,6 +228,29 @@ def payload_motion_cost(env):
     return data.root_link_lin_vel_w.square().sum(-1) + 0.1 * data.root_link_ang_vel_w.square().sum(-1)
 
 
+def unsupported_cost(env):
+    """Penalize every unsupported sample, including the permitted contact grace."""
+    return (~forearm_contact_metrics(env)["payload_forearm_supported"]).float()
+
+
+def missing_feet_cost(env):
+    """Zero/two points for both/no feet on the floor; stepping is not terminated."""
+    contact = env.scene["feet_ground_contact"].data.found.reshape(env.num_envs, 2).gt(0)
+    return (~contact).sum(-1).float()
+
+
+def robot_vertical_velocity_cost(env):
+    return env.scene["robot"].data.root_link_lin_vel_w[:, 2].square()
+
+
+def robot_angular_velocity_cost(env):
+    return env.scene["robot"].data.root_link_ang_vel_w.square().sum(-1)
+
+
+def joint_velocity_cost(env):
+    return env.scene["robot"].data.joint_vel.square().sum(-1)
+
+
 def fell(env):
     robot = env.scene["robot"].data
     low = robot.root_link_pos_w[:, 2] - env.scene.env_origins[:, 2] < 0.28
@@ -372,6 +395,14 @@ def task_metrics(env) -> dict[str, torch.Tensor]:
         "torque_rms_nm": env.scene["robot"].data.qfrc_actuator.square().mean(-1).sqrt(),
         "feet_contact_count": contacts.sum(-1).float(),
         "foot_slip_m2_s2": foot_slip_cost(env),
+        "joint_velocity_rms_rad_s": env.scene["robot"].data.joint_vel.square().mean(-1).sqrt(),
+        "action_delta_rms": (env.action_manager.action - env.action_manager.prev_action).square().mean(-1).sqrt(),
+        "robot_vertical_speed_m_s": env.scene["robot"].data.root_link_lin_vel_w[:, 2].abs(),
+        "robot_angular_speed_rad_s": torch.linalg.vector_norm(env.scene["robot"].data.root_link_ang_vel_w, dim=-1),
+        "payload_linear_speed_m_s": torch.linalg.vector_norm(env.scene["payload"].data.root_link_lin_vel_w, dim=-1),
+        "payload_angular_speed_rad_s": torch.linalg.vector_norm(env.scene["payload"].data.root_link_ang_vel_w, dim=-1),
+        "both_feet_contact": contacts.all(-1).float(),
+        "airborne": (~contacts.any(-1)).float(),
         "fell": is_fallen,
         "nonfinite": nonfinite,
     }

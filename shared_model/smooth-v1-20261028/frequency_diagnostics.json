@@ -1,0 +1,1473 @@
+{
+  "formal_evaluation": false,
+  "scope": "Single CPU capture and descriptive cross-source replay comparison; not same-training-budget evaluation.",
+  "method": {
+    "base_band": "7-9 Hz one-sided periodogram integrated RMS, SI meters; linear detrend, periodic Hann, PSD normalized by fs*sum(window**2), bin width fs/N.",
+    "peak_bin_amplitude": "2*abs(rFFT)/sum(Hann): coherent sine amplitude at a sampled frequency, not total band amplitude.",
+    "sampling": "50 Hz; substeps and >25Hz unavailable.",
+    "startup": "Full recording retained; after_2s is a separate disclosed view, not removed from success criteria.",
+    "calculation_sanity_check": "4mm 8Hz sine plus linear drift reproduced RMS=4mm/sqrt(2) within1e-8m.",
+    "zero_power": "A zero-power band has no reported peak frequency."
+  },
+  "limitations": [
+    "Our capture uses CPU, seed2027, fixed0.494922kg, smooth-v1 1000update policy; teammate captures use CUDA, seed11, different checkpoints and source hash.",
+    "Teammate metadata lacks raw joint/action arrays; only base-height bands can be compared.",
+    "Single-episode diagnostic; not formal 150episode protocol and not evidence of equal-budget superiority.",
+    "Band amplitude does not identify a causal mechanism; very small simulated variations may reflect numerical precision."
+  ],
+  "base_height_comparison": [
+    {
+      "name": "smooth_1000_joint_cpu_20s",
+      "source_file": "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\smooth_study_20261028\\smooth_1000_joint_cpu_20s\\demo.json",
+      "source_file_sha256": "3a16e2efeee99b66902c5e34a060cea7d36def1c8625b1c8e0d170a7de573cb0",
+      "device": "cpu",
+      "source_fingerprint": "b097e3415fcaa087ecc33c329d6cd34cbce7d07b43b8a0bf1cf4b986c7e61c9c",
+      "checkpoint_sha256": "a65edc7fd9415035179a039a2b80aa95b3fe3eeabb0203fa1051d5833b325118",
+      "seed": 2027,
+      "mass_kg": 0.4949224923474894,
+      "frames": 1000,
+      "seconds": 20.0,
+      "contact": {
+        "bilateral_forearm_support_fraction": 0.983,
+        "both_forearms_contact_fraction": 0.983,
+        "both_feet_contact_fraction": 0.998,
+        "neither_foot_contact_fraction": 0.0,
+        "max_support_gap_steps": 5,
+        "max_support_gap_seconds": 0.1,
+        "longest_recorded_unsupported_run_steps": 5,
+        "longest_no_feet_contact_steps": 0
+      },
+      "valid_hold": {
+        "all_recorded_steps_valid": true,
+        "valid_step_fraction": 1.0,
+        "invalid_step_count": 0,
+        "first_invalid_step_1_based": null
+      },
+      "full": {
+        "base_height_std_m": 0.0010050285066119159,
+        "base_height_peak_to_peak_m": 0.01009756326675415,
+        "base_height_spectrum": {
+          "peak_hz": 0.05,
+          "resolution_hz": 0.05,
+          "nyquist_hz": 25.0,
+          "possible_drift": true,
+          "peak_three_bin_power_fraction": 0.9688199319296912,
+          "status": "possible_drift",
+          "note": "Low-frequency/under-three-cycle peak may be drift, not an established oscillation."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 2.9112840825287917e-06,
+          "band_peak_hz": 7.5,
+          "band_peak_bin_coherent_amplitude": 1.3977046541109324e-06,
+          "resolution_hz": 0.05
+        }
+      },
+      "after_2s": {
+        "frames": 900,
+        "base_height_std_m": 0.0006715922350053638,
+        "base_height_peak_to_peak_m": 0.002291738986968994,
+        "base_height_spectrum": {
+          "peak_hz": 0.05555555555555555,
+          "resolution_hz": 0.05555555555555555,
+          "nyquist_hz": 25.0,
+          "possible_drift": true,
+          "peak_three_bin_power_fraction": 0.8912935986340369,
+          "status": "possible_drift",
+          "note": "Low-frequency/under-three-cycle peak may be drift, not an established oscillation."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 2.7715028754237054e-06,
+          "band_peak_hz": 7.5,
+          "band_peak_bin_coherent_amplitude": 1.6587789400833647e-06,
+          "resolution_hz": 0.05555555555555555
+        }
+      }
+    },
+    {
+      "name": "01_stand_hold_1g",
+      "source_file": "D:\\Inventories\\CS498\\Booster-track\\tmp\\teammate-visualizations-20261028\\visualizations_20261027_173122\\metadata\\01_stand_hold_1g\\demo.json",
+      "source_file_sha256": "6d61278dd14783a37851480ac60d877fbe40f390d7362b7a550571475177db7c",
+      "device": "cuda:0",
+      "source_fingerprint": "4d94536e49f075c78fa4c783ff4ee26790fcb409318b550c14cfaf5cae6a434d",
+      "checkpoint_sha256": "30e896cac56f2946b762f1709db9f4a1e6959f222940fc26fe1cef5ad8c41664",
+      "seed": 11,
+      "mass_kg": 0.0,
+      "frames": 1000,
+      "seconds": 20.0,
+      "contact": {
+        "bilateral_forearm_support_fraction": 0.299,
+        "both_forearms_contact_fraction": 0.368,
+        "both_feet_contact_fraction": 0.561,
+        "neither_foot_contact_fraction": 0.316,
+        "max_support_gap_steps": 5,
+        "max_support_gap_seconds": 0.1,
+        "longest_recorded_unsupported_run_steps": 5,
+        "longest_no_feet_contact_steps": 3
+      },
+      "valid_hold": {
+        "all_recorded_steps_valid": false,
+        "valid_step_fraction": 0.998,
+        "invalid_step_count": 2,
+        "first_invalid_step_1_based": 125
+      },
+      "full": {
+        "base_height_std_m": 0.005738795262653936,
+        "base_height_peak_to_peak_m": 0.020396649837493896,
+        "base_height_spectrum": {
+          "peak_hz": 7.550000000000001,
+          "resolution_hz": 0.05,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.6833689515566079,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.0055515305406095275,
+          "band_peak_hz": 7.550000000000001,
+          "band_peak_bin_coherent_amplitude": 0.005705418776310915,
+          "resolution_hz": 0.05
+        }
+      },
+      "after_2s": {
+        "frames": 900,
+        "base_height_std_m": 0.005747067409808833,
+        "base_height_peak_to_peak_m": 0.02012789249420166,
+        "base_height_spectrum": {
+          "peak_hz": 7.555555555555555,
+          "resolution_hz": 0.05555555555555555,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.6101949421587707,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.005587713702814374,
+          "band_peak_hz": 7.555555555555555,
+          "band_peak_bin_coherent_amplitude": 0.005173993158375075,
+          "resolution_hz": 0.05555555555555555
+        }
+      }
+    },
+    {
+      "name": "02_curriculum_phase0_1g",
+      "source_file": "D:\\Inventories\\CS498\\Booster-track\\tmp\\teammate-visualizations-20261028\\visualizations_20261027_173122\\metadata\\02_curriculum_phase0_1g\\demo.json",
+      "source_file_sha256": "bda548bf545e89d278bd7f8f7b5a22336932e76b4b40feba8f67aa6368a94aa3",
+      "device": "cuda:0",
+      "source_fingerprint": "4d94536e49f075c78fa4c783ff4ee26790fcb409318b550c14cfaf5cae6a434d",
+      "checkpoint_sha256": "22b864d85b15452fc56759c873d9f7d1e1a2a1de0b5f523cc6cab505e2c8a608",
+      "seed": 11,
+      "mass_kg": 0.0,
+      "frames": 653,
+      "seconds": 13.06,
+      "contact": {
+        "bilateral_forearm_support_fraction": 0.35222052067381315,
+        "both_forearms_contact_fraction": 0.3721286370597244,
+        "both_feet_contact_fraction": 0.7641653905053599,
+        "neither_foot_contact_fraction": 0.09494640122511486,
+        "max_support_gap_steps": 5,
+        "max_support_gap_seconds": 0.1,
+        "longest_recorded_unsupported_run_steps": 5,
+        "longest_no_feet_contact_steps": 2
+      },
+      "valid_hold": {
+        "all_recorded_steps_valid": false,
+        "valid_step_fraction": 0.998468606431853,
+        "invalid_step_count": 1,
+        "first_invalid_step_1_based": 653
+      },
+      "full": {
+        "base_height_std_m": 0.004651480854848046,
+        "base_height_peak_to_peak_m": 0.01887279748916626,
+        "base_height_spectrum": {
+          "peak_hz": 7.656967840735068,
+          "resolution_hz": 0.07656967840735068,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.5865806246539491,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004384962895138897,
+          "band_peak_hz": 7.656967840735068,
+          "band_peak_bin_coherent_amplitude": 0.003940124974639245,
+          "resolution_hz": 0.07656967840735068
+        }
+      },
+      "after_2s": {
+        "frames": 553,
+        "base_height_std_m": 0.004640064754478006,
+        "base_height_peak_to_peak_m": 0.018310368061065674,
+        "base_height_spectrum": {
+          "peak_hz": 7.685352622061483,
+          "resolution_hz": 0.09041591320072333,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.6669030964101798,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004457365139012004,
+          "band_peak_hz": 7.685352622061483,
+          "band_peak_bin_coherent_amplitude": 0.004283579850724105,
+          "resolution_hz": 0.09041591320072333
+        }
+      }
+    },
+    {
+      "name": "03_curriculum_phase1_0.495kg",
+      "source_file": "D:\\Inventories\\CS498\\Booster-track\\tmp\\teammate-visualizations-20261028\\visualizations_20261027_173122\\metadata\\03_curriculum_phase1_0.495kg\\demo.json",
+      "source_file_sha256": "7515bf21345d453508d16a25659a24d3329393ac676e639707b89c8123c6bae3",
+      "device": "cuda:0",
+      "source_fingerprint": "4d94536e49f075c78fa4c783ff4ee26790fcb409318b550c14cfaf5cae6a434d",
+      "checkpoint_sha256": "60b489700761dbfefe2d03b745178544d7b1818748c8ddbf348dbc362886bbff",
+      "seed": 11,
+      "mass_kg": 0.4949224923474894,
+      "frames": 1000,
+      "seconds": 20.0,
+      "contact": {
+        "bilateral_forearm_support_fraction": 0.352,
+        "both_forearms_contact_fraction": 0.419,
+        "both_feet_contact_fraction": 0.668,
+        "neither_foot_contact_fraction": 0.175,
+        "max_support_gap_steps": 5,
+        "max_support_gap_seconds": 0.1,
+        "longest_recorded_unsupported_run_steps": 5,
+        "longest_no_feet_contact_steps": 2
+      },
+      "valid_hold": {
+        "all_recorded_steps_valid": true,
+        "valid_step_fraction": 1.0,
+        "invalid_step_count": 0,
+        "first_invalid_step_1_based": null
+      },
+      "full": {
+        "base_height_std_m": 0.004910877762201303,
+        "base_height_peak_to_peak_m": 0.01680585741996765,
+        "base_height_spectrum": {
+          "peak_hz": 7.550000000000001,
+          "resolution_hz": 0.05,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.9391599643293156,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.0049012226552080165,
+          "band_peak_hz": 7.550000000000001,
+          "band_peak_bin_coherent_amplitude": 0.006288090655382908,
+          "resolution_hz": 0.05
+        }
+      },
+      "after_2s": {
+        "frames": 900,
+        "base_height_std_m": 0.0049102290111545654,
+        "base_height_peak_to_peak_m": 0.015556037425994873,
+        "base_height_spectrum": {
+          "peak_hz": 7.555555555555555,
+          "resolution_hz": 0.05555555555555555,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.9481892308833267,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004905583558545902,
+          "band_peak_hz": 7.555555555555555,
+          "band_peak_bin_coherent_amplitude": 0.00599716153413548,
+          "resolution_hz": 0.05555555555555555
+        }
+      }
+    },
+    {
+      "name": "04_curriculum_phase2_0.990kg",
+      "source_file": "D:\\Inventories\\CS498\\Booster-track\\tmp\\teammate-visualizations-20261028\\visualizations_20261027_173122\\metadata\\04_curriculum_phase2_0.990kg\\demo.json",
+      "source_file_sha256": "3eae7b87dc1b947d189d27b73095bdc8522de2d4e150fcf6c3e0926d666d4631",
+      "device": "cuda:0",
+      "source_fingerprint": "4d94536e49f075c78fa4c783ff4ee26790fcb409318b550c14cfaf5cae6a434d",
+      "checkpoint_sha256": "501c2ca50ef055269a894518d8c709a57bece9362625b6cfa7b7930b27ab621c",
+      "seed": 11,
+      "mass_kg": 0.9898449846949788,
+      "frames": 1000,
+      "seconds": 20.0,
+      "contact": {
+        "bilateral_forearm_support_fraction": 0.346,
+        "both_forearms_contact_fraction": 0.452,
+        "both_feet_contact_fraction": 0.79,
+        "neither_foot_contact_fraction": 0.135,
+        "max_support_gap_steps": 5,
+        "max_support_gap_seconds": 0.1,
+        "longest_recorded_unsupported_run_steps": 5,
+        "longest_no_feet_contact_steps": 2
+      },
+      "valid_hold": {
+        "all_recorded_steps_valid": true,
+        "valid_step_fraction": 1.0,
+        "invalid_step_count": 0,
+        "first_invalid_step_1_based": null
+      },
+      "full": {
+        "base_height_std_m": 0.004254696154168812,
+        "base_height_peak_to_peak_m": 0.018481731414794922,
+        "base_height_spectrum": {
+          "peak_hz": 8.200000000000001,
+          "resolution_hz": 0.05,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.2927483126644665,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004191273775104498,
+          "band_peak_hz": 8.200000000000001,
+          "band_peak_bin_coherent_amplitude": 0.003010151737645994,
+          "resolution_hz": 0.05
+        }
+      },
+      "after_2s": {
+        "frames": 900,
+        "base_height_std_m": 0.004226878148418024,
+        "base_height_peak_to_peak_m": 0.014197677373886108,
+        "base_height_spectrum": {
+          "peak_hz": 8.222222222222221,
+          "resolution_hz": 0.05555555555555555,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.3733040814128985,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.0041778947577046106,
+          "band_peak_hz": 8.222222222222221,
+          "band_peak_bin_coherent_amplitude": 0.0031575856603096816,
+          "resolution_hz": 0.05555555555555555
+        }
+      }
+    },
+    {
+      "name": "05_mass_range_1g",
+      "source_file": "D:\\Inventories\\CS498\\Booster-track\\tmp\\teammate-visualizations-20261028\\visualizations_20261027_173122\\metadata\\05_mass_range_1g\\demo.json",
+      "source_file_sha256": "87cc543f570f77d684363e304e84a507e2fac39cc79722693639fe1e0cec12e8",
+      "device": "cuda:0",
+      "source_fingerprint": "4d94536e49f075c78fa4c783ff4ee26790fcb409318b550c14cfaf5cae6a434d",
+      "checkpoint_sha256": "0c2953b4bc48dacb261444cad9e5a9fc1f92cd7ac48cc4c8ecdfdebd3b091e6c",
+      "seed": 11,
+      "mass_kg": 0.0,
+      "frames": 1000,
+      "seconds": 20.0,
+      "contact": {
+        "bilateral_forearm_support_fraction": 0.35,
+        "both_forearms_contact_fraction": 0.36,
+        "both_feet_contact_fraction": 0.601,
+        "neither_foot_contact_fraction": 0.286,
+        "max_support_gap_steps": 5,
+        "max_support_gap_seconds": 0.1,
+        "longest_recorded_unsupported_run_steps": 5,
+        "longest_no_feet_contact_steps": 3
+      },
+      "valid_hold": {
+        "all_recorded_steps_valid": true,
+        "valid_step_fraction": 1.0,
+        "invalid_step_count": 0,
+        "first_invalid_step_1_based": null
+      },
+      "full": {
+        "base_height_std_m": 0.004892694730744541,
+        "base_height_peak_to_peak_m": 0.025305956602096558,
+        "base_height_spectrum": {
+          "peak_hz": 7.800000000000001,
+          "resolution_hz": 0.05,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.3917416871959272,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.0046116640488581264,
+          "band_peak_hz": 7.800000000000001,
+          "band_peak_bin_coherent_amplitude": 0.003613509719137851,
+          "resolution_hz": 0.05
+        }
+      },
+      "after_2s": {
+        "frames": 900,
+        "base_height_std_m": 0.004829251193844904,
+        "base_height_peak_to_peak_m": 0.021863192319869995,
+        "base_height_spectrum": {
+          "peak_hz": 7.833333333333333,
+          "resolution_hz": 0.05555555555555555,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.5292323226917622,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004638628765242697,
+          "band_peak_hz": 7.833333333333333,
+          "band_peak_bin_coherent_amplitude": 0.003930525850786145,
+          "resolution_hz": 0.05555555555555555
+        }
+      }
+    },
+    {
+      "name": "06_mass_range_0.495kg",
+      "source_file": "D:\\Inventories\\CS498\\Booster-track\\tmp\\teammate-visualizations-20261028\\visualizations_20261027_173122\\metadata\\06_mass_range_0.495kg\\demo.json",
+      "source_file_sha256": "24f9fdff4f532660d0d51f9690abd47b9a6e78f13bbba8c2b4b9bbef580218fe",
+      "device": "cuda:0",
+      "source_fingerprint": "4d94536e49f075c78fa4c783ff4ee26790fcb409318b550c14cfaf5cae6a434d",
+      "checkpoint_sha256": "0c2953b4bc48dacb261444cad9e5a9fc1f92cd7ac48cc4c8ecdfdebd3b091e6c",
+      "seed": 11,
+      "mass_kg": 0.4949224923474894,
+      "frames": 1000,
+      "seconds": 20.0,
+      "contact": {
+        "bilateral_forearm_support_fraction": 0.335,
+        "both_forearms_contact_fraction": 0.344,
+        "both_feet_contact_fraction": 0.605,
+        "neither_foot_contact_fraction": 0.274,
+        "max_support_gap_steps": 5,
+        "max_support_gap_seconds": 0.1,
+        "longest_recorded_unsupported_run_steps": 5,
+        "longest_no_feet_contact_steps": 3
+      },
+      "valid_hold": {
+        "all_recorded_steps_valid": true,
+        "valid_step_fraction": 1.0,
+        "invalid_step_count": 0,
+        "first_invalid_step_1_based": null
+      },
+      "full": {
+        "base_height_std_m": 0.004937572705504559,
+        "base_height_peak_to_peak_m": 0.019288241863250732,
+        "base_height_spectrum": {
+          "peak_hz": 7.95,
+          "resolution_hz": 0.05,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.5788615751181037,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004619618651702634,
+          "band_peak_hz": 7.95,
+          "band_peak_bin_coherent_amplitude": 0.00388569750700885,
+          "resolution_hz": 0.05
+        }
+      },
+      "after_2s": {
+        "frames": 900,
+        "base_height_std_m": 0.00492634631578778,
+        "base_height_peak_to_peak_m": 0.01875293254852295,
+        "base_height_spectrum": {
+          "peak_hz": 7.944444444444444,
+          "resolution_hz": 0.05555555555555555,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.6224946978138852,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004617459260386475,
+          "band_peak_hz": 7.944444444444444,
+          "band_peak_bin_coherent_amplitude": 0.00428012749714283,
+          "resolution_hz": 0.05555555555555555
+        }
+      }
+    },
+    {
+      "name": "07_mass_range_0.990kg",
+      "source_file": "D:\\Inventories\\CS498\\Booster-track\\tmp\\teammate-visualizations-20261028\\visualizations_20261027_173122\\metadata\\07_mass_range_0.990kg\\demo.json",
+      "source_file_sha256": "2efe083391ccaa6438f734ab0a71f7c5760f217f0b5bd58adac0dcc5a6f688ae",
+      "device": "cuda:0",
+      "source_fingerprint": "4d94536e49f075c78fa4c783ff4ee26790fcb409318b550c14cfaf5cae6a434d",
+      "checkpoint_sha256": "0c2953b4bc48dacb261444cad9e5a9fc1f92cd7ac48cc4c8ecdfdebd3b091e6c",
+      "seed": 11,
+      "mass_kg": 0.9898449846949788,
+      "frames": 1000,
+      "seconds": 20.0,
+      "contact": {
+        "bilateral_forearm_support_fraction": 0.32,
+        "both_forearms_contact_fraction": 0.33,
+        "both_feet_contact_fraction": 0.611,
+        "neither_foot_contact_fraction": 0.235,
+        "max_support_gap_steps": 5,
+        "max_support_gap_seconds": 0.1,
+        "longest_recorded_unsupported_run_steps": 5,
+        "longest_no_feet_contact_steps": 3
+      },
+      "valid_hold": {
+        "all_recorded_steps_valid": true,
+        "valid_step_fraction": 1.0,
+        "invalid_step_count": 0,
+        "first_invalid_step_1_based": null
+      },
+      "full": {
+        "base_height_std_m": 0.004961197068352634,
+        "base_height_peak_to_peak_m": 0.019107401371002197,
+        "base_height_spectrum": {
+          "peak_hz": 7.65,
+          "resolution_hz": 0.05,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.6877262531102576,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004814695080307342,
+          "band_peak_hz": 7.65,
+          "band_peak_bin_coherent_amplitude": 0.005498735536925681,
+          "resolution_hz": 0.05
+        }
+      },
+      "after_2s": {
+        "frames": 900,
+        "base_height_std_m": 0.004967448425895714,
+        "base_height_peak_to_peak_m": 0.018997609615325928,
+        "base_height_spectrum": {
+          "peak_hz": 7.666666666666666,
+          "resolution_hz": 0.05555555555555555,
+          "nyquist_hz": 25.0,
+          "possible_drift": false,
+          "peak_three_bin_power_fraction": 0.7274601226253916,
+          "status": "spectral_peak",
+          "note": "Sampled spectral peak only; not proof of its physical cause."
+        },
+        "base_height_band": {
+          "band_7_to_9_hz_rms": 0.004815919864612726,
+          "band_peak_hz": 7.666666666666666,
+          "band_peak_bin_coherent_amplitude": 0.00567187572658733,
+          "resolution_hz": 0.05555555555555555
+        }
+      }
+    }
+  ],
+  "our_joint_sections": {
+    "full": {
+      "frames": 1000,
+      "joint_velocity_rms_rad_s": 0.21282017011918225,
+      "mean_of_frame_joint_velocity_rms_rad_s": 0.0527345994441112,
+      "target_delta_rms_rad_per_step": 0.01677402040821818,
+      "action_delta_rms_per_step": 0.056793818073465195,
+      "joints": [
+        {
+          "joint": "Head_Yaw",
+          "velocity_rms_rad_s": 0.410448754886285,
+          "velocity_max_abs_rad_s": 4.729913711547852,
+          "target_delta_rms_rad_per_step": 0.02801740339068577,
+          "target_delta_max_abs_rad_per_step": 0.34497761726379395,
+          "action_delta_rms_per_step": 0.07471307546754877,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.002567455569454663,
+            "band_peak_hz": 7.9,
+            "band_peak_bin_coherent_amplitude": 0.0013897611415851286,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00020505956629588833,
+            "band_peak_hz": 7.45,
+            "band_peak_bin_coherent_amplitude": 0.00010181962232791016,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Head_Pitch",
+          "velocity_rms_rad_s": 0.2217234222127846,
+          "velocity_max_abs_rad_s": 3.3712170124053955,
+          "target_delta_rms_rad_per_step": 0.009229751520182912,
+          "target_delta_max_abs_rad_per_step": 0.1637611985206604,
+          "action_delta_rms_per_step": 0.024612670325468055,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0009179206878927843,
+            "band_peak_hz": 8.950000000000001,
+            "band_peak_bin_coherent_amplitude": 0.0005002408093922614,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 4.020914151130281e-07,
+            "band_peak_hz": 7.75,
+            "band_peak_bin_coherent_amplitude": 1.1412286949781068e-07,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Shoulder_Pitch",
+          "velocity_rms_rad_s": 0.1125478339096005,
+          "velocity_max_abs_rad_s": 1.8281896114349365,
+          "target_delta_rms_rad_per_step": 0.013247152009405586,
+          "target_delta_max_abs_rad_per_step": 0.22941551730036736,
+          "action_delta_rms_per_step": 0.03784900624112393,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0016926808487285748,
+            "band_peak_hz": 7.95,
+            "band_peak_bin_coherent_amplitude": 0.0007991784394615418,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 1.1154516641045946e-05,
+            "band_peak_hz": 7.65,
+            "band_peak_bin_coherent_amplitude": 3.222585453288987e-06,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Shoulder_Roll",
+          "velocity_rms_rad_s": 0.13763216755698235,
+          "velocity_max_abs_rad_s": 1.64167320728302,
+          "target_delta_rms_rad_per_step": 0.01452725993894951,
+          "target_delta_max_abs_rad_per_step": 0.18629801273345947,
+          "action_delta_rms_per_step": 0.04150645741840354,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0015401030071208544,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 0.0007647726858361978,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00020469424417690653,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 0.00010585198209695999,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Elbow_Pitch",
+          "velocity_rms_rad_s": 0.16515200858213985,
+          "velocity_max_abs_rad_s": 2.210120439529419,
+          "target_delta_rms_rad_per_step": 0.013569410592127266,
+          "target_delta_max_abs_rad_per_step": 0.19810502231121063,
+          "action_delta_rms_per_step": 0.038769744705084624,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0009712303792050428,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0004506164871788995,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 1.0401245161430064e-05,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 3.0824980553810305e-06,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Elbow_Yaw",
+          "velocity_rms_rad_s": 0.24818728887927816,
+          "velocity_max_abs_rad_s": 3.714935302734375,
+          "target_delta_rms_rad_per_step": 0.02571671592743002,
+          "target_delta_max_abs_rad_per_step": 0.36409926414489746,
+          "action_delta_rms_per_step": 0.07347632557082873,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0019544014846469998,
+            "band_peak_hz": 8.75,
+            "band_peak_bin_coherent_amplitude": 0.0008464756043468164,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.0001946243815146454,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 8.492252065202013e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Shoulder_Pitch",
+          "velocity_rms_rad_s": 0.19627628798795071,
+          "velocity_max_abs_rad_s": 2.2262160778045654,
+          "target_delta_rms_rad_per_step": 0.025155892838704442,
+          "target_delta_max_abs_rad_per_step": 0.27790335565805435,
+          "action_delta_rms_per_step": 0.07187398063160627,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0013212874627813406,
+            "band_peak_hz": 7.45,
+            "band_peak_bin_coherent_amplitude": 0.0007035660654436337,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.000259088066357497,
+            "band_peak_hz": 7.45,
+            "band_peak_bin_coherent_amplitude": 0.0001277744187413652,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Shoulder_Roll",
+          "velocity_rms_rad_s": 0.11209489335736758,
+          "velocity_max_abs_rad_s": 1.2742133140563965,
+          "target_delta_rms_rad_per_step": 0.010427292342614853,
+          "target_delta_max_abs_rad_per_step": 0.1452723741531372,
+          "action_delta_rms_per_step": 0.029792265972876066,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0010578529760545338,
+            "band_peak_hz": 8.450000000000001,
+            "band_peak_bin_coherent_amplitude": 0.0005402072120497259,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00010028211298307495,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 5.284453557591343e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Elbow_Pitch",
+          "velocity_rms_rad_s": 0.1112664054361514,
+          "velocity_max_abs_rad_s": 1.4714961051940918,
+          "target_delta_rms_rad_per_step": 0.009009559563640706,
+          "target_delta_max_abs_rad_per_step": 0.1315723992884159,
+          "action_delta_rms_per_step": 0.025741599965002956,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.000926530187753582,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 0.00047831672036176536,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 8.192246157815292e-05,
+            "band_peak_hz": 7.550000000000001,
+            "band_peak_bin_coherent_amplitude": 4.674356965743877e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Elbow_Yaw",
+          "velocity_rms_rad_s": 0.12663232609945727,
+          "velocity_max_abs_rad_s": 1.5974056720733643,
+          "target_delta_rms_rad_per_step": 0.01861357121488355,
+          "target_delta_max_abs_rad_per_step": 0.2686415910720825,
+          "action_delta_rms_per_step": 0.05318163292891282,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0007804752564241395,
+            "band_peak_hz": 7.6000000000000005,
+            "band_peak_bin_coherent_amplitude": 0.00042314728559106465,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00013397370770027028,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 7.010442429580596e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Hip_Pitch",
+          "velocity_rms_rad_s": 0.18037297360427507,
+          "velocity_max_abs_rad_s": 2.375455379486084,
+          "target_delta_rms_rad_per_step": 0.009796566600895174,
+          "target_delta_max_abs_rad_per_step": 0.15105116367340088,
+          "action_delta_rms_per_step": 0.04610149047494373,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0018247353066072817,
+            "band_peak_hz": 8.75,
+            "band_peak_bin_coherent_amplitude": 0.0010570609865975784,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 8.818759503504472e-05,
+            "band_peak_hz": 8.75,
+            "band_peak_bin_coherent_amplitude": 4.75715554347584e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Hip_Roll",
+          "velocity_rms_rad_s": 0.09981342952703433,
+          "velocity_max_abs_rad_s": 1.4815831184387207,
+          "target_delta_rms_rad_per_step": 0.010266990699856749,
+          "target_delta_max_abs_rad_per_step": 0.12128346040844917,
+          "action_delta_rms_per_step": 0.04322943554043955,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0014033297773729102,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0008317368636749097,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00020746358100663654,
+            "band_peak_hz": 8.450000000000001,
+            "band_peak_bin_coherent_amplitude": 9.65705561273062e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Hip_Yaw",
+          "velocity_rms_rad_s": 0.03781987898773287,
+          "velocity_max_abs_rad_s": 0.6092153191566467,
+          "target_delta_rms_rad_per_step": 0.0025485027125383094,
+          "target_delta_max_abs_rad_per_step": 0.048357969149947166,
+          "action_delta_rms_per_step": 0.021292974140824386,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0017181164689527508,
+            "band_peak_hz": 8.75,
+            "band_peak_bin_coherent_amplitude": 0.0008941187628939688,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 2.8129593682789352e-05,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 1.776703332639489e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Knee_Pitch",
+          "velocity_rms_rad_s": 0.28484466538854764,
+          "velocity_max_abs_rad_s": 3.4389400482177734,
+          "target_delta_rms_rad_per_step": 0.023391274944351045,
+          "target_delta_max_abs_rad_per_step": 0.27929115295410156,
+          "action_delta_rms_per_step": 0.06683221646631668,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.003185951667194719,
+            "band_peak_hz": 8.75,
+            "band_peak_bin_coherent_amplitude": 0.0019903941897517295,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00018031366304044647,
+            "band_peak_hz": 8.75,
+            "band_peak_bin_coherent_amplitude": 9.21963178325195e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Ankle_Pitch",
+          "velocity_rms_rad_s": 0.12585059011258903,
+          "velocity_max_abs_rad_s": 1.5588785409927368,
+          "target_delta_rms_rad_per_step": 0.007686226802810929,
+          "target_delta_max_abs_rad_per_step": 0.1076563149690628,
+          "action_delta_rms_per_step": 0.04013695350899168,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.010694190441523165,
+            "band_peak_hz": 7.6000000000000005,
+            "band_peak_bin_coherent_amplitude": 0.005214356055461623,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00010388159449489022,
+            "band_peak_hz": 7.550000000000001,
+            "band_peak_bin_coherent_amplitude": 5.3420802761630173e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Left_Ankle_Roll",
+          "velocity_rms_rad_s": 0.14821014415123518,
+          "velocity_max_abs_rad_s": 1.761326789855957,
+          "target_delta_rms_rad_per_step": 0.008662965326469483,
+          "target_delta_max_abs_rad_per_step": 0.11236442252993584,
+          "action_delta_rms_per_step": 0.04523741800584196,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.01737462899227939,
+            "band_peak_hz": 8.450000000000001,
+            "band_peak_bin_coherent_amplitude": 0.008453329089390912,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 7.776944420424886e-05,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 4.1154812777481236e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Hip_Pitch",
+          "velocity_rms_rad_s": 0.28740077958526455,
+          "velocity_max_abs_rad_s": 3.034208059310913,
+          "target_delta_rms_rad_per_step": 0.018154022197325332,
+          "target_delta_max_abs_rad_per_step": 0.21463194489479065,
+          "action_delta_rms_per_step": 0.08543068861310553,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0016765483407449684,
+            "band_peak_hz": 7.6000000000000005,
+            "band_peak_bin_coherent_amplitude": 0.0009824682413632382,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.0001194025213679397,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 6.218386869788574e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Hip_Roll",
+          "velocity_rms_rad_s": 0.1380225246828,
+          "velocity_max_abs_rad_s": 1.8169708251953125,
+          "target_delta_rms_rad_per_step": 0.008256678118044935,
+          "target_delta_max_abs_rad_per_step": 0.10231034457683563,
+          "action_delta_rms_per_step": 0.03476496082092126,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0014682306068597088,
+            "band_peak_hz": 8.35,
+            "band_peak_bin_coherent_amplitude": 0.0006863304117950664,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 1.3932316663285991e-05,
+            "band_peak_hz": 7.6000000000000005,
+            "band_peak_bin_coherent_amplitude": 4.132238991108915e-06,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Hip_Yaw",
+          "velocity_rms_rad_s": 0.21585290317255398,
+          "velocity_max_abs_rad_s": 2.559377908706665,
+          "target_delta_rms_rad_per_step": 0.009904234288285891,
+          "target_delta_max_abs_rad_per_step": 0.12503135576844215,
+          "action_delta_rms_per_step": 0.08275078438867185,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0012340218382228044,
+            "band_peak_hz": 7.550000000000001,
+            "band_peak_bin_coherent_amplitude": 0.0006468606942536227,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 3.124440921484453e-05,
+            "band_peak_hz": 7.6000000000000005,
+            "band_peak_bin_coherent_amplitude": 1.0099272123071467e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Knee_Pitch",
+          "velocity_rms_rad_s": 0.4091675880186209,
+          "velocity_max_abs_rad_s": 4.11290979385376,
+          "target_delta_rms_rad_per_step": 0.03586620801845851,
+          "target_delta_max_abs_rad_per_step": 0.4398782253265381,
+          "action_delta_rms_per_step": 0.10247488494168494,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0024208892598185172,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 0.0013202870201327397,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00028457600072619117,
+            "band_peak_hz": 8.4,
+            "band_peak_bin_coherent_amplitude": 0.0001368016069557644,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Ankle_Pitch",
+          "velocity_rms_rad_s": 0.11749556340088727,
+          "velocity_max_abs_rad_s": 1.4345136880874634,
+          "target_delta_rms_rad_per_step": 0.006681028030156204,
+          "target_delta_max_abs_rad_per_step": 0.08429902791976929,
+          "action_delta_rms_per_step": 0.034887876083503064,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0010230561935453723,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0005464037164056248,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00013148341755940955,
+            "band_peak_hz": 7.550000000000001,
+            "band_peak_bin_coherent_amplitude": 6.473948136922981e-05,
+            "resolution_hz": 0.05
+          }
+        },
+        {
+          "joint": "Right_Ankle_Roll",
+          "velocity_rms_rad_s": 0.2940794804110228,
+          "velocity_max_abs_rad_s": 3.6716713905334473,
+          "target_delta_rms_rad_per_step": 0.014238141062875288,
+          "target_delta_max_abs_rad_per_step": 0.17229970917105675,
+          "action_delta_rms_per_step": 0.07435060832142153,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0029581185860930023,
+            "band_peak_hz": 7.45,
+            "band_peak_bin_coherent_amplitude": 0.0014759616544999818,
+            "resolution_hz": 0.05
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00011131728891845279,
+            "band_peak_hz": 7.45,
+            "band_peak_bin_coherent_amplitude": 5.5031994590063176e-05,
+            "resolution_hz": 0.05
+          }
+        }
+      ]
+    },
+    "after_2s": {
+      "frames": 900,
+      "joint_velocity_rms_rad_s": 0.01981742531157647,
+      "mean_of_frame_joint_velocity_rms_rad_s": 0.018028388922776882,
+      "target_delta_rms_rad_per_step": 0.0007566249396656942,
+      "action_delta_rms_per_step": 0.0027448470829542727,
+      "joints": [
+        {
+          "joint": "Head_Yaw",
+          "velocity_rms_rad_s": 0.008928155876652577,
+          "velocity_max_abs_rad_s": 0.02750903181731701,
+          "target_delta_rms_rad_per_step": 0.00067365819564587,
+          "target_delta_max_abs_rad_per_step": 0.002150457352399826,
+          "action_delta_rms_per_step": 0.0017964217976901835,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.002268220169865062,
+            "band_peak_hz": 7.944444444444444,
+            "band_peak_bin_coherent_amplitude": 0.001354225939460323,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00018696286929286842,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.00010679586268551422,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Head_Pitch",
+          "velocity_rms_rad_s": 0.004982605285960317,
+          "velocity_max_abs_rad_s": 0.01574041321873665,
+          "target_delta_rms_rad_per_step": 0.0,
+          "target_delta_max_abs_rad_per_step": 0.0,
+          "action_delta_rms_per_step": 0.0,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0008683033910238266,
+            "band_peak_hz": 8.777777777777777,
+            "band_peak_bin_coherent_amplitude": 0.00048091317095496435,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.0,
+            "band_peak_hz": null,
+            "band_peak_bin_coherent_amplitude": 0,
+            "resolution_hz": 0.05555555555555555,
+            "status": "zero_band_power_no_peak"
+          }
+        },
+        {
+          "joint": "Left_Shoulder_Pitch",
+          "velocity_rms_rad_s": 0.006152337638808014,
+          "velocity_max_abs_rad_s": 0.014351289719343185,
+          "target_delta_rms_rad_per_step": 0.0,
+          "target_delta_max_abs_rad_per_step": 0.0,
+          "action_delta_rms_per_step": 0.0,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0015991614756797814,
+            "band_peak_hz": 7.944444444444444,
+            "band_peak_bin_coherent_amplitude": 0.0008222742281265667,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.0,
+            "band_peak_hz": null,
+            "band_peak_bin_coherent_amplitude": 0,
+            "resolution_hz": 0.05555555555555555,
+            "status": "zero_band_power_no_peak"
+          }
+        },
+        {
+          "joint": "Left_Shoulder_Roll",
+          "velocity_rms_rad_s": 0.006558717882858902,
+          "velocity_max_abs_rad_s": 0.017532365396618843,
+          "target_delta_rms_rad_per_step": 0.002064797167104625,
+          "target_delta_max_abs_rad_per_step": 0.005952000617980957,
+          "action_delta_rms_per_step": 0.005899413066067227,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0014779618187029204,
+            "band_peak_hz": 8.444444444444445,
+            "band_peak_bin_coherent_amplitude": 0.000806473977679552,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00019644626729731554,
+            "band_peak_hz": 8.38888888888889,
+            "band_peak_bin_coherent_amplitude": 0.00010331513408755234,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Left_Elbow_Pitch",
+          "velocity_rms_rad_s": 0.004803747802606278,
+          "velocity_max_abs_rad_s": 0.013978461734950542,
+          "target_delta_rms_rad_per_step": 0.0,
+          "target_delta_max_abs_rad_per_step": 0.0,
+          "action_delta_rms_per_step": 0.0,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0009392310038198412,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0004690562285811675,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.0,
+            "band_peak_hz": null,
+            "band_peak_bin_coherent_amplitude": 0,
+            "resolution_hz": 0.05555555555555555,
+            "status": "zero_band_power_no_peak"
+          }
+        },
+        {
+          "joint": "Left_Elbow_Yaw",
+          "velocity_rms_rad_s": 0.006449941732745742,
+          "velocity_max_abs_rad_s": 0.01811232790350914,
+          "target_delta_rms_rad_per_step": 0.0006610833374305381,
+          "target_delta_max_abs_rad_per_step": 0.0019279718399047852,
+          "action_delta_rms_per_step": 0.001888807505138805,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0018219452793319666,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0008733203246435139,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00018259349699911904,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 9.298504655663073e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Right_Shoulder_Pitch",
+          "velocity_rms_rad_s": 0.0036014644209422277,
+          "velocity_max_abs_rad_s": 0.010810786858201027,
+          "target_delta_rms_rad_per_step": 0.0008157980350826931,
+          "target_delta_max_abs_rad_per_step": 0.002807050943374634,
+          "action_delta_rms_per_step": 0.002330851488990399,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.001166632817940393,
+            "band_peak_hz": 7.611111111111111,
+            "band_peak_bin_coherent_amplitude": 0.0006057418227284744,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00024001704324855687,
+            "band_peak_hz": 7.944444444444444,
+            "band_peak_bin_coherent_amplitude": 0.00011612020897328839,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Right_Shoulder_Roll",
+          "velocity_rms_rad_s": 0.004624433882358122,
+          "velocity_max_abs_rad_s": 0.013051836751401424,
+          "target_delta_rms_rad_per_step": 0.0007191395451815237,
+          "target_delta_max_abs_rad_per_step": 0.00203096866607666,
+          "action_delta_rms_per_step": 0.002054676364003519,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0009787337057268917,
+            "band_peak_hz": 8.444444444444445,
+            "band_peak_bin_coherent_amplitude": 0.0005042549624829023,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 9.83431318808726e-05,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 5.447533569268221e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Right_Elbow_Pitch",
+          "velocity_rms_rad_s": 0.004510896058259922,
+          "velocity_max_abs_rad_s": 0.011537022888660431,
+          "target_delta_rms_rad_per_step": 0.0005269329412154453,
+          "target_delta_max_abs_rad_per_step": 0.001461118459701538,
+          "action_delta_rms_per_step": 0.001505523865250295,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0008818753525038021,
+            "band_peak_hz": 8.38888888888889,
+            "band_peak_bin_coherent_amplitude": 0.0004101324141971831,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 8.428777686796507e-05,
+            "band_peak_hz": 7.555555555555555,
+            "band_peak_bin_coherent_amplitude": 4.7637288386308125e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Right_Elbow_Yaw",
+          "velocity_rms_rad_s": 0.0041440764488688,
+          "velocity_max_abs_rad_s": 0.01002888660877943,
+          "target_delta_rms_rad_per_step": 0.0006959646338879954,
+          "target_delta_max_abs_rad_per_step": 0.0021851062774658203,
+          "action_delta_rms_per_step": 0.0019884767745705937,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.000738135151285832,
+            "band_peak_hz": 7.555555555555555,
+            "band_peak_bin_coherent_amplitude": 0.0004281429335280336,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00012387460043060042,
+            "band_peak_hz": 8.444444444444445,
+            "band_peak_bin_coherent_amplitude": 6.901971573546876e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Left_Hip_Pitch",
+          "velocity_rms_rad_s": 0.0050866278458374,
+          "velocity_max_abs_rad_s": 0.021325232461094856,
+          "target_delta_rms_rad_per_step": 0.000671648016356487,
+          "target_delta_max_abs_rad_per_step": 0.002124965190887451,
+          "action_delta_rms_per_step": 0.003160698463521063,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.001631133264987027,
+            "band_peak_hz": 8.777777777777777,
+            "band_peak_bin_coherent_amplitude": 0.0009137736786919569,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 8.017192239474173e-05,
+            "band_peak_hz": 8.722222222222221,
+            "band_peak_bin_coherent_amplitude": 4.0745801193125004e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Left_Hip_Roll",
+          "velocity_rms_rad_s": 0.004826334014388087,
+          "velocity_max_abs_rad_s": 0.01858583837747574,
+          "target_delta_rms_rad_per_step": 0.0011858104172497604,
+          "target_delta_max_abs_rad_per_step": 0.00322616845369339,
+          "action_delta_rms_per_step": 0.0049928861288199055,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0013766157524583173,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.000846040170676688,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.0002024832274579833,
+            "band_peak_hz": 8.444444444444445,
+            "band_peak_bin_coherent_amplitude": 0.00010251121314674199,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Left_Hip_Yaw",
+          "velocity_rms_rad_s": 0.006422151817636664,
+          "velocity_max_abs_rad_s": 0.02238280326128006,
+          "target_delta_rms_rad_per_step": 0.00022485847763077944,
+          "target_delta_max_abs_rad_per_step": 0.0006831735372543335,
+          "action_delta_rms_per_step": 0.00187871378199027,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0015650485674140772,
+            "band_peak_hz": 8.777777777777777,
+            "band_peak_bin_coherent_amplitude": 0.0008084042657021522,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 2.8323676102450206e-05,
+            "band_peak_hz": 8.444444444444445,
+            "band_peak_bin_coherent_amplitude": 1.58494793734926e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Left_Knee_Pitch",
+          "velocity_rms_rad_s": 0.009629183839522637,
+          "velocity_max_abs_rad_s": 0.03084457479417324,
+          "target_delta_rms_rad_per_step": 0.0006255746169664361,
+          "target_delta_max_abs_rad_per_step": 0.0019631385803222656,
+          "action_delta_rms_per_step": 0.0017873548552940282,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.002913006327942948,
+            "band_peak_hz": 8.777777777777777,
+            "band_peak_bin_coherent_amplitude": 0.0017115993851541324,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00016504024351220536,
+            "band_peak_hz": 8.722222222222221,
+            "band_peak_bin_coherent_amplitude": 8.16018220945534e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Left_Ankle_Pitch",
+          "velocity_rms_rad_s": 0.03812332482793409,
+          "velocity_max_abs_rad_s": 0.12495709210634232,
+          "target_delta_rms_rad_per_step": 0.0006202152933780581,
+          "target_delta_max_abs_rad_per_step": 0.0018328726291656494,
+          "action_delta_rms_per_step": 0.0032387225704577386,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.010165614475870697,
+            "band_peak_hz": 7.666666666666666,
+            "band_peak_bin_coherent_amplitude": 0.0048531724863106265,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00010046497474407061,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 6.06724982968699e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Left_Ankle_Roll",
+          "velocity_rms_rad_s": 0.0805822925781864,
+          "velocity_max_abs_rad_s": 0.2041410207748413,
+          "target_delta_rms_rad_per_step": 0.00020805165759654116,
+          "target_delta_max_abs_rad_per_step": 0.0006584785878658295,
+          "action_delta_rms_per_step": 0.0010864316750947196,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.017118600725227598,
+            "band_peak_hz": 8.444444444444445,
+            "band_peak_bin_coherent_amplitude": 0.009015899539120516,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 7.296656505999384e-05,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 4.6013361285762186e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Right_Hip_Pitch",
+          "velocity_rms_rad_s": 0.005063671297705859,
+          "velocity_max_abs_rad_s": 0.016748270019888878,
+          "target_delta_rms_rad_per_step": 0.0005469132909573791,
+          "target_delta_max_abs_rad_per_step": 0.0015349984169006348,
+          "action_delta_rms_per_step": 0.0025737126575703603,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0013676505098085042,
+            "band_peak_hz": 7.611111111111111,
+            "band_peak_bin_coherent_amplitude": 0.0007512512866690437,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00010475933481056629,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 6.225713939198389e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Right_Hip_Roll",
+          "velocity_rms_rad_s": 0.007961209919911711,
+          "velocity_max_abs_rad_s": 0.023573555052280426,
+          "target_delta_rms_rad_per_step": 0.0,
+          "target_delta_max_abs_rad_per_step": 0.0,
+          "action_delta_rms_per_step": 0.0,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.001402907734547232,
+            "band_peak_hz": 8.444444444444445,
+            "band_peak_bin_coherent_amplitude": 0.0007048914031701869,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.0,
+            "band_peak_hz": null,
+            "band_peak_bin_coherent_amplitude": 0,
+            "resolution_hz": 0.05555555555555555,
+            "status": "zero_band_power_no_peak"
+          }
+        },
+        {
+          "joint": "Right_Hip_Yaw",
+          "velocity_rms_rad_s": 0.003797722416848508,
+          "velocity_max_abs_rad_s": 0.0102232675999403,
+          "target_delta_rms_rad_per_step": 0.0,
+          "target_delta_max_abs_rad_per_step": 0.0,
+          "action_delta_rms_per_step": 0.0,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.0010257801271427367,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0005892449662095951,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.0,
+            "band_peak_hz": null,
+            "band_peak_bin_coherent_amplitude": 0,
+            "resolution_hz": 0.05555555555555555,
+            "status": "zero_band_power_no_peak"
+          }
+        },
+        {
+          "joint": "Right_Knee_Pitch",
+          "velocity_rms_rad_s": 0.005134908361757541,
+          "velocity_max_abs_rad_s": 0.017193906009197235,
+          "target_delta_rms_rad_per_step": 0.000997112308527247,
+          "target_delta_max_abs_rad_per_step": 0.003213226795196533,
+          "action_delta_rms_per_step": 0.0028488892702258554,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.001913970999167453,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0009389060909322591,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00024518574894364037,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0001103261452470345,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Right_Ankle_Pitch",
+          "velocity_rms_rad_s": 0.0035333052308905493,
+          "velocity_max_abs_rad_s": 0.013768209144473076,
+          "target_delta_rms_rad_per_step": 0.0011551997487212686,
+          "target_delta_max_abs_rad_per_step": 0.0033375024795532227,
+          "action_delta_rms_per_step": 0.00603238112876622,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.000942989473108295,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0005721065067482642,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 0.00012508692228690066,
+            "band_peak_hz": 7.555555555555555,
+            "band_peak_bin_coherent_amplitude": 6.269752209215014e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        },
+        {
+          "joint": "Right_Ankle_Roll",
+          "velocity_rms_rad_s": 0.006766379694323307,
+          "velocity_max_abs_rad_s": 0.025761565193533897,
+          "target_delta_rms_rad_per_step": 0.00037509076136728163,
+          "target_delta_max_abs_rad_per_step": 0.0011779367923736572,
+          "action_delta_rms_per_step": 0.0019586984931291513,
+          "velocity_band": {
+            "band_7_to_9_hz_rms": 0.002679933685521598,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 0.0014468494424151916,
+            "resolution_hz": 0.05555555555555555
+          },
+          "target_band": {
+            "band_7_to_9_hz_rms": 9.799540167480713e-05,
+            "band_peak_hz": 7.5,
+            "band_peak_bin_coherent_amplitude": 5.844012842373154e-05,
+            "resolution_hz": 0.05555555555555555
+          }
+        }
+      ]
+    }
+  },
+  "startup_peaks": {
+    "velocity": {
+      "joint": "Head_Yaw",
+      "value_rad_s": 4.729913711547852,
+      "time_s": 0.16
+    },
+    "target_delta": {
+      "joint": "Right_Knee_Pitch",
+      "value_rad_per_step": 0.4398782253265381,
+      "time_s": 0.14
+    }
+  }
+}

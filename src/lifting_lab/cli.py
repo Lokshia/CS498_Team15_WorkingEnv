@@ -57,6 +57,8 @@ def build_parser():
         p.add_argument("--threads", type=_positive_int, default=4)
         p.add_argument("--support-mode", choices=("forearms", "pregrasp"), default="forearms",
                        help="forearms: free contact task; pregrasp: legacy CONNECT task")
+        p.add_argument("--reward-profile", choices=("baseline", "smooth-v1"),
+                       help="Fresh runs default to baseline; checkpoints inherit their saved profile unless explicitly changed for training")
         if name != "evaluate":
             mass.add_argument("--mass-range-fraction", type=_nonnegative, nargs=2, metavar=("LOW", "HIGH"),
                               help="Per-environment uniform payload mass as fractions of robot mass, redrawn every reset")
@@ -85,6 +87,8 @@ def build_parser():
                            help="Transitions per environment per PPO iteration; fresh training defaults to 24, resume preserves its prior value")
             p.add_argument("--resume", type=Path, help="Own trusted checkpoint; phase changes can use a different mass")
             p.add_argument("--curriculum", action="store_true", help="Three fixed-mass phases: 0%, 2.5%, 5%; optimizer state is continued")
+            p.add_argument("--learning-rate", type=_positive, help="Explicit PPO learning rate override, applied after optimizer restore")
+            p.add_argument("--entropy-coef", type=_nonnegative, help="Explicit PPO entropy coefficient override; otherwise inherit defaults/checkpoint")
         else:
             p.add_argument("--protocol", type=Path, help="Versioned protocol; default chosen by support mode")
             p.add_argument("--member", default="member1", help="Label only; does not change seeds or physics")
@@ -158,10 +162,32 @@ def task_contract(args):
             "mass_observed": not getattr(args, "mass_blind", False)}
 
 
+def reward_profile(args, metadata=None):
+    """Resolve reward-only configuration without changing the policy task contract."""
+    saved = metadata.get("reward_profile", "baseline") if metadata else "baseline"
+    if saved not in ("baseline", "smooth-v1"):
+        raise ValueError(f"Unknown checkpoint reward_profile: {saved!r}")
+    if metadata and metadata.get("reward_profile_schema", 1) != 1:
+        raise ValueError("Unsupported checkpoint reward_profile_schema")
+    if saved != "baseline" and metadata and metadata.get("reward_profile_schema") != 1:
+        raise ValueError("Non-baseline checkpoint requires reward_profile_schema=1")
+    requested = getattr(args, "reward_profile", None)
+    profile = saved if requested is None else requested
+    if profile not in ("baseline", "smooth-v1"):
+        raise ValueError(f"Unknown reward_profile: {profile!r}")
+    if profile == "smooth-v1" and getattr(args, "support_mode", "pregrasp") != "forearms":
+        raise ValueError("smooth-v1 is only supported by the forearms task")
+    if (metadata and requested is not None and requested != saved
+            and getattr(args, "checkpoint", None) is not None):
+        raise ValueError("Demo/evaluation reward_profile must match its checkpoint; use --resume for an explicit training profile change")
+    return profile
+
+
 def _validate_checkpoint_support(args):
     """Read only metadata before constructing a simulator or unpickling weights."""
     checkpoint = getattr(args, "checkpoint", None) or getattr(args, "resume", None)
     if checkpoint is None:
+        reward_profile(args)
         return None
     checkpoint = Path(checkpoint)
     if not checkpoint.is_file():
@@ -183,11 +209,13 @@ def _validate_checkpoint_support(args):
         raise ValueError("Checkpoint metadata is missing runner configuration")
     if getattr(args, "resume", None) and old.get("seed") != args.seed:
         raise ValueError("Resume must keep the original training seed; it is not an independent seed trial")
+    reward_profile(args, old)
     return old
 
 
 def _env(args, *, seconds=20.0, render=False, auto_reset=True, num_envs=None):
-    _validate_checkpoint_support(args)
+    checkpoint_metadata = _validate_checkpoint_support(args)
+    profile = reward_profile(args, checkpoint_metadata)
     import torch
     from mjlab.envs import ManagerBasedRlEnv
     from .env_cfg import make_env_cfg
@@ -199,6 +227,7 @@ def _env(args, *, seconds=20.0, render=False, auto_reset=True, num_envs=None):
                        num_envs=num_envs or args.num_envs, episode_length_s=seconds,
                        mass_observed=not args.mass_blind,
                        support_mode=getattr(args, "support_mode", "pregrasp"),
+                       reward_profile=profile,
                        payload_mass_range_kg=None if mass.get("mass_range_kg") is None else tuple(mass["mass_range_kg"]),
                        payload_com_offset_m=tuple(randomization["com_offset_m"]),
                        payload_xy_jitter_m=randomization["payload_xy_jitter_m"],
@@ -248,6 +277,8 @@ def _policy(env, args):
         raise ValueError("Checkpoint support mode differs from this environment; observation shape alone is not compatibility.")
     if experiment["mass_observed"] != (not args.mass_blind):
         raise ValueError("Checkpoint mass-observation variant differs; use --mass-blind for a blind checkpoint.")
+    if getattr(env.cfg, "reward_profile", "baseline") != reward_profile(args, experiment):
+        raise ValueError("Constructed environment reward_profile differs from the checkpoint profile")
     from mjlab.rl import RslRlVecEnvWrapper
     from mjlab.rl.runner import MjlabOnPolicyRunner
     from tensordict import TensorDict
@@ -280,6 +311,7 @@ def smoke(args):
         elapsed = time.perf_counter() - start
         result = {"passed": True, "scope": "finite physics/API smoke, NOT trained-policy success",
                   "runtime": runtime_info(env.device), "mass": mass, "randomization": _randomization(args),
+                  "reward_profile": env.cfg.reward_profile, "reward_profile_schema": 1,
                   "support_mode": getattr(env.cfg, "support_mode", "pregrasp"),
                   "policy": "zero-action joint-position PD; no trained balancing policy",
                   "num_envs": env.num_envs, "steps_per_env": args.steps, "seed": args.seed,
@@ -312,6 +344,7 @@ def demo(args):
         # Wrappers may reset during construction. Apply the agreed seed last.
         obs, _ = env.reset(seed=args.seed)
         metadata = {"runtime": runtime_info(env.device), "mass": mass, "randomization": _randomization(args),
+                    "reward_profile": env.cfg.reward_profile, "reward_profile_schema": 1,
                     "support_mode": getattr(env.cfg, "support_mode", "pregrasp"),
                     "seed": args.seed, "mass_observed": not args.mass_blind,
                     "policy": "checkpoint" if args.checkpoint else "zero-action joint-position PD; no trained balancing policy",
@@ -368,6 +401,7 @@ def train(args):
         # Internal curriculum phases resume the preceding phase, not the original.
         stage_args.resume = previous
         old = _validate_checkpoint_support(stage_args)
+        profile = reward_profile(stage_args, old)
         start_iteration, previous_steps = 0, 0
         if previous:
             state = torch.load(previous, map_location="cpu", weights_only=True)
@@ -380,9 +414,16 @@ def train(args):
             cfg["max_iterations"] = args.iterations
             cfg["num_steps_per_env"] = _training_rollout_steps(args, old)
             cfg["save_interval"] = min(50, args.iterations)
+            _configure_training_overrides(cfg, args)
             phase_steps = args.iterations * cfg["num_steps_per_env"] * env.num_envs
             metadata = {"runtime": runtime_info(env.device), "mass": mass, "seed": args.seed,
                         "randomization": _randomization(stage_args),
+                        "reward_profile": profile, "reward_profile_schema": 1,
+                        "reward_profile_changed_from": (old.get("reward_profile", "baseline")
+                            if old and profile != old.get("reward_profile", "baseline") else None),
+                        "training_hyperparameter_overrides": {
+                            "learning_rate": getattr(args, "learning_rate", None),
+                            "entropy_coef": getattr(args, "entropy_coef", None)},
                         **task_contract(args), "checkpoint_metadata_schema": 2, "runner": cfg,
                         "episode_seconds": 20, "num_envs": env.num_envs,
                         "phase_start_iteration": start_iteration,
@@ -394,6 +435,7 @@ def train(args):
                         "curriculum_mass_fractions": fractions if args.curriculum else None,
                         "phase_history": (old.get("phase_history", []) + [{
                             "checkpoint": str(previous), "mass": old["mass"],
+                            "reward_profile": old.get("reward_profile", "baseline"),
                             "completed_iteration": start_iteration - 1,
                             "cumulative_env_steps": previous_steps}]) if old else [],
                         "resume_from": str(previous) if previous else None,
@@ -416,6 +458,7 @@ def train(args):
                 runner.load(str(previous), map_location=env.device)
                 # Upstream stores the last COMPLETED zero-based iteration.
                 runner.current_learning_iteration += 1
+            _apply_learning_rate_override(runner, args)
             runner.learn(args.iterations, init_at_random_ep_len=False)
             _assert_finite_training_state(runner.alg.save())
             actual_iterations = runner.current_learning_iteration - start_iteration + 1
@@ -445,6 +488,23 @@ def _training_rollout_steps(args, previous_metadata):
     if override is not None:
         return override
     return previous_metadata["runner"]["num_steps_per_env"] if previous_metadata else 24
+
+
+def _configure_training_overrides(cfg, args):
+    for name in ("learning_rate", "entropy_coef"):
+        value = getattr(args, name, None)
+        if value is not None:
+            cfg["algorithm"][name] = value
+
+
+def _apply_learning_rate_override(runner, args):
+    value = getattr(args, "learning_rate", None)
+    if value is not None:
+        # PPO.load restores both optimizer parameter groups and alg.learning_rate.
+        # Apply the explicit override afterwards; keep saved momentum tensors.
+        runner.alg.learning_rate = value
+        for group in runner.alg.optimizer.param_groups:
+            group["lr"] = value
 
 
 def _checkpoint_steps(metadata, next_iteration):
@@ -510,6 +570,7 @@ def _protocol_conditions(protocol):
 
 def evaluate(args):
     experiment = _validate_checkpoint_support(args)
+    profile = reward_profile(args, experiment)
     protocol_path, protocol = _evaluation_protocol(args)
     import numpy as np
     import torch
@@ -575,6 +636,7 @@ def evaluate(args):
                           "episodes": len(condition_flags), "successes": sum(condition_flags),
                           "success_rate": float(np.mean(condition_flags))})
     result = {"runtime": runtime_info(resolve_device(args.device)), "protocol": protocol,
+              "reward_profile": profile, "reward_profile_schema": 1,
               **task_contract(args),
               "protocol_sha256": file_sha256(protocol_path), "member": args.member,
               "quick_smoke_only": args.quick, "episode_seconds": seconds,

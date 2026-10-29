@@ -35,6 +35,7 @@ MAX_PAYLOAD_YAW_JITTER_RAD = 0.03
 @dataclass(kw_only=True)
 class LiftingEnvCfg(ManagerBasedRlEnvCfg):
     support_mode: str = "pregrasp"
+    reward_profile: str = "baseline"
     requested_payload_mass_kg: float = 1.0
     actual_payload_mass_kg: float = 1.0
     payload_half_size_m: tuple[float, float, float] = (0.10, 0.20, 0.06)
@@ -66,6 +67,7 @@ def make_env_cfg(*, payload_mass_kg: float = 1.0, num_envs: int = 64,
                  reset_xy_range_m: float = 0.05, reset_yaw_range_rad: float = 0.05,
                  reset_speed_range_m_s: float = 0.02,
                  support_mode: str = "pregrasp",
+                 reward_profile: str = "baseline",
                  payload_mass_range_kg: tuple[float, float] | None = None,
                  payload_com_offset_m: tuple[float, float, float] = (0.0, 0.0, 0.0),
                  payload_xy_jitter_m: float = 0.0, payload_yaw_jitter_rad: float = 0.0,
@@ -78,6 +80,10 @@ def make_env_cfg(*, payload_mass_kg: float = 1.0, num_envs: int = 64,
     No startup randomization, command resampling, or frozen posture reward is
     used. All 22 joints act; the base is free; corrective steps are allowed.
     ``play`` does not weaken fall checks or change the finite horizon.
+
+    ``reward_profile="smooth-v1"`` is an opt-in forearm reward ablation. It
+    penalizes unsupported/airborne and fast motion samples; it does not change
+    physics, actions, observations, contact grace, or the success criteria.
 
     Everything below is off by default and leaves the compiled model untouched:
 
@@ -96,6 +102,10 @@ def make_env_cfg(*, payload_mass_kg: float = 1.0, num_envs: int = 64,
     """
     del play
     validate_support_mode(support_mode)
+    if reward_profile not in ("baseline", "smooth-v1"):
+        raise ValueError("reward_profile must be 'baseline' or 'smooth-v1'")
+    if reward_profile == "smooth-v1" and support_mode != "forearms":
+        raise ValueError("smooth-v1 requires support_mode='forearms'")
     if isinstance(num_envs, bool) or not isinstance(num_envs, int) or num_envs < 1:
         raise ValueError("num_envs must be a positive integer")
     if not math.isfinite(episode_length_s) or episode_length_s <= 0:
@@ -181,8 +191,32 @@ def make_env_cfg(*, payload_mass_kg: float = 1.0, num_envs: int = 64,
                                           "velocity_range": {"x": (-speed, speed), "y": (-speed, speed)},
                                           "asset_cfg": SceneEntityCfg("robot"),
                                       })
+    rewards = {
+        "hold_height": RewardTermCfg(func=mdp.hold_height_reward, weight=3.0),
+        "payload_level": RewardTermCfg(func=mdp.payload_level_reward, weight=2.0),
+        "upright": RewardTermCfg(func=mdp.upright_reward, weight=2.0),
+        "balance_approx": RewardTermCfg(func=mdp.balance_reward, weight=0.5),
+        "effort": RewardTermCfg(func=mdp.effort_cost, weight=-0.00002),
+        "smooth_actions": RewardTermCfg(func=builtin.action_rate_l2, weight=-0.02),
+        "payload_motion": RewardTermCfg(func=mdp.payload_motion_cost, weight=-0.05),
+        "foot_slip": RewardTermCfg(func=mdp.foot_slip_cost, weight=-0.2),
+        "joint_limits": RewardTermCfg(func=builtin.joint_pos_limits, weight=-0.1),
+        **({"supported_hold": RewardTermCfg(func=mdp.supported_hold_reward, weight=3.0)}
+           if support_mode == "forearms" else {}),
+    }
+    if reward_profile == "smooth-v1":
+        rewards["smooth_actions"].weight = -0.15
+        rewards["payload_motion"].weight = -0.2
+        rewards["foot_slip"].weight = -0.5
+        rewards.update({
+            "unsupported": RewardTermCfg(func=mdp.unsupported_cost, weight=-2.0),
+            "missing_feet": RewardTermCfg(func=mdp.missing_feet_cost, weight=-2.0),
+            "robot_vertical_velocity": RewardTermCfg(func=mdp.robot_vertical_velocity_cost, weight=-4.0),
+            "robot_angular_velocity": RewardTermCfg(func=mdp.robot_angular_velocity_cost, weight=-0.2),
+            "joint_velocity": RewardTermCfg(func=mdp.joint_velocity_cost, weight=-0.002),
+        })
     return LiftingEnvCfg(
-        support_mode=support_mode,
+        support_mode=support_mode, reward_profile=reward_profile,
         requested_payload_mass_kg=payload.mass_kg,
         actual_payload_mass_kg=payload.actual_mass_kg,
         payload_half_size_m=tuple(payload.half_size),
@@ -207,19 +241,7 @@ def make_env_cfg(*, payload_mass_kg: float = 1.0, num_envs: int = 64,
         actions={"joint_pos": JointPositionActionCfg(entity_name="robot", actuator_names=(".*",),
                                                      scale=deepcopy(K1_ACTION_SCALE), use_default_offset=True)},
         events=events,
-        rewards={
-            "hold_height": RewardTermCfg(func=mdp.hold_height_reward, weight=3.0),
-            "payload_level": RewardTermCfg(func=mdp.payload_level_reward, weight=2.0),
-            "upright": RewardTermCfg(func=mdp.upright_reward, weight=2.0),
-            "balance_approx": RewardTermCfg(func=mdp.balance_reward, weight=0.5),
-            "effort": RewardTermCfg(func=mdp.effort_cost, weight=-0.00002),
-            "smooth_actions": RewardTermCfg(func=builtin.action_rate_l2, weight=-0.02),
-            "payload_motion": RewardTermCfg(func=mdp.payload_motion_cost, weight=-0.05),
-            "foot_slip": RewardTermCfg(func=mdp.foot_slip_cost, weight=-0.2),
-            "joint_limits": RewardTermCfg(func=builtin.joint_pos_limits, weight=-0.1),
-            **({"supported_hold": RewardTermCfg(func=mdp.supported_hold_reward, weight=3.0)}
-               if support_mode == "forearms" else {}),
-        },
+        rewards=rewards,
         terminations={
             "time_out": TerminationTermCfg(func=builtin.time_out, time_out=True),
             "fell": TerminationTermCfg(func=mdp.fell),

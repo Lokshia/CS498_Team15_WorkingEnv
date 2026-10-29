@@ -16,6 +16,19 @@ validation/
 *.log
 # Generated ZIP manifest is release-specific; regenerate when packaging.
 RELEASE_MANIFEST.json
+BUNDLE_MANIFEST.json
+shared_model/*
+!shared_model/smooth-v1-20261028/
+shared_model/smooth-v1-20261028/*
+!shared_model/smooth-v1-20261028/README.md
+!shared_model/smooth-v1-20261028/SHA256SUMS.json
+!shared_model/smooth-v1-20261028/experiment.json
+!shared_model/smooth-v1-20261028/completed.json
+!shared_model/smooth-v1-20261028/evaluation.json
+!shared_model/smooth-v1-20261028/joint_capture.json
+!shared_model/smooth-v1-20261028/joint_summary.json
+!shared_model/smooth-v1-20261028/joint_trace.npz
+!shared_model/smooth-v1-20261028/frequency_diagnostics.json
 logs/
 runs/
 checkpoints/
@@ -30,5 +43,8 @@ _netrc
 *.mp4
 *.zip
 *.tar.gz
+# Only these reviewed binaries belong in the shared Git version.
+!shared_model/smooth-v1-20261028/policy.pt
+!shared_model/smooth-v1-20261028/hold_0p495kg.mp4
 .DS_Store
 Thumbs.db

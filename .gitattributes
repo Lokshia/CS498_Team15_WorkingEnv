@@ -1,2 +1,7 @@
-# Keep source fingerprints identical across Windows and Linux checkouts.
+# Keep the recorded Python/config source fingerprint portable across platforms.
 * text=auto eol=lf
+# Preserve published experiment evidence byte-for-byte, including JSON records.
+/shared_model/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+*.pt binary
+*.npz binary
+*.mp4 binary
