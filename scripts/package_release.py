@@ -14,7 +14,7 @@ import zlib
 PREFIX = "lifting-lab/"
 MANIFEST_NAME = PREFIX + "RELEASE_MANIFEST.json"
 ROOT_FILES = (
-    "pyproject.toml", "uv.lock", ".python-version", ".gitignore",
+    "pyproject.toml", "uv.lock", ".python-version", ".gitignore", ".gitattributes",
     "README.md", "THIRD_PARTY_NOTICES.md",
 )
 DIRECTORY_SUFFIXES = {
@@ -23,7 +23,7 @@ DIRECTORY_SUFFIXES = {
     "tests": frozenset({".py"}),
     "configs": frozenset({".json"}),
 }
-DOC_FILES = ("ENVIRONMENT_DESIGN.md", "TEAM_PROTOCOL.md", "SIM_TO_REAL_ZH.md")
+DOC_FILES = ("ENVIRONMENT_DESIGN.md", "TEAM_PROTOCOL.md", "SIM_TO_REAL_ZH.md", "SMOOTH_HOLD_ZH.md")
 REQUIRED_FILES = frozenset(ROOT_FILES) | frozenset("docs/" + name for name in DOC_FILES)
 EXCLUDED_NAMES = frozenset({
     "__pycache__", "venv", "cache", "caches", "build", "dist", "node_modules",

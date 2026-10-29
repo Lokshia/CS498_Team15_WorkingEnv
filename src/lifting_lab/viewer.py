@@ -212,6 +212,7 @@ def run_interactive(args, output, env_factory, policy_factory):
             snapshot = world_snapshot(env, mass, len(history), paused)
             history.append(snapshot)
             metadata = {"runtime": runtime_info(env.device), "mass": mass,
+                        "reward_profile": env.cfg.reward_profile, "reward_profile_schema": 1,
                         "support_mode": snapshot["support_mode"],
                         "seed": args.seed, "mass_observed": not args.mass_blind,
                         "policy": "checkpoint" if args.checkpoint else "zero-action joint-position PD; no trained balancing policy",

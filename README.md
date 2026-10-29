@@ -1,14 +1,54 @@
-# K1 前臂托箱训练环境 · v0.4.0
+# K1 前臂托箱训练环境 · v0.4.0 + smooth-v1
 
-四位队友共用的 mjlab / MuJoCo-Warp 环境。新默认演示把自由方块放在近水平的两条前臂上，靠仿真碰撞体之间的接触和摩擦承重，可以在浏览器改重量，也支持 CUDA。**方块没有绑在手上；它可以滑动、倾斜、掉落，机器人也可能倒下。没有训练好的平衡策略，也不学习从地面拾取。**
+## 队友快速开始：运行已训练的平稳托箱模型
 
-本说明对应 v0.4.0：前臂自由接触、PPO 训练、续训、负载课程和独立评测。团队请统一使用 `k1-lifting-lab-v0.4.0.zip` 或同一 Git commit。旧包不会自动更新；本包不附带训练成功的策略。
+本分支 `codex/smooth-forearm-hold` 包含代码、精选 checkpoint 和评测结果。先安装 [Git](https://git-scm.com/downloads) 和 [uv](https://docs.astral.sh/uv/getting-started/installation/)（uv ≥ 0.11.21），再在 Windows PowerShell 运行：
 
-本版在 Windows / RTX 5090 Laptop GPU 上完成小规模验收：32 并行环境、24 步 rollout，共 10 次 PPO 更新（含续训、三阶段课程和盲质量对照），总计 7,680 个训练 transitions；保存/恢复、有限值、优化器延续、评测和 CPU 推理检查通过。完整回归 160 项通过、1 项因 Windows 符号链接权限跳过。**短跑 conditioned / blind / 零动作基线各自的 quick 评测均为 0/6 成功；这只是流程验证，未达到稳定托箱目标。** 未进行正式 20 秒评测、收敛验证或真机测试。
+```powershell
+git clone --branch codex/smooth-forearm-hold --single-branch https://github.com/Lokshia/CS498_Team15_WorkingEnv.git
+cd CS498_Team15_WorkingEnv
+powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Backend cu130
+```
+
+只看演示、没有可用 NVIDIA GPU 时，把安装参数 `cu130` 改成 `cpu`；下面的 CUDA 评测和续训需要 GPU 安装。Linux 安装见第 1 节。
+
+**打开已训练模型的 CPU viewer**（安装 CUDA 版也可以用 CPU 预览）：
+
+```powershell
+.\.venv\Scripts\python.exe -m lifting_lab demo --device cpu --support-mode forearms --checkpoint shared_model/smooth-v1-20261028/policy.pt --mass 0.4949224923474894 --seconds 3600 --viewer --paused
+```
+
+打开终端打印的网址，通常为 `http://127.0.0.1:8080/`，点击 **Play**。在 **Payload / 负重** 中修改重量，再点 **应用并重置**。保留终端运行。必须带上上面的 `--checkpoint`；省略它运行的是零动作 PD，不是已训练策略。
+
+**CUDA 正式五负载评测**（每档 50 个 20 秒 episode；失败可提前终止）：
+
+```powershell
+.\.venv\Scripts\python.exe -m lifting_lab evaluate --checkpoint shared_model/smooth-v1-20261028/policy.pt --protocol configs/smooth_hold_validation.json --device cuda --num-envs 50 --output outputs/smooth_shared_five_load_eval
+```
+
+该模型训练 seed 为 11，协议自动选评测 seed 5011。已有结果为四档约 0.25–1 kg 离散负载各 **50/50**，1.48 kg 压力测试 **33/50（66%）**；这是一个训练种子的结果，没有测试推力或摩擦随机化。启动阶段仍有瞬态动作，不能称为全程无抖动。详见 [模型与结果文件](shared_model/smooth-v1-20261028/README.md) 和 [训练说明](docs/SMOOTH_HOLD_ZH.md)。
+
+**从发布模型续训 100 次 PPO 更新**（可选，会实际使用 GPU）：
+
+```powershell
+.\.venv\Scripts\python.exe -m lifting_lab train --device cuda --support-mode forearms --resume shared_model/smooth-v1-20261028/policy.pt --num-envs 512 --iterations 100 --seed 11 --output outputs/smooth_shared_seed11_more
+```
+
+续训继承原模型的质量、`smooth-v1` 奖励、rollout 长度和优化器状态；它不是新的独立训练种子，也不保证续训后性能提高。评测和训练的输出目录必须使用新名字。`policy.pt` 与同目录 `experiment.json` 要一起保留。
+
+**分享方式：** 此 Git 分支含 `shared_model/smooth-v1-20261028/` 的精选模型和结果；`scripts/package_release.py` 生成的 ZIP 仍是纯源码包，不含模型或视频。只拿到源码 ZIP 的队友需要另取这个完整模型目录。
+
+四位队友共用的 mjlab / MuJoCo-Warp 环境。默认演示把自由方块放在近水平的两条前臂上，靠接触和摩擦承重，可以在浏览器改重量，也支持 CUDA。**方块没有绑在手上；它可以滑动、倾斜、掉落，机器人也可能倒下。不学习从地面拾取。** 不传 checkpoint 的演示仍是零动作 PD，不是训练好的策略。
+
+2026-10-28 增加了可选 `--reward-profile smooth-v1`、关节诊断和复测协议，用来减少持续抽动。PPO、97 维观测、22 个动作、原始位置控制、物理参数和接触成功判据均保留。训练方法、已测范围及限制见 [平稳托箱说明](docs/SMOOTH_HOLD_ZH.md)；新训练仍须显式选择该奖励，默认 `baseline` 保留对照行为。模型回放/续训会继承相邻 `experiment.json` 的奖励配置。
+
+本项目基于 v0.4.0：前臂自由接触、PPO 训练、续训、负载课程和独立评测。团队请使用同一个日期版本的代码包或同一 Git commit；旧 v0.4.0 ZIP 没有新奖励配置。源码包不包含权重，分享训练结果时须同时携带 `policy.pt` 与相邻 `experiment.json`。
+
+原始 v0.4.0 的历史验收：Windows / RTX 5090 Laptop GPU，32 并行环境、24 步 rollout，共 10 次 PPO 更新（含续训、三阶段课程和盲质量对照），总计 7,680 个训练 transitions；保存/恢复、有限值、优化器延续、评测和 CPU 推理检查通过。当时回归 160 项通过、1 项因 Windows 符号链接权限跳过。**当时短跑 conditioned / blind / 零动作基线的 quick 评测均为 0/6 成功，只是流程验证。** 后续平稳托箱训练的结果独立记录在上述说明和对应结果包中，不能与这次历史验收混淆。
 
 ## 1. 安装（只做一次）
 
-先把 ZIP **完整解压**，进入里面的 `lifting-lab` 文件夹，再在这里打开终端。不要在压缩包内运行。需要联网，并先装好 [Git](https://git-scm.com/downloads) 和 [uv](https://docs.astral.sh/uv/getting-started/installation/)（uv ≥ 0.11.21）；安装后重新打开终端。
+Git 用户进入 clone 得到的 `CS498_Team15_WorkingEnv` 目录；源码 ZIP 用户先**完整解压**，进入里面的 `lifting-lab` 文件夹。下面都在项目根目录打开终端运行，不要在压缩包内运行。需要联网，并先装好 [Git](https://git-scm.com/downloads) 和 [uv](https://docs.astral.sh/uv/getting-started/installation/)（uv ≥ 0.11.21）；安装后重新打开终端。
 
 ### Windows / PowerShell
 
@@ -26,7 +66,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Backend cu130
 bash scripts/bootstrap.sh cu130
 ```
 
-无 NVIDIA 显卡时同样改成 `cpu`。已有运行环境在 Windows RTX 5090 上使用；这不等于新前臂模式已经通过平衡或真机验证。**Linux 安装和显示尚未在 Linux 实机验证**。此发行版不支持 macOS / ARM。
+无 NVIDIA 显卡时同样改成 `cpu`。本分支的已记录训练和 GPU 评测来自 Windows / RTX 5090 Laptop，不能代替其他硬件上的复测或真机验证。**Linux 安装和显示尚未在 Linux 实机验证**。此发行版不支持 macOS / ARM。
 
 脚本会安装固定的 Python 3.13.14 和 `uv.lock` 中的依赖，创建当前项目自己的 `.venv`，最后检查 CPU/GPU。无需安装旧 HW3，也不用手动激活环境。CUDA 13.0 配置需要兼容的 NVIDIA 驱动（R580 及以上；`nvidia-smi` 右上角 CUDA Version 低于 13.0 时 `cu130` 的 doctor 会直接失败，先升驱动或改用 `cpu`）；检查失败不会偷偷切换 CPU。首次下载会比较大，ZIP 本身不包含依赖和机器人资产。`uv.lock` 只解析 Windows x86-64 和 Linux x86-64；GH200 这类 aarch64 节点需要另行解锁依赖，不要在那里直接跑本脚本。
 
@@ -35,13 +75,13 @@ bash scripts/bootstrap.sh cu130
 Windows：
 
 ```powershell
-.\.venv\Scripts\python.exe -m lifting_lab demo --device cpu --support-mode forearms --mass 0.5 --seconds 3600 --viewer --paused
+.\.venv\Scripts\python.exe -m lifting_lab demo --device cpu --support-mode forearms --checkpoint shared_model/smooth-v1-20261028/policy.pt --mass 0.4949224923474894 --seconds 3600 --viewer --paused
 ```
 
 Linux：
 
 ```bash
-./.venv/bin/python -m lifting_lab demo --device cpu --support-mode forearms --mass 0.5 --seconds 3600 --viewer --paused
+./.venv/bin/python -m lifting_lab demo --device cpu --support-mode forearms --checkpoint shared_model/smooth-v1-20261028/policy.pt --mass 0.4949224923474894 --seconds 3600 --viewer --paused
 ```
 
 打开终端打印的地址，通常是 `http://127.0.0.1:8080/`。保留终端运行。单机器人预览使用 CPU 即可；安装了 CUDA 配置也可以运行这个命令。要测试 GPU 路径，可将 `--device cpu` 改成 `--device cuda`。
@@ -50,7 +90,7 @@ Linux：
 - **Play / Pause**：运行或暂停；**Step**：单步；**Reset Environment**：重置。
 - 前臂交互预览允许箱子掉落、机器人倒地后继续模拟，不自动重置，也不计作评测结果；看完后手动 Reset。普通 smoke / 离线 demo 保留跌倒终止条件。
 - 窗口中的 0–10 kg 只是仿真输入范围，**不代表真机承载额定值**。0 kg 实际用 0.001 kg，避免零惯量。
-- 零动作 PD 只以设定关节姿态为目标，不是平衡控制器。播放后箱子可能滑落、机器人可能倒下；不要把暂停时的摆放当成稳定承重结果。
+- 上面的命令加载发布的平稳托箱模型。只有主动省略 `--checkpoint` 才是零动作 PD 基线；它不是平衡控制器，箱子可能滑落、机器人可能倒下。不要把暂停时的摆放当成稳定承重结果。
 - 录像前另装 FFmpeg 并加入 PATH（`ffmpeg -version` 验证）；不录像则不需要。录像期间须先停止录像再改重量。
 
 `demo`、`smoke`、`train`、`evaluate` 的 `--support-mode` 都可选 `forearms`（默认，前臂自由接触）或 `pregrasp`（旧版双点连接）。切换模式需重新运行命令；重量控件只改变当前模式的负载。
@@ -102,7 +142,7 @@ Linux：
 - `--payload-xy-jitter-m` / `--payload-yaw-jitter-rad`：reset 时只移动箱子相对前臂的位置：x 只向前（箱子后沿离躯干只有 1 cm），y 和 yaw 对称。已验证上限 0.01 m / 0.03 rad，超过后箱子会落在末端球上、起步就失去双前臂承托。
 - `--push-interval-s LOW HIGH` + `--push-velocity-m-s V`：每个环境按自己的计时器每隔 LOW–HIGH 秒给机器人基座水平速度各加一个 ±V 的随机增量（Isaac Lab 同款速度踢），箱子只通过接触受影响。两个参数必须同时给。
 - `--resume` 默认沿用 checkpoint 里记录的这些设置，命令行显式给出的参数才会覆盖；`experiment.json` 的 `randomization` 和 `mass.mass_range_fraction` 记录实际使用值。
-- 带推力评测用 `configs/team_protocol_push.json`（3–5 s 一次、0.3 m/s）：`evaluate --protocol configs/team_protocol_push.json --checkpoint ...`。它与无推力协议分开报告，不能合并成功率。箱子后沿离躯干 1 cm，摩擦 μ=0.7 能追回的相对速度约 v=√(2μgd)≈0.37 m/s，再大的向前踢会先把箱子撞进躯干、按接触判据直接失败，与平衡能力无关。
+- 带推力评测用 `configs/team_protocol_push.json`（3–5 s 一次、0.3 m/s）：`evaluate --protocol configs/team_protocol_push.json --checkpoint ...`。它与无推力协议分开报告，不能合并成功率。若粗略按固定水平面上的滑块计算，取间距 d=1 cm、μ=0.7，停止距离估算给出 v=√(2μgd)≈0.37 m/s。这忽略了机器人运动、箱体转动及瞬态接触，不能作为本系统的硬速度上限，也不能据此断言碰撞与平衡能力无关；0.3 m/s 是待验证的协议设定，实际结果须由仿真和后续标定判断。
 
 这些只改变训练分布和评测条件，不改变观测/动作/成功判据，所以 `task_schema` 仍是 `forearms-contact-v1`，checkpoint 可以在有无随机化的环境间互相加载；报告结果时要写明训练用的随机化范围和评测协议。零动作 PD 基线本身在 0.5 kg 下约 0.16 s 后箱子就会后滑碰到躯干，这不是随机化造成的；机器人本体在零动作下也会在 1.5 s 内前倾倒地（踝/髋是软 PD，没有策略就没有平衡），所以任何策略都要先学会站。
 
@@ -145,29 +185,27 @@ lifting-lab/
   scripts/                  安装、结果比较、打包与校验工具
   tests/                    自动化检查
   docs/                     物理与训练设计、团队评测、实物对应边界
+  shared_model/smooth-v1-20261028/  Git 分支附带的精选模型、评测和诊断
   THIRD_PARTY_NOTICES.md     依赖来源与授权边界
-  RELEASE_MANIFEST.json     包内文件 SHA-256 清单
+  RELEASE_MANIFEST.json     仅源码 ZIP 生成的包内文件 SHA-256 清单
 ```
 
-运行后自动生成的 `.venv/`、`outputs/` 不在分享包内。代码包不含视频、checkpoint、凭据、旧日志或第三方模型资产。依赖和机器人资产在安装时从锁定的上游提交获取；请遵守 [来源说明](THIRD_PARTY_NOTICES.md)。
+运行后自动生成的 `.venv/`、`outputs/` 不随 Git 发布。`shared_model/smooth-v1-20261028/` 包含精选 checkpoint、相邻训练配置、五负载评测、约 0.495 kg 演示视频、关节诊断及 `SHA256SUMS.json`；详见该目录的 [文件说明](shared_model/smooth-v1-20261028/README.md)。`scripts/package_release.py` 的源码 ZIP 不包含这个目录。凭据、旧日志和第三方模型资产均不随本分支发布；依赖和机器人资产在安装时从锁定的上游提交获取，请遵守 [来源说明](THIRD_PARTY_NOTICES.md)。
 
 需要理解“前臂接触和旧手部连接有什么不同”：看 [实物与仿真对应](docs/SIM_TO_REAL_ZH.md)。需要详细参数：看 [环境设计](docs/ENVIRONMENT_DESIGN.md) 或运行 `python -m lifting_lab COMMAND --help`（使用本项目解释器）。本包不确认真实前臂外壳、衬垫或托架可以承重。
 
-## 6. 放到 Git 给四个人共用
+## 6. 用 Git 给四个人共用
 
-建议使用一个仅小组成员可访问的独立私有仓库。把 ZIP 解压到新的文件夹，
-以里面的 `lifting-lab` 作为仓库根目录，提交解压后的源码，而不是只提交 ZIP。
-不要在包含其他课程作业的父目录执行 `git add .`。
+团队仓库为 [CS498_Team15_WorkingEnv](https://github.com/Lokshia/CS498_Team15_WorkingEnv)，平稳托箱版本在 `codex/smooth-forearm-hold` 分支。请按开头命令 clone，在这个独立仓库内操作。不要在包含其他课程作业的父目录执行 `git add .`。该分支供队友复测和继续研究；合入 `main` 应另行审查。
 
 - 保留 `uv.lock`、`.python-version`、`.gitignore` 和中文 README。
-- `.gitignore` 已排除 `.venv/`、`outputs/`、`validation/`、日志、录像、模型权重和本地凭据文件。
-- 提交前检查 `git status --short`，确认只有本项目的源码和说明；不要使用 `git add -f` 绕过忽略规则。
+- `.gitignore` 排除 `.venv/`、`outputs/`、`validation/`、日志和本地凭据；仅为指定的 `shared_model/smooth-v1-20261028/` 发布文件保留例外。
+- 提交前检查 `git status --short`，确认只有本项目的源码、说明及有意发布的模型/结果；不要使用 `git add -f` 上传整个输出目录。
 - 队友 clone 后进入仓库，按本文件第 1 节安装。GPU 用户选 `cu130`，CPU 用户选 `cpu`。
 - 开始统一测试前对齐 `git rev-parse HEAD` 的结果，避免各自使用不同版本。
 - `RELEASE_MANIFEST.json` 只对应那一次 ZIP 内容。修改代码后应重新打包生成清单，不把旧清单当成当前代码的校验结果。
 
-只分享自己的项目源码；不上传 `.venv` 中下载的第三方实现/机器人资产，详见来源说明。
-本包未自动创建远程仓库或上传文件。
+只分享本项目源码及有意发布的模型/结果；不上传 `.venv` 中下载的第三方实现/机器人资产，详见来源说明。新实验保存在 `outputs/`；以后要发布新的模型时，另建有日期的精选目录，保留配置、评测和校验清单。
 
 ## 7. 给 GPT / 队友的说明
 

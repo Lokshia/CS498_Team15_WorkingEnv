@@ -91,6 +91,12 @@ class EpisodeAccumulator:
         success = episode_success(self.steps, self.required_steps, self.fallen,
                                   self.max_tilt, self.max_height_error,
                                   self.tilt_limit_deg, self.height_limit_m)
+        means = {k: _finite_list(v / np.maximum(self.steps, 1)) for k, v in self.sums.items()}
+        diagnostic_keys = (
+            "joint_velocity_rms_rad_s", "action_delta_rms", "robot_vertical_speed_m_s",
+            "robot_angular_speed_rad_s", "payload_linear_speed_m_s", "payload_angular_speed_rad_s",
+            "both_feet_contact", "airborne", "payload_forearm_supported", "torque_rms_nm",
+        )
         return {
             "success": success.tolist(), "success_rate": float(success.mean()),
             "steps": self.steps.tolist(), "fallen": self.fallen.tolist(),
@@ -101,8 +107,10 @@ class EpisodeAccumulator:
             "max_contact_gap_steps": self.max_contact_gap.tolist(),
             "max_payload_tilt_deg": _finite_list(self.max_tilt),
             "max_abs_height_error_m": _finite_list(self.max_height_error),
-            "means_until_completion_or_fall": {
-                k: _finite_list(v / np.maximum(self.steps, 1)) for k, v in self.sums.items()
+            "means_until_completion_or_fall": means,
+            "smoothness_summary": {
+                "scope": "Diagnostic time-means until completion/failure; not a new success criterion. Short failed episodes are not comparable to full episodes without considering duration.",
+                "per_episode_means": {key: means[key] for key in diagnostic_keys if key in means},
             },
         }
 
