@@ -1,0 +1,206 @@
+{
+  "task_schema": "k1-empty-hand-stand-v1",
+  "actor_observation_schema": "k1-imu-proprio-last-action-72-v1",
+  "critic_observation_schema": "k1-empty-hand-privileged-76-v1",
+  "actor_observation_dim": 72,
+  "critic_observation_dim": 76,
+  "action_dim": 22,
+  "control_dt_s": 0.02,
+  "payload_entity_present": false,
+  "reward_profile": "empty-hand-v1",
+  "action_contract": "original K1 joint-position scale, default-offset, clipped [-1,1]",
+  "runtime": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "nvidia_driver_inventory": [
+      "NVIDIA GeForce RTX 5090 Laptop GPU, 591.91"
+    ],
+    "torch_cuda": "13.0",
+    "versions": {
+      "torch": "2.11.0+cu130",
+      "mjlab": "1.6.0",
+      "mujoco": "3.11.0",
+      "mujoco-warp": "3.11.0",
+      "warp-lang": "1.15.0",
+      "rsl-rl-lib": "5.5.0",
+      "booster-mjlab": "0.1.0",
+      "numpy": "2.4.4",
+      "viser": "1.1.0"
+    },
+    "source_sha256": "7e889140c5472cb0daf878a683959bc68bdf78fc901b77a120141606eac21a13"
+  },
+  "runtime_source_sha256_at_end": "7e889140c5472cb0daf878a683959bc68bdf78fc901b77a120141606eac21a13",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "policy": "zero-action position PD baseline",
+  "seed": 5011,
+  "num_envs": 16,
+  "seconds": 20.0,
+  "joint_names": [
+    "Head_Yaw",
+    "Head_Pitch",
+    "Left_Shoulder_Pitch",
+    "Left_Shoulder_Roll",
+    "Left_Elbow_Pitch",
+    "Left_Elbow_Yaw",
+    "Right_Shoulder_Pitch",
+    "Right_Shoulder_Roll",
+    "Right_Elbow_Pitch",
+    "Right_Elbow_Yaw",
+    "Left_Hip_Pitch",
+    "Left_Hip_Roll",
+    "Left_Hip_Yaw",
+    "Left_Knee_Pitch",
+    "Left_Ankle_Pitch",
+    "Left_Ankle_Roll",
+    "Right_Hip_Pitch",
+    "Right_Hip_Roll",
+    "Right_Hip_Yaw",
+    "Right_Knee_Pitch",
+    "Right_Ankle_Pitch",
+    "Right_Ankle_Roll"
+  ],
+  "reset_joint_jitter_rad": 0.015,
+  "reset_speed_m_s": 0.02,
+  "push_speed_m_s": 0,
+  "successes": 0,
+  "completed_without_fall": 0,
+  "criteria": "Full duration; at t>=2s >=95% both feet contact+sole tilts<5deg, trunk p95<5deg, arm pose RMS<.15rad, joint speed RMS<.2rad/s; whole-episode base XY drift<.10m. No reset episode replacement.",
+  "sampling": "50Hz last physics substep, not force substep average",
+  "episodes": [
+    {
+      "slot": 0,
+      "recorded_seconds": 1.16,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.38890010118484497,
+      "steady": null
+    },
+    {
+      "slot": 1,
+      "recorded_seconds": 1.2,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.3787992596626282,
+      "steady": null
+    },
+    {
+      "slot": 2,
+      "recorded_seconds": 1.24,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.3997981548309326,
+      "steady": null
+    },
+    {
+      "slot": 3,
+      "recorded_seconds": 1.22,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.3807227909564972,
+      "steady": null
+    },
+    {
+      "slot": 4,
+      "recorded_seconds": 1.2,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.3967858850955963,
+      "steady": null
+    },
+    {
+      "slot": 5,
+      "recorded_seconds": 1.18,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.40356898307800293,
+      "steady": null
+    },
+    {
+      "slot": 6,
+      "recorded_seconds": 1.24,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.39602571725845337,
+      "steady": null
+    },
+    {
+      "slot": 7,
+      "recorded_seconds": 1.16,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.3800298869609833,
+      "steady": null
+    },
+    {
+      "slot": 8,
+      "recorded_seconds": 1.22,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.3962841033935547,
+      "steady": null
+    },
+    {
+      "slot": 9,
+      "recorded_seconds": 1.24,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.3893122375011444,
+      "steady": null
+    },
+    {
+      "slot": 10,
+      "recorded_seconds": 1.2,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.39018911123275757,
+      "steady": null
+    },
+    {
+      "slot": 11,
+      "recorded_seconds": 1.22,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.39299777150154114,
+      "steady": null
+    },
+    {
+      "slot": 12,
+      "recorded_seconds": 1.2,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.3839940130710602,
+      "steady": null
+    },
+    {
+      "slot": 13,
+      "recorded_seconds": 1.2,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.39918237924575806,
+      "steady": null
+    },
+    {
+      "slot": 14,
+      "recorded_seconds": 1.22,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.40174296498298645,
+      "steady": null
+    },
+    {
+      "slot": 15,
+      "recorded_seconds": 1.16,
+      "completed_without_fall": false,
+      "success": false,
+      "max_xy_drift_m": 0.39849233627319336,
+      "steady": null
+    }
+  ],
+  "limitations": [
+    "Simulation only; no hardware interface or safety acceptance.",
+    "Arms-forward initial posture, no arms-down transition or adding/removing a box."
+  ]
+}

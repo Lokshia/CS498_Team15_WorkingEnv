@@ -251,6 +251,107 @@ def joint_velocity_cost(env):
     return env.scene["robot"].data.joint_vel.square().sum(-1)
 
 
+def stance_foot_data(env):
+    """Left/right sole normals and ground reactions, in world coordinates.
+
+    netforce sensors report primary -> secondary: feet -> terrain is downward,
+    so negate it for the reaction ON the robot. No assumed regex ordering.
+    Normal +Z is the sole site's local normal (the K1 sites have no rotation).
+    """
+    sensor = env.scene["feet_ground_contact"]
+    if not hasattr(env, "_stance_contact_ids"):
+        names = [name.split("/")[-1] for name in sensor.primary_names]
+        expected = ("left_foot_link", "right_foot_link")
+        if len(names) != 2 or set(names) != set(expected):
+            raise ValueError(f"Expected two named foot contact primaries, got {names}")
+        env._stance_contact_ids = [names.index(name) for name in expected]
+    ids = env._stance_contact_ids
+    forces = -sensor.data.force.reshape(env.num_envs, 2, 3)[:, ids]
+    contact = sensor.data.found.reshape(env.num_envs, 2)[:, ids] > 0
+    quat = env.scene["robot"].data.site_quat_w[:, _ids(env)[2]]
+    z = torch.zeros_like(quat[..., :3])
+    z[..., 2] = 1
+    normal = quat_apply(quat, z)
+    return normal[..., 2].clamp(-1, 1), forces, contact
+
+
+def feet_flat_cost(env):
+    """Zero for upward level soles, positive for tilt including inverted feet.
+
+    Applied even in flight; the separate missing-feet cost prevents hovering
+    from satisfying the stance objective. This is not a contact-area metric.
+    """
+    normal_z, _, _ = stance_foot_data(env)
+    return (1.0 - normal_z).sum(-1)
+
+
+def foot_load_share_cost(env, minimum_share: float = 0.30):
+    """Soft 30--70% deadband, not a demand for exact equal foot loading.
+
+    Missing or tensile contacts cannot earn a balanced-load score. Total force
+    must exceed 10% of weight; transient dynamics remain allowed with a cost.
+    """
+    _, force, contact = stance_foot_data(env)
+    vertical = force[..., 2].clamp_min(0) * contact
+    total = vertical.sum(-1)
+    share = vertical / total[:, None].clamp_min(1e-6)
+    cost = (torch.relu(minimum_share - share) / minimum_share).square().sum(-1)
+    weight = (robot_mass_kg() + payload_mass_kg(env)) * 9.81
+    return torch.where(total > 0.1 * weight, cost, torch.ones_like(cost))
+
+
+def leg_posture_cost(env, scale_rad: float = 0.25):
+    """Soft preference for the nominal bent-knee leg pose; arms remain free."""
+    robot = env.scene["robot"]
+    if not hasattr(env, "_stance_leg_ids"):
+        env._stance_leg_ids = robot.find_joints(
+            ("Left_Hip_.*", "Left_Knee_Pitch", "Left_Ankle_.*",
+             "Right_Hip_.*", "Right_Knee_Pitch", "Right_Ankle_.*"),
+            preserve_order=True)[0]
+        if len(env._stance_leg_ids) != 12:
+            raise ValueError("stance profile requires the twelve named K1 leg joints")
+    displacement = (robot.data.joint_pos - robot.data.default_joint_pos)[:, env._stance_leg_ids]
+    return (displacement / scale_rad).square().mean(-1)
+
+
+def trunk_tilt_cost(env, scale_deg: float = 10.0):
+    """Yaw-invariant upright cost: one at scale_deg, including inverted poses."""
+    if not math.isfinite(scale_deg) or not 0 < scale_deg <= 180:
+        raise ValueError("scale_deg must be finite and in (0, 180]")
+    scale = 1.0 - math.cos(math.radians(scale_deg))
+    return (1.0 - robot_upright(env).clamp(-1.0, 1.0)) / scale
+
+
+def leg_symmetry_cost(env, deadband_deg: float = 5.0, scale_deg: float = 10.0):
+    """Soft mirrored leg preference; small asymmetry is free and arms stay free.
+
+    Pitch and knee axes have equal joint signs; roll/yaw axes have opposite
+    signs across the sagittal mirror plane. The deadband permits load-dependent
+    adjustments rather than requiring identical leg trajectories.
+    """
+    if not math.isfinite(deadband_deg) or deadband_deg < 0:
+        raise ValueError("deadband_deg must be finite and nonnegative")
+    if not math.isfinite(scale_deg) or scale_deg <= 0:
+        raise ValueError("scale_deg must be finite and positive")
+    robot = env.scene["robot"]
+    if not hasattr(env, "_stance_mirror_joint_ids"):
+        joints = ("Hip_Pitch", "Hip_Roll", "Hip_Yaw", "Knee_Pitch", "Ankle_Pitch", "Ankle_Roll")
+        sides = []
+        for side in ("Left", "Right"):
+            expected = tuple(f"{side}_{joint}" for joint in joints)
+            indices, names = robot.find_joints(expected, preserve_order=True)
+            if len(indices) != 6 or tuple(names) != expected:
+                raise ValueError(f"stance symmetry requires ordered named {side} leg joints")
+            sides.append(indices)
+        env._stance_mirror_joint_ids = tuple(sides)
+    left_ids, right_ids = env._stance_mirror_joint_ids
+    positions = robot.data.joint_pos
+    signs = positions.new_tensor((1.0, -1.0, -1.0, 1.0, 1.0, -1.0))
+    residual = positions[:, left_ids] - signs * positions[:, right_ids]
+    excess = torch.relu(residual.abs() - math.radians(deadband_deg))
+    return (excess / math.radians(scale_deg)).square().mean(-1)
+
+
 def fell(env):
     robot = env.scene["robot"].data
     low = robot.root_link_pos_w[:, 2] - env.scene.env_origins[:, 2] < 0.28

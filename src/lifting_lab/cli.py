@@ -57,7 +57,7 @@ def build_parser():
         p.add_argument("--threads", type=_positive_int, default=4)
         p.add_argument("--support-mode", choices=("forearms", "pregrasp"), default="forearms",
                        help="forearms: free contact task; pregrasp: legacy CONNECT task")
-        p.add_argument("--reward-profile", choices=("baseline", "smooth-v1"),
+        p.add_argument("--reward-profile", choices=("baseline", "smooth-v1", "stance-v1", "stance-v2"),
                        help="Fresh runs default to baseline; checkpoints inherit their saved profile unless explicitly changed for training")
         if name != "evaluate":
             mass.add_argument("--mass-range-fraction", type=_nonnegative, nargs=2, metavar=("LOW", "HIGH"),
@@ -165,7 +165,7 @@ def task_contract(args):
 def reward_profile(args, metadata=None):
     """Resolve reward-only configuration without changing the policy task contract."""
     saved = metadata.get("reward_profile", "baseline") if metadata else "baseline"
-    if saved not in ("baseline", "smooth-v1"):
+    if saved not in ("baseline", "smooth-v1", "stance-v1", "stance-v2"):
         raise ValueError(f"Unknown checkpoint reward_profile: {saved!r}")
     if metadata and metadata.get("reward_profile_schema", 1) != 1:
         raise ValueError("Unsupported checkpoint reward_profile_schema")
@@ -173,10 +173,10 @@ def reward_profile(args, metadata=None):
         raise ValueError("Non-baseline checkpoint requires reward_profile_schema=1")
     requested = getattr(args, "reward_profile", None)
     profile = saved if requested is None else requested
-    if profile not in ("baseline", "smooth-v1"):
+    if profile not in ("baseline", "smooth-v1", "stance-v1", "stance-v2"):
         raise ValueError(f"Unknown reward_profile: {profile!r}")
-    if profile == "smooth-v1" and getattr(args, "support_mode", "pregrasp") != "forearms":
-        raise ValueError("smooth-v1 is only supported by the forearms task")
+    if profile in ("smooth-v1", "stance-v1", "stance-v2") and getattr(args, "support_mode", "pregrasp") != "forearms":
+        raise ValueError(f"{profile} is only supported by the forearms task")
     if (metadata and requested is not None and requested != saved
             and getattr(args, "checkpoint", None) is not None):
         raise ValueError("Demo/evaluation reward_profile must match its checkpoint; use --resume for an explicit training profile change")

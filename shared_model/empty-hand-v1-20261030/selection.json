@@ -1,0 +1,73 @@
+{
+  "task": "True empty-hand, arms-forward standing; no payload entity or box-state input",
+  "training_seed": 11,
+  "training_updates": 300,
+  "training_transitions": 1843200,
+  "source_sha256": "7e889140c5472cb0daf878a683959bc68bdf78fc901b77a120141606eac21a13",
+  "checkpoint_sha256": "6b535d6bd6f419bd3da018ed49d3b7a50529bda982ff32b1a9b504ef0d6f0703",
+  "ordinary": {
+    "successes": 32,
+    "episodes": 32,
+    "seconds_each": 20,
+    "mean_foot_tilt_deg_left_right": [
+      0.060740042419638485,
+      0.025087781134061515
+    ],
+    "mean_vertical_ground_reaction_n_left_right": [
+      99.06433844566345,
+      94.98759627342224
+    ],
+    "mean_trunk_tilt_deg": 0.25663594529032707,
+    "max_xy_drift_m": 0.012615986168384552
+  },
+  "velocity_disturbance": {
+    "successes": 16,
+    "episodes": 16,
+    "seconds_each": 22,
+    "description": "Every 5 seconds, independently add U[-0.05,0.05] m/s to each horizontal velocity component; not a force-calibrated push"
+  },
+  "cpu_replay": {
+    "successes": 1,
+    "episodes": 1,
+    "seconds_each": 20
+  },
+  "base_height": {
+    "train300_eval5011": {
+      "steady_mean_m": 0.514237105846405,
+      "steady_min_m": 0.5139877200126648
+    },
+    "train300_eval6011": {
+      "steady_mean_m": 0.5142371654510498,
+      "steady_min_m": 0.5140027403831482
+    },
+    "train300_stress7011": {
+      "steady_mean_m": 0.5142384767532349,
+      "steady_min_m": 0.5134981870651245
+    },
+    "train300_cpu2027": {
+      "steady_mean_m": 0.5142070055007935,
+      "steady_min_m": 0.5140289664268494
+    }
+  },
+  "tests": {
+    "passed": 275,
+    "skipped": 17
+  },
+  "limitations": [
+    "One training seed, narrow reset variation, fixed physical parameters and friction.",
+    "Starts with arms raised; no arms-down transition.",
+    "No box placement/removal or policy handover.",
+    "No validated hardware adapter or real-robot acceptance."
+  ],
+  "evidence_sources": {
+    "policy.pt": "train300/policy.pt",
+    "experiment.json": "train300/experiment.json",
+    "completed.json": "train300/completed.json",
+    "evaluation_seed5011.json": "train300_eval5011/evaluation.json",
+    "evaluation_seed6011.json": "train300_eval6011/evaluation.json",
+    "velocity_kick_seed7011.json": "train300_stress7011/evaluation.json",
+    "cpu_seed2027.json": "train300_cpu2027/evaluation.json",
+    "cpu_trace.npz": "train300_cpu2027/trace.npz",
+    "pd_baseline_seed5011.json": "pd_baseline_v2/evaluation.json"
+  }
+}

@@ -1,14 +1,43 @@
-# K1 前臂托箱训练环境 · v0.4.0 + smooth-v1
+# K1 空手与前臂托箱训练环境 · v0.4.0 + stance / empty-hand
 
-## 队友快速开始：运行已训练的平稳托箱模型
+## 队友快速开始：空手 / 托箱切换版本
 
-本分支 `codex/smooth-forearm-hold` 包含代码、精选 checkpoint 和评测结果。先安装 [Git](https://git-scm.com/downloads) 和 [uv](https://docs.astral.sh/uv/getting-started/installation/)（uv ≥ 0.11.21），再在 Windows PowerShell 运行：
+本次代码、训练好的模型和评测结果在 `codex/empty-hand-stand` 分支。先安装 [Git](https://git-scm.com/downloads) 和 [uv](https://docs.astral.sh/uv/getting-started/installation/)（uv ≥ 0.11.21），在 Windows PowerShell 运行：
 
 ```powershell
-git clone --branch codex/smooth-forearm-hold --single-branch https://github.com/Lokshia/CS498_Team15_WorkingEnv.git
+git clone --branch codex/empty-hand-stand --single-branch https://github.com/Lokshia/CS498_Team15_WorkingEnv.git
 cd CS498_Team15_WorkingEnv
 powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Backend cu130
+.\.venv\Scripts\python.exe -m lifting_lab.mode_viewer --port 8082
 ```
+
+没有可用 NVIDIA GPU、只看演示时，把安装参数 `cu130` 改为 `cpu`。Linux 安装见第 1 节，运行解释器改为 `./.venv/bin/python`。浏览器打开 `http://127.0.0.1:8082/`，选择模式和重量，点 **应用并重置**，再点 **Play**。空手会真正移除箱体；托箱模型训练范围约 0.247–0.990 kg，超出时界面会提示。[完整操作方法](docs/LOAD_CONTROLS_ZH.md)。
+
+本分支基于之前的 `codex/smooth-forearm-hold`，包含它所需的代码和文件；直接 clone 本分支即可，不需要先合并其他 PR。请四位队友对齐 `git rev-parse HEAD`，模型须与同目录 `experiment.json` 一起保留。此版本供仿真研究，尚未验证真机接口。
+
+## 2026-10-30：真正空手的独立稳站模型
+
+统一操作入口：运行 `.\.venv\Scripts\python.exe -m lifting_lab.mode_viewer --port 8082`，在同一个 viewer 选择空手/托箱、输入重量、应用并重置，再点 Play。[中文操作方法](docs/LOAD_CONTROLS_ZH.md)。切换会重建场景并换对应策略，不模拟连续接箱/卸箱。
+
+`codex/empty-hand-stand` 增加没有箱子实体的空手任务，Actor 只用 72 维本体观测。重新训练后，普通独立评测 **32/32**，小幅速度扰动 **16/16**，CPU 回放 **1/1**；均为仿真、一个训练 seed。模型、配置和原始评测见 [空手模型目录](shared_model/empty-hand-v1-20261030/README.md)，命令见 [中文操作说明](docs/EMPTY_HAND_ZH.md)。空手 viewer 使用 8081，原托箱 viewer 可保留在 8080。
+
+从双臂已抬起的姿态开始，尚未实现抬臂过渡、运行中接箱/卸箱或连续策略切换，也没有真机 adapter。这是独立任务，不是将托箱模型重量滑块改为 0。viewer 支持重置场景后切换模型。
+
+## 2026-10-29：平脚与直立姿态版本
+
+本分支同时包含脚底倾角、过度偏向单脚承重、腿姿、躯干直立和软性左右腿镜像奖励，保留原来的托箱与平顺动作要求。当前姿态演示模型在 [stance-v2 模型目录](shared_model/stance-v2-20261029/README.md)，训练与失败记录见 [直立姿态实验说明](docs/STANCE_V2_ZH.md)。同时保留 [stance-v1 平脚版本](shared_model/stance-v1-20261029/README.md) 与[第一阶段诊断](docs/STANCE_HOLD_ZH.md)作为对照。
+
+安装后的本地项目可直接打开新模型：
+
+```powershell
+.\.venv\Scripts\python.exe -m lifting_lab demo --device cpu --support-mode forearms --checkpoint shared_model/stance-v2-20261029/policy.pt --mass 0.4949224923474894 --seed 2027 --seconds 3600 --viewer --paused
+```
+
+在 viewer 点击 **Play**。修改 **Payload / 负重** 后点 **应用并重置**，再播放。`policy.pt` 和相邻的 `experiment.json` 要一起保留。v2 两组评测共 94/96 次托箱及严格平脚成功（约 0.25 kg：30/32；约 0.5 kg 和 1 kg：各 32/32）。脚平放、躯干和腿姿有改善，但轻载启动仍出现失败，仿真关节力矩也有所上升；不是所有指标都改善。v1 的已测启动可靠性更好。两版均不代表完全对称站姿或真机部署已验证；本次没有修改物理参数或降低托箱成功标准。
+
+## 旧版对照：运行 smooth-v1 平稳托箱模型
+
+本分支也保留之前 `codex/smooth-forearm-hold` 的模型和原始证据。完成开头的 clone 和安装后，以下命令可运行旧版对照；不需要另 clone 一个仓库。日常切换空手/托箱请使用开头的 `lifting_lab.mode_viewer`。
 
 只看演示、没有可用 NVIDIA GPU 时，把安装参数 `cu130` 改成 `cpu`；下面的 CUDA 评测和续训需要 GPU 安装。Linux 安装见第 1 节。
 
@@ -185,21 +214,21 @@ lifting-lab/
   scripts/                  安装、结果比较、打包与校验工具
   tests/                    自动化检查
   docs/                     物理与训练设计、团队评测、实物对应边界
-  shared_model/smooth-v1-20261028/  Git 分支附带的精选模型、评测和诊断
+  shared_model/              smooth-v1、stance-v1/v2、empty-hand-v1 模型与证据
   THIRD_PARTY_NOTICES.md     依赖来源与授权边界
   RELEASE_MANIFEST.json     仅源码 ZIP 生成的包内文件 SHA-256 清单
 ```
 
-运行后自动生成的 `.venv/`、`outputs/` 不随 Git 发布。`shared_model/smooth-v1-20261028/` 包含精选 checkpoint、相邻训练配置、五负载评测、约 0.495 kg 演示视频、关节诊断及 `SHA256SUMS.json`；详见该目录的 [文件说明](shared_model/smooth-v1-20261028/README.md)。`scripts/package_release.py` 的源码 ZIP 不包含这个目录。凭据、旧日志和第三方模型资产均不随本分支发布；依赖和机器人资产在安装时从锁定的上游提交获取，请遵守 [来源说明](THIRD_PARTY_NOTICES.md)。
+运行后自动生成的 `.venv/`、`outputs/` 不随 Git 发布。`shared_model/` 的四个日期目录包含精选 checkpoint、相邻配置、评测和诊断，每个目录都有 README 和 `SHA256SUMS.json`；历史对照和失败记录也保留。统一 viewer 默认使用 stance-v2 与 empty-hand-v1。`scripts/package_release.py` 的源码 ZIP 不包含 `shared_model/`。凭据、旧日志和第三方模型资产均不随本分支发布；依赖和机器人资产在安装时从锁定的上游提交获取，请遵守 [来源说明](THIRD_PARTY_NOTICES.md)。
 
 需要理解“前臂接触和旧手部连接有什么不同”：看 [实物与仿真对应](docs/SIM_TO_REAL_ZH.md)。需要详细参数：看 [环境设计](docs/ENVIRONMENT_DESIGN.md) 或运行 `python -m lifting_lab COMMAND --help`（使用本项目解释器）。本包不确认真实前臂外壳、衬垫或托架可以承重。
 
 ## 6. 用 Git 给四个人共用
 
-团队仓库为 [CS498_Team15_WorkingEnv](https://github.com/Lokshia/CS498_Team15_WorkingEnv)，平稳托箱版本在 `codex/smooth-forearm-hold` 分支。请按开头命令 clone，在这个独立仓库内操作。不要在包含其他课程作业的父目录执行 `git add .`。该分支供队友复测和继续研究；合入 `main` 应另行审查。
+团队仓库为 [CS498_Team15_WorkingEnv](https://github.com/Lokshia/CS498_Team15_WorkingEnv)，本次空手/托箱统一版本在 `codex/empty-hand-stand` 分支。请按开头命令 clone，在这个独立仓库内操作。不要在包含其他课程作业的父目录执行 `git add .`。该分支供队友复测和继续研究；合入 `main` 应另行审查。
 
 - 保留 `uv.lock`、`.python-version`、`.gitignore` 和中文 README。
-- `.gitignore` 排除 `.venv/`、`outputs/`、`validation/`、日志和本地凭据；仅为指定的 `shared_model/smooth-v1-20261028/` 发布文件保留例外。
+- `.gitignore` 排除 `.venv/`、`outputs/`、`validation/`、日志和本地凭据；仅为指定的四个 `shared_model/` 结果目录保留例外。
 - 提交前检查 `git status --short`，确认只有本项目的源码、说明及有意发布的模型/结果；不要使用 `git add -f` 上传整个输出目录。
 - 队友 clone 后进入仓库，按本文件第 1 节安装。GPU 用户选 `cu130`，CPU 用户选 `cpu`。
 - 开始统一测试前对齐 `git rev-parse HEAD` 的结果，避免各自使用不同版本。
