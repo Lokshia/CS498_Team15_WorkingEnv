@@ -102,10 +102,10 @@ def make_env_cfg(*, payload_mass_kg: float = 1.0, num_envs: int = 64,
     """
     del play
     validate_support_mode(support_mode)
-    if reward_profile not in ("baseline", "smooth-v1"):
-        raise ValueError("reward_profile must be 'baseline' or 'smooth-v1'")
-    if reward_profile == "smooth-v1" and support_mode != "forearms":
-        raise ValueError("smooth-v1 requires support_mode='forearms'")
+    if reward_profile not in ("baseline", "smooth-v1", "stance-v1", "stance-v2"):
+        raise ValueError("reward_profile must be 'baseline', 'smooth-v1', 'stance-v1' or 'stance-v2'")
+    if reward_profile in ("smooth-v1", "stance-v1", "stance-v2") and support_mode != "forearms":
+        raise ValueError(f"{reward_profile} requires support_mode='forearms'")
     if isinstance(num_envs, bool) or not isinstance(num_envs, int) or num_envs < 1:
         raise ValueError("num_envs must be a positive integer")
     if not math.isfinite(episode_length_s) or episode_length_s <= 0:
@@ -204,7 +204,7 @@ def make_env_cfg(*, payload_mass_kg: float = 1.0, num_envs: int = 64,
         **({"supported_hold": RewardTermCfg(func=mdp.supported_hold_reward, weight=3.0)}
            if support_mode == "forearms" else {}),
     }
-    if reward_profile == "smooth-v1":
+    if reward_profile in ("smooth-v1", "stance-v1", "stance-v2"):
         rewards["smooth_actions"].weight = -0.15
         rewards["payload_motion"].weight = -0.2
         rewards["foot_slip"].weight = -0.5
@@ -214,6 +214,24 @@ def make_env_cfg(*, payload_mass_kg: float = 1.0, num_envs: int = 64,
             "robot_vertical_velocity": RewardTermCfg(func=mdp.robot_vertical_velocity_cost, weight=-4.0),
             "robot_angular_velocity": RewardTermCfg(func=mdp.robot_angular_velocity_cost, weight=-0.2),
             "joint_velocity": RewardTermCfg(func=mdp.joint_velocity_cost, weight=-0.002),
+        })
+    if reward_profile in ("stance-v1", "stance-v2"):
+        # The old envelope includes tilted/airborne soles. Do not reward that
+        # approximation as stability; measured contact, pose and motion replace it.
+        del rewards["balance_approx"]
+        rewards["upright"].weight = 4.0
+        rewards.update({
+            "feet_flat": RewardTermCfg(func=mdp.feet_flat_cost, weight=-20.0),
+            "foot_load_share": RewardTermCfg(func=mdp.foot_load_share_cost, weight=-0.5),
+            "leg_posture": RewardTermCfg(func=mdp.leg_posture_cost, weight=-0.5),
+        })
+    if reward_profile == "stance-v2":
+        rewards.update({
+            "trunk_tilt": RewardTermCfg(func=mdp.trunk_tilt_cost, weight=-0.75),
+            "leg_symmetry": RewardTermCfg(func=mdp.leg_symmetry_cost, weight=-0.25),
+            # RewardManager multiplies by control dt=.02: -2 on a failure.
+            # is_terminated excludes time-limit truncations.
+            "failure": RewardTermCfg(func=builtin.is_terminated, weight=-100.0),
         })
     return LiftingEnvCfg(
         support_mode=support_mode, reward_profile=reward_profile,

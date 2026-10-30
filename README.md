@@ -1,4 +1,16 @@
-# K1 前臂托箱训练环境 · v0.4.0 + smooth-v1
+# K1 前臂托箱训练环境 · v0.4.0 + stance-v2
+
+## 2026-10-29：平脚与直立姿态版本（本地分支）
+
+本地 `codex/flat-foot-hold` 新增脚底倾角、过度偏向单脚承重、腿姿、躯干直立和软性左右腿镜像奖励，保留原来的托箱与平顺动作要求。当前姿态演示模型在 [stance-v2 模型目录](shared_model/stance-v2-20261029/README.md)，训练与失败记录见 [直立姿态实验说明](docs/STANCE_V2_ZH.md)。同时保留 [stance-v1 平脚版本](shared_model/stance-v1-20261029/README.md) 与[第一阶段诊断](docs/STANCE_HOLD_ZH.md)作为对照。这次改动尚未推送 GitHub；下面原有的 clone 命令仍获取已发布的 smooth-v1 版本。
+
+安装后的本地项目可直接打开新模型：
+
+```powershell
+.\.venv\Scripts\python.exe -m lifting_lab demo --device cpu --support-mode forearms --checkpoint shared_model/stance-v2-20261029/policy.pt --mass 0.4949224923474894 --seed 2027 --seconds 3600 --viewer --paused
+```
+
+在 viewer 点击 **Play**。修改 **Payload / 负重** 后点 **应用并重置**，再播放。`policy.pt` 和相邻的 `experiment.json` 要一起保留。v2 两组评测共 94/96 次托箱及严格平脚成功（约 0.25 kg：30/32；约 0.5 kg 和 1 kg：各 32/32）。脚平放、躯干和腿姿有改善，但轻载启动仍出现失败，仿真关节力矩也有所上升；不是所有指标都改善。v1 的已测启动可靠性更好。两版均不代表完全对称站姿或真机部署已验证；本次没有修改物理参数或降低托箱成功标准。
 
 ## 队友快速开始：运行已训练的平稳托箱模型
 

@@ -1,0 +1,9 @@
+{
+  "checkpoint": "policy.pt",
+  "sha256": "b0177c11ad67e6351b10b84ace80d79bac48face440eb3dc93946d6bd1802ada",
+  "iterations_this_phase": 400,
+  "actual_phase_env_steps": 2457600,
+  "actual_cumulative_env_steps": 21516288,
+  "finite_training_state": true,
+  "policy_quality": "not evaluated; a completed train loop is not success evidence"
+}

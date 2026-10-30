@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "selection_status": "Selected as posture-improved simulation demo with known startup reliability and torque tradeoffs; verification complete.",
+  "selected_checkpoint_file": "policy.pt",
+  "selected_checkpoint_sha256": "b0177c11ad67e6351b10b84ace80d79bac48face440eb3dc93946d6bd1802ada",
+  "source_checkpoint": "outputs/stance_study_20261029/upright_recovery400/policy.pt",
+  "checkpoint_last_completed_iteration_zero_based": 1950,
+  "total_updates_in_selected_checkpoint": 1951,
+  "cumulative_transitions_in_selected_checkpoint": 21516288,
+  "reward_profile": "stance-v2",
+  "training_seed": 11,
+  "source_fingerprint": "3db870c3d1fd52617a35ec6143793a425b6bb94c430ea078c37d80f4477c8990",
+  "recovery_run_metadata_file": "experiment.json",
+  "recovery_run_completion_file": "completed.json",
+  "training_lineage": [
+    {
+      "stage": "smooth-v1",
+      "last_completed_iteration": 999,
+      "updates_in_stage": 1000,
+      "num_envs": 512,
+      "rollout_steps": 24,
+      "cumulative_transitions": 12288000
+    },
+    {
+      "stage": "stance-v1 pilot300",
+      "last_completed_iteration": 1299,
+      "updates_in_stage": 300,
+      "num_envs": 512,
+      "rollout_steps": 24,
+      "cumulative_transitions": 15974400
+    },
+    {
+      "stage": "stance-v1 mixed151 selected",
+      "last_completed_iteration": 1450,
+      "updates_in_stage": 151,
+      "num_envs": 512,
+      "rollout_steps": 24,
+      "cumulative_transitions": 17829888,
+      "relative_checkpoint": "../stance-v1-20261029/policy.pt",
+      "sha256": "b0093a17767ba382549e392dc0c2f5844dea66b37173a6b6f1ba08c9c98a18f4"
+    },
+    {
+      "stage": "stance-v2 upright300 saved checkpoint",
+      "last_completed_iteration": 1550,
+      "updates_in_stage_saved": 100,
+      "num_envs": 512,
+      "rollout_steps": 24,
+      "cumulative_transitions": 19058688,
+      "sha256": "40bd97a5c57b8ac4fb80f87b3986b05e419f5bd7911992c783a30d79c398d7f7"
+    },
+    {
+      "stage": "stance-v2 recovery400",
+      "last_completed_iteration": 1950,
+      "updates_in_stage": 400,
+      "num_envs": 256,
+      "rollout_steps": 24,
+      "phase_transitions": 2457600,
+      "cumulative_transitions": 21516288
+    }
+  ],
+  "interruption": {
+    "original_run": "outputs/stance_study_20261029/upright300",
+    "metadata_file": "interrupted_run_experiment.json",
+    "planned_updates": 300,
+    "last_saved_iteration": 1550,
+    "logged_iteration_near_failure": 1589,
+    "error": "CUDA error 719: unspecified launch failure",
+    "completed_json_present": false,
+    "contemporaneous_windows_events": "nvlddmkm 13/153, 2026-10-29 20:22:18-20:22:20 America/Chicago; association is not proof of root cause.",
+    "budget_note": "Only the 100 v2 updates retained in model_1550.pt are counted. Uncheckpointed work after iteration1550 was not retained. Recovery uses half the environment batch and twice the remaining update count, matching the planned interaction budget but not the optimizer trajectory."
+  },
+  "selection_evaluation_file": "evaluation_seed5011.json",
+  "selection_evaluation_seed": 5011,
+  "selection_total_episodes": 48,
+  "selection_hold_successes": 47,
+  "selection_strict_stance_successes": 47,
+  "additional_evaluation_status": "seed6011 complete: 47/48 hold and strict stance successes; one light-load startup contact failure",
+  "fallback_model": "../stance-v1-20261029/policy.pt",
+  "fallback_selection_record": "../stance-v1-20261029/selection.json",
+  "matched_original_baseline_summary": "../stance-v1-20261029/baseline_stance_summary.json",
+  "matched_v1_summary": "../stance-v1-20261029/stance_summary.json",
+  "limitations": [
+    "Selected for improved measured posture, not a claim of universally better or fully reliable holding. Retain stance-v1 as the more reliable measured fallback.",
+    "CPU steady trunk tilt improves to1.549deg from smooth-v1 2.646deg, but torque RMS increases approximately6.76percent to2.237Nm. Raw mirrored-leg RMS7.256deg does not imply full symmetry.",
+    "Seed5011 was reused for candidate selection. Training uses one continued seed11; only three fixed evaluated load points, fixed friction, no external pushes or payload relative-pose perturbations.",
+    "97-dimensional simulator-state observation and22actions remain unchanged. No real-robot sensor adapter, control mapping, entry-pose sequence or deployment validation."
+  ],
+  "additional_evaluation_file": "evaluation_seed6011.json",
+  "additional_evaluation_seed": 6011,
+  "additional_total_episodes": 48,
+  "additional_hold_successes": 47,
+  "additional_strict_stance_successes": 47,
+  "known_failures": [
+    {
+      "mass_kg": 0.247461246173745,
+      "seed": 5011,
+      "slot": 7,
+      "time_seconds": 0.26,
+      "reason": "support contact gap, 7 consecutive control steps"
+    },
+    {
+      "mass_kg": 0.247461246173745,
+      "seed": 6011,
+      "slot": 4,
+      "time_seconds": 0.26,
+      "reason": "support contact gap, 7 consecutive control steps"
+    }
+  ],
+  "combined_evaluation": {
+    "total_episodes": 96,
+    "hold_successes": 94,
+    "strict_stance_successes": 94,
+    "by_mass": [
+      {
+        "mass_kg": 0.247461246173745,
+        "episodes": 32,
+        "hold_successes": 30,
+        "strict_stance_successes": 30
+      },
+      {
+        "mass_kg": 0.494922492347489,
+        "episodes": 32,
+        "hold_successes": 32,
+        "strict_stance_successes": 32
+      },
+      {
+        "mass_kg": 0.989844984694979,
+        "episodes": 32,
+        "hold_successes": 32,
+        "strict_stance_successes": 32
+      }
+    ],
+    "note": "One training seed (11), two evaluation seeds (5011,6011). Seed5011 informed checkpoint selection; no claim of independent training replicas or hardware validation."
+  }
+}

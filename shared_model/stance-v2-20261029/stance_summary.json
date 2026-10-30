@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "formal_evaluation": false,
+  "checkpoint": "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\stance_study_20261029\\upright_recovery400\\policy.pt",
+  "checkpoint_sha256": "b0177c11ad67e6351b10b84ace80d79bac48face440eb3dc93946d6bd1802ada",
+  "runtime": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "cpu",
+    "gpu": null,
+    "nvidia_driver_inventory": [
+      "NVIDIA GeForce RTX 5090 Laptop GPU, 591.91"
+    ],
+    "torch_cuda": "13.0",
+    "versions": {
+      "torch": "2.11.0+cu130",
+      "mjlab": "1.6.0",
+      "mujoco": "3.11.0",
+      "mujoco-warp": "3.11.0",
+      "warp-lang": "1.15.0",
+      "rsl-rl-lib": "5.5.0",
+      "booster-mjlab": "0.1.0",
+      "numpy": "2.4.4",
+      "viser": "1.1.0"
+    },
+    "source_sha256": "3db870c3d1fd52617a35ec6143793a425b6bb94c430ea078c37d80f4477c8990"
+  },
+  "runtime_source_sha256_at_end": "3db870c3d1fd52617a35ec6143793a425b6bb94c430ea078c37d80f4477c8990",
+  "source_files_changed_during_capture": false,
+  "seed": 2027,
+  "mass": {
+    "robot_mass_kg": 19.796899693899576,
+    "requested_payload_mass_kg": 0.494922492347489,
+    "actual_payload_mass_kg": 0.494922492347489,
+    "requested_mass_fraction": 0.024999999999999977,
+    "zero_load_uses_1g_proxy": false,
+    "mass_range_fraction": null,
+    "mass_range_kg": null,
+    "nominal_mass_is_range_midpoint": false
+  },
+  "reward_profile": "stance-v2",
+  "requested_seconds": 20.0,
+  "recorded_seconds": 20.0,
+  "auto_reset": false,
+  "terminated": false,
+  "truncated": false,
+  "stopped_early": false,
+  "foot_order": [
+    "left",
+    "right"
+  ],
+  "sensor_primary_names": [
+    "left_foot_link",
+    "right_foot_link"
+  ],
+  "joint_names": [
+    "Head_Yaw",
+    "Head_Pitch",
+    "Left_Shoulder_Pitch",
+    "Left_Shoulder_Roll",
+    "Left_Elbow_Pitch",
+    "Left_Elbow_Yaw",
+    "Right_Shoulder_Pitch",
+    "Right_Shoulder_Roll",
+    "Right_Elbow_Pitch",
+    "Right_Elbow_Yaw",
+    "Left_Hip_Pitch",
+    "Left_Hip_Roll",
+    "Left_Hip_Yaw",
+    "Left_Knee_Pitch",
+    "Left_Ankle_Pitch",
+    "Left_Ankle_Roll",
+    "Right_Hip_Pitch",
+    "Right_Hip_Roll",
+    "Right_Hip_Yaw",
+    "Right_Knee_Pitch",
+    "Right_Ankle_Pitch",
+    "Right_Ankle_Roll"
+  ],
+  "reference_total_weight_n": 199.0627756470837,
+  "sampling": "Post-control-step final substep, 50 Hz; not decimation-averaged force.",
+  "force_convention": "netforce sensor sums all contacts in each foot subtree in WORLD frame. Sensor is primary foot on secondary terrain; negative yields ground reaction on foot. No abs or sign guessing.",
+  "tilt_convention": "Angle of sole site local +Z to world +Z, from normalized wxyz quaternion; no yaw penalty.",
+  "all": {
+    "frames": 1000,
+    "time_first_s": 0.02,
+    "time_last_s": 20.0,
+    "vertical_force_mean_n_left_right": [
+      111.243408203125,
+      87.92225646972656
+    ],
+    "vertical_force_min_n_left_right": [
+      -0.0,
+      -0.0
+    ],
+    "vertical_force_max_n_left_right": [
+      200.87673950195312,
+      270.5902099609375
+    ],
+    "total_vertical_force_mean_n": 199.1657257080078,
+    "loaded_frames": 999,
+    "left_load_fraction_mean_when_loaded": 0.5601733922958374,
+    "left_load_fraction_p05_p95_when_loaded": [
+      0.545754200220108,
+      0.5707163572311401
+    ],
+    "fraction_with_each_foot_at_least_20percent_when_loaded": 0.993993993993994,
+    "sole_tilt_mean_deg_left_right": [
+      0.1026447285986429,
+      1.2453882774843756
+    ],
+    "sole_tilt_p95_deg_left_right": [
+      0.2663588275191342,
+      2.5317461591501558
+    ],
+    "sole_tilt_max_deg_left_right": [
+      4.274781691027811,
+      9.792200942463522
+    ],
+    "both_feet_contact_fraction": 0.996,
+    "both_feet_contact_and_tilt_under_5deg_fraction": 0.986,
+    "both_feet_contact_and_tilt_under_10deg_fraction": 0.996,
+    "robot_tilt_mean_deg": 1.5805147067904473,
+    "robot_tilt_max_deg": 3.2507054805755615,
+    "joint_velocity_rms_rad_s": 0.27632981538772583,
+    "joint_torque_rms_nm": 2.425725221633911,
+    "joint_torque_rms_nm_by_joint": [
+      0.04022042080760002,
+      0.3307112157344818,
+      0.9111249446868896,
+      0.11320777237415314,
+      0.07317919284105301,
+      0.4753561019897461,
+      1.0527695417404175,
+      0.19738952815532684,
+      0.17040614783763885,
+      0.8165366053581238,
+      3.7417216300964355,
+      2.0868375301361084,
+      1.3986647129058838,
+      5.352855205535889,
+      1.4022432565689087,
+      2.0314199924468994,
+      1.5344042778015137,
+      2.1320526599884033,
+      1.8424218893051147,
+      6.903172492980957,
+      2.4729268550872803,
+      2.702117681503296
+    ],
+    "joint_torque_max_abs_nm_by_joint": [
+      0.49471402168273926,
+      1.0620381832122803,
+      2.604747772216797,
+      0.7209510803222656,
+      0.358184814453125,
+      1.1586837768554688,
+      2.3161282539367676,
+      0.9542303085327148,
+      0.3995805084705353,
+      1.8753337860107422,
+      8.491146087646484,
+      13.283702850341797,
+      5.315636157989502,
+      25.289588928222656,
+      11.810074806213379,
+      3.8059301376342773,
+      8.074565887451172,
+      11.06224536895752,
+      6.100903034210205,
+      28.156803131103516,
+      8.359167098999023,
+      6.285892963409424
+    ],
+    "leg_mirror": {
+      "pair_names": [
+        "Hip_Pitch",
+        "Hip_Roll",
+        "Hip_Yaw",
+        "Knee_Pitch",
+        "Ankle_Pitch",
+        "Ankle_Roll"
+      ],
+      "right_joint_mirror_sign": [
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "convention": "q_left - sign*q_right; named joints; degrees. Zero is an exact mirrored leg pose.",
+      "rms_deg_over_frames_and_pairs": 7.196791672320964,
+      "max_abs_deg_over_frames_and_pairs": 14.580065873088657,
+      "rms_deg_by_pair": [
+        3.759244276214434,
+        14.062276986417631,
+        1.8886655946614244,
+        3.6158535029073473,
+        1.8280465972707818,
+        8.882572939920612
+      ],
+      "mean_signed_deg_by_pair": [
+        -3.693273440107482,
+        -13.768485341704286,
+        1.575645291745898,
+        3.4143528093870392,
+        0.9001707729438428,
+        8.596842384952717
+      ],
+      "max_abs_deg_by_pair": [
+        7.93591141927319,
+        14.580065873088657,
+        7.634993561566527,
+        4.652912692814861,
+        7.014172268138092,
+        11.147508628808675
+      ],
+      "all_pairs_within_5deg_fraction": 0.005,
+      "limitations": "A mirrored joint pose is a geometric preference, not proof of balanced forces or stability."
+    }
+  },
+  "startup_before_2s": {
+    "frames": 99,
+    "time_first_s": 0.02,
+    "time_last_s": 1.98,
+    "vertical_force_mean_n_left_right": [
+      107.16459655761719,
+      92.8647689819336
+    ],
+    "vertical_force_min_n_left_right": [
+      -0.0,
+      -0.0
+    ],
+    "vertical_force_max_n_left_right": [
+      200.87673950195312,
+      270.5902099609375
+    ],
+    "total_vertical_force_mean_n": 200.02938842773438,
+    "loaded_frames": 98,
+    "left_load_fraction_mean_when_loaded": 0.5521631240844727,
+    "left_load_fraction_p05_p95_when_loaded": [
+      0.33424134701490404,
+      0.7098801851272577
+    ],
+    "fraction_with_each_foot_at_least_20percent_when_loaded": 0.9387755102040817,
+    "sole_tilt_mean_deg_left_right": [
+      0.47705084106125206,
+      1.4789663636080075
+    ],
+    "sole_tilt_p95_deg_left_right": [
+      2.8635489629545083,
+      7.217584464142006
+    ],
+    "sole_tilt_max_deg_left_right": [
+      4.274781691027811,
+      9.792200942463522
+    ],
+    "both_feet_contact_fraction": 0.9595959595959596,
+    "both_feet_contact_and_tilt_under_5deg_fraction": 0.8585858585858586,
+    "both_feet_contact_and_tilt_under_10deg_fraction": 0.9595959595959596,
+    "robot_tilt_mean_deg": 1.8674045614521912,
+    "robot_tilt_max_deg": 3.2507054805755615,
+    "joint_velocity_rms_rad_s": 0.8777174353599548,
+    "joint_torque_rms_nm": 3.7247016429901123,
+    "joint_torque_rms_nm_by_joint": [
+      0.12703706324100494,
+      0.40063169598579407,
+      1.0100988149642944,
+      0.25670504570007324,
+      0.1487509310245514,
+      0.550070583820343,
+      1.0668922662734985,
+      0.16662077605724335,
+      0.15034443140029907,
+      0.8390730619430542,
+      4.464390754699707,
+      4.834683895111084,
+      3.507114887237549,
+      8.14195442199707,
+      4.134592056274414,
+      0.9866532683372498,
+      2.8581132888793945,
+      3.953942060470581,
+      1.9070557355880737,
+      10.934762954711914,
+      2.9385128021240234,
+      2.4752519130706787
+    ],
+    "joint_torque_max_abs_nm_by_joint": [
+      0.49471402168273926,
+      1.0620381832122803,
+      2.604747772216797,
+      0.7209510803222656,
+      0.358184814453125,
+      1.1586837768554688,
+      2.3161282539367676,
+      0.9542303085327148,
+      0.3995805084705353,
+      1.8753337860107422,
+      8.491146087646484,
+      13.283702850341797,
+      5.315636157989502,
+      25.289588928222656,
+      11.810074806213379,
+      3.8059301376342773,
+      8.074565887451172,
+      11.06224536895752,
+      6.100903034210205,
+      28.156803131103516,
+      8.359167098999023,
+      6.285892963409424
+    ],
+    "leg_mirror": {
+      "pair_names": [
+        "Hip_Pitch",
+        "Hip_Roll",
+        "Hip_Yaw",
+        "Knee_Pitch",
+        "Ankle_Pitch",
+        "Ankle_Roll"
+      ],
+      "right_joint_mirror_sign": [
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "convention": "q_left - sign*q_right; named joints; degrees. Zero is an exact mirrored leg pose.",
+      "rms_deg_over_frames_and_pairs": 6.632291025525851,
+      "max_abs_deg_over_frames_and_pairs": 13.83079582868555,
+      "rms_deg_by_pair": [
+        5.263549324430891,
+        11.004365443554748,
+        3.089555645222183,
+        1.5472550793627087,
+        5.017322945898246,
+        8.83231641578984
+      ],
+      "mean_signed_deg_by_pair": [
+        -5.03466369413454,
+        -8.406569552376958,
+        0.4251076014278913,
+        0.8848137169019561,
+        4.190396248251527,
+        6.1870594762178195
+      ],
+      "max_abs_deg_by_pair": [
+        7.93591141927319,
+        13.83079582868555,
+        7.634993561566527,
+        4.52343279671893,
+        7.014172268138092,
+        11.147508628808675
+      ],
+      "all_pairs_within_5deg_fraction": 0.050505050505050504,
+      "limitations": "A mirrored joint pose is a geometric preference, not proof of balanced forces or stability."
+    }
+  },
+  "steady_from_2s": {
+    "frames": 901,
+    "time_first_s": 2.0,
+    "time_last_s": 20.0,
+    "vertical_force_mean_n_left_right": [
+      111.69156646728516,
+      87.3791732788086
+    ],
+    "vertical_force_min_n_left_right": [
+      103.1888427734375,
+      85.4173583984375
+    ],
+    "vertical_force_max_n_left_right": [
+      116.13197326660156,
+      92.25962829589844
+    ],
+    "total_vertical_force_mean_n": 199.07083129882812,
+    "loaded_frames": 901,
+    "left_load_fraction_mean_when_loaded": 0.5610446929931641,
+    "left_load_fraction_p05_p95_when_loaded": [
+      0.5491403937339783,
+      0.5697938203811646
+    ],
+    "fraction_with_each_foot_at_least_20percent_when_loaded": 1.0,
+    "sole_tilt_mean_deg_left_right": [
+      0.06150576618599213,
+      1.2197232047582496
+    ],
+    "sole_tilt_p95_deg_left_right": [
+      0.260627694087308,
+      2.4643950170676647
+    ],
+    "sole_tilt_max_deg_left_right": [
+      0.28416568564171757,
+      2.6041296973230432
+    ],
+    "both_feet_contact_fraction": 1.0,
+    "both_feet_contact_and_tilt_under_5deg_fraction": 1.0,
+    "both_feet_contact_and_tilt_under_10deg_fraction": 1.0,
+    "robot_tilt_mean_deg": 1.5489918481761158,
+    "robot_tilt_max_deg": 1.6155575513839722,
+    "joint_velocity_rms_rad_s": 0.00998184084892273,
+    "joint_torque_rms_nm": 2.237476348876953,
+    "joint_torque_rms_nm_by_joint": [
+      0.00470895366743207,
+      0.3221043348312378,
+      0.8995863795280457,
+      0.08356741070747375,
+      0.059265147894620895,
+      0.4664174020290375,
+      1.051206350326538,
+      0.2004825621843338,
+      0.17246824502944946,
+      0.8140224814414978,
+      3.6536097526550293,
+      1.505022644996643,
+      0.9053904414176941,
+      4.951507568359375,
+      0.5513536930084229,
+      2.114978313446045,
+      1.3097795248031616,
+      1.8240946531295776,
+      1.835181474685669,
+      6.304915428161621,
+      2.416304111480713,
+      2.7258944511413574
+    ],
+    "joint_torque_max_abs_nm_by_joint": [
+      0.00995779037475586,
+      0.32485485076904297,
+      0.9374592304229736,
+      0.14990234375,
+      0.10098910331726074,
+      0.48866748809814453,
+      1.1282178163528442,
+      0.25043678283691406,
+      0.18636417388916016,
+      0.8324136734008789,
+      4.4526214599609375,
+      3.2668228149414062,
+      2.553016185760498,
+      5.1075592041015625,
+      2.199462890625,
+      2.592522144317627,
+      2.2033462524414062,
+      2.965749740600586,
+      2.6369543075561523,
+      6.785854339599609,
+      2.595515251159668,
+      2.977749824523926
+    ],
+    "leg_mirror": {
+      "pair_names": [
+        "Hip_Pitch",
+        "Hip_Roll",
+        "Hip_Yaw",
+        "Knee_Pitch",
+        "Ankle_Pitch",
+        "Ankle_Roll"
+      ],
+      "right_joint_mirror_sign": [
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "convention": "q_left - sign*q_right; named joints; degrees. Zero is an exact mirrored leg pose.",
+      "rms_deg_over_frames_and_pairs": 7.256140515233499,
+      "max_abs_deg_over_frames_and_pairs": 14.580065873088657,
+      "rms_deg_by_pair": [
+        3.5553538329605368,
+        14.35861933438612,
+        1.7059235032515199,
+        3.7746438814034953,
+        0.9710429745236958,
+        8.888077694574326
+      ],
+      "mean_signed_deg_by_pair": [
+        -3.5458842779002913,
+        -14.357641460620387,
+        1.702063972480063,
+        3.6922932868077085,
+        0.5386476630043748,
+        8.861624302782634
+      ],
+      "max_abs_deg_by_pair": [
+        4.820771421857095,
+        14.580065873088657,
+        2.257617431083811,
+        4.652912692814861,
+        3.862367815257368,
+        10.479576745910313
+      ],
+      "all_pairs_within_5deg_fraction": 0.0,
+      "limitations": "A mirrored joint pose is a geometric preference, not proof of balanced forces or stability."
+    }
+  },
+  "task_metrics_final": {
+    "payload_height_m": 0.5897508263587952,
+    "height_error_m": -0.003496885299682617,
+    "payload_tilt_deg": 1.790784478187561,
+    "robot_tilt_deg": 1.6093679666519165,
+    "upright": 0.9996055364608765,
+    "com_margin_approx_m": 0.04059865325689316,
+    "base_height_m": 0.5045860409736633,
+    "support_reference_offset_m": 0.09044324606657028,
+    "torque_rms_nm": 2.31081485748291,
+    "feet_contact_count": 2.0,
+    "foot_slip_m2_s2": 1.3248503591967165e-06,
+    "joint_velocity_rms_rad_s": 0.014780488796532154,
+    "action_delta_rms": 0.0012460551224648952,
+    "robot_vertical_speed_m_s": 3.292132169008255e-05,
+    "robot_angular_speed_rad_s": 0.0096253901720047,
+    "payload_linear_speed_m_s": 0.0007254782249219716,
+    "payload_angular_speed_rad_s": 0.002818185603246093,
+    "both_feet_contact": 1.0,
+    "airborne": 0.0,
+    "fell": 0.0,
+    "nonfinite": 0.0,
+    "left_forearm_contact": 1.0,
+    "right_forearm_contact": 1.0,
+    "forearm_contact_count": 2.0,
+    "forearm_support_force_n": 2.563045024871826,
+    "payload_forearm_supported": 1.0,
+    "payload_disallowed_contact": 0.0,
+    "support_gap_steps": 0.0,
+    "support_lost": 0.0,
+    "valid_hold": 1.0
+  },
+  "script_sha256": "fc175b8c3381b28d37ac0ab7c9ea4af7a8911878d6145ab2624780c9e42a7771",
+  "limitations": [
+    "One replay is not a success-rate estimate or real-robot validation.",
+    "Foot vertical forces are simulated ground reactions; joint torques are simulated actuator torques.",
+    "Sole tilt and contact presence do not measure contact area, COP, or a true support polygon.",
+    "Control-step samples can miss physics-substep peaks."
+  ]
+}

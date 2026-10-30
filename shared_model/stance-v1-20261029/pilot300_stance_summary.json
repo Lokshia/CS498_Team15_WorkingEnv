@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "formal_evaluation": false,
+  "checkpoint": "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\stance_study_20261029\\pilot300\\policy.pt",
+  "checkpoint_sha256": "adc8223dc24db0c82dd87e29881f20f7118353528cf7cfdf44f0399e4c62260b",
+  "runtime": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "cpu",
+    "gpu": null,
+    "nvidia_driver_inventory": [
+      "NVIDIA GeForce RTX 5090 Laptop GPU, 591.91"
+    ],
+    "torch_cuda": "13.0",
+    "versions": {
+      "torch": "2.11.0+cu130",
+      "mjlab": "1.6.0",
+      "mujoco": "3.11.0",
+      "mujoco-warp": "3.11.0",
+      "warp-lang": "1.15.0",
+      "rsl-rl-lib": "5.5.0",
+      "booster-mjlab": "0.1.0",
+      "numpy": "2.4.4",
+      "viser": "1.1.0"
+    },
+    "source_sha256": "3b09ef90d8b244caa2d602e0783a8bae129a916458ba02e198eba4e55b5717b8"
+  },
+  "runtime_source_sha256_at_end": "3b09ef90d8b244caa2d602e0783a8bae129a916458ba02e198eba4e55b5717b8",
+  "source_files_changed_during_capture": false,
+  "seed": 2027,
+  "mass": {
+    "robot_mass_kg": 19.796899693899576,
+    "requested_payload_mass_kg": 0.4949224923474894,
+    "actual_payload_mass_kg": 0.4949224923474894,
+    "requested_mass_fraction": 0.025,
+    "zero_load_uses_1g_proxy": false,
+    "mass_range_fraction": null,
+    "mass_range_kg": null,
+    "nominal_mass_is_range_midpoint": false
+  },
+  "reward_profile": "stance-v1",
+  "requested_seconds": 20.0,
+  "recorded_seconds": 20.0,
+  "auto_reset": false,
+  "terminated": false,
+  "truncated": false,
+  "stopped_early": false,
+  "foot_order": [
+    "left",
+    "right"
+  ],
+  "sensor_primary_names": [
+    "left_foot_link",
+    "right_foot_link"
+  ],
+  "joint_names": [
+    "Head_Yaw",
+    "Head_Pitch",
+    "Left_Shoulder_Pitch",
+    "Left_Shoulder_Roll",
+    "Left_Elbow_Pitch",
+    "Left_Elbow_Yaw",
+    "Right_Shoulder_Pitch",
+    "Right_Shoulder_Roll",
+    "Right_Elbow_Pitch",
+    "Right_Elbow_Yaw",
+    "Left_Hip_Pitch",
+    "Left_Hip_Roll",
+    "Left_Hip_Yaw",
+    "Left_Knee_Pitch",
+    "Left_Ankle_Pitch",
+    "Left_Ankle_Roll",
+    "Right_Hip_Pitch",
+    "Right_Hip_Roll",
+    "Right_Hip_Yaw",
+    "Right_Knee_Pitch",
+    "Right_Ankle_Pitch",
+    "Right_Ankle_Roll"
+  ],
+  "reference_total_weight_n": 199.0627756470837,
+  "sampling": "Post-control-step final substep, 50 Hz; not decimation-averaged force.",
+  "force_convention": "netforce sensor sums all contacts in each foot subtree in WORLD frame. Sensor is primary foot on secondary terrain; negative yields ground reaction on foot. No abs or sign guessing.",
+  "tilt_convention": "Angle of sole site local +Z to world +Z, from normalized wxyz quaternion; no yaw penalty.",
+  "all": {
+    "frames": 1000,
+    "time_first_s": 0.02,
+    "time_last_s": 20.0,
+    "vertical_force_mean_n_left_right": [
+      115.3319091796875,
+      83.81983184814453
+    ],
+    "vertical_force_min_n_left_right": [
+      -0.0,
+      -0.0
+    ],
+    "vertical_force_max_n_left_right": [
+      259.37457275390625,
+      251.78036499023438
+    ],
+    "total_vertical_force_mean_n": 199.15174865722656,
+    "loaded_frames": 1000,
+    "left_load_fraction_mean_when_loaded": 0.5794094204902649,
+    "left_load_fraction_p05_p95_when_loaded": [
+      0.5634454250335693,
+      0.600622084736824
+    ],
+    "fraction_with_each_foot_at_least_20percent_when_loaded": 0.998,
+    "sole_tilt_mean_deg_left_right": [
+      0.07355001099740544,
+      0.28124718569620116
+    ],
+    "sole_tilt_p95_deg_left_right": [
+      0.06095875843930469,
+      0.4726763587826893
+    ],
+    "sole_tilt_max_deg_left_right": [
+      3.3238776900481994,
+      7.979777921445555
+    ],
+    "both_feet_contact_fraction": 0.998,
+    "both_feet_contact_and_tilt_under_5deg_fraction": 0.989,
+    "both_feet_contact_and_tilt_under_10deg_fraction": 0.998,
+    "robot_tilt_mean_deg": 4.019395868718624,
+    "robot_tilt_max_deg": 4.5901336669921875,
+    "joint_velocity_rms_rad_s": 0.2704140543937683,
+    "joint_torque_rms_nm": 2.137937068939209,
+    "joint_torque_rms_nm_by_joint": [
+      0.04466138407588005,
+      0.346091628074646,
+      0.8592926859855652,
+      0.11466149985790253,
+      0.06785023212432861,
+      0.47661712765693665,
+      1.1804858446121216,
+      0.21374057233333588,
+      0.2087419480085373,
+      0.7908373475074768,
+      2.0847692489624023,
+      2.79724383354187,
+      1.4123525619506836,
+      6.323307991027832,
+      1.4372299909591675,
+      1.8098316192626953,
+      1.5318071842193604,
+      1.7690129280090332,
+      0.9512392282485962,
+      3.8693318367004395,
+      3.2939698696136475,
+      2.3770108222961426
+    ],
+    "joint_torque_max_abs_nm_by_joint": [
+      0.438900887966156,
+      0.8663794994354248,
+      2.5726490020751953,
+      0.6291561126708984,
+      0.35726651549339294,
+      1.208465576171875,
+      2.1202280521392822,
+      0.7950401306152344,
+      0.3655003309249878,
+      1.8454103469848633,
+      8.07244873046875,
+      12.420888900756836,
+      4.01727294921875,
+      26.182971954345703,
+      11.830595016479492,
+      3.366771697998047,
+      7.5041961669921875,
+      8.267248153686523,
+      5.496047019958496,
+      26.26291275024414,
+      7.491167068481445,
+      6.709406852722168
+    ]
+  },
+  "startup_before_2s": {
+    "frames": 99,
+    "time_first_s": 0.02,
+    "time_last_s": 1.98,
+    "vertical_force_mean_n_left_right": [
+      112.18231201171875,
+      87.30440521240234
+    ],
+    "vertical_force_min_n_left_right": [
+      -0.0,
+      -0.0
+    ],
+    "vertical_force_max_n_left_right": [
+      259.37457275390625,
+      251.78036499023438
+    ],
+    "total_vertical_force_mean_n": 199.4867401123047,
+    "loaded_frames": 99,
+    "left_load_fraction_mean_when_loaded": 0.5653898119926453,
+    "left_load_fraction_p05_p95_when_loaded": [
+      0.32677128314971926,
+      0.6843232929706573
+    ],
+    "fraction_with_each_foot_at_least_20percent_when_loaded": 0.9797979797979798,
+    "sole_tilt_mean_deg_left_right": [
+      0.4695163778423836,
+      1.2706193418728338
+    ],
+    "sole_tilt_p95_deg_left_right": [
+      2.349048308411196,
+      6.199932625341026
+    ],
+    "sole_tilt_max_deg_left_right": [
+      3.3238776900481994,
+      7.979777921445555
+    ],
+    "both_feet_contact_fraction": 0.9797979797979798,
+    "both_feet_contact_and_tilt_under_5deg_fraction": 0.8888888888888888,
+    "both_feet_contact_and_tilt_under_10deg_fraction": 0.9797979797979798,
+    "robot_tilt_mean_deg": 3.6076639607699232,
+    "robot_tilt_max_deg": 4.5901336669921875,
+    "joint_velocity_rms_rad_s": 0.8583678603172302,
+    "joint_torque_rms_nm": 3.502279758453369,
+    "joint_torque_rms_nm_by_joint": [
+      0.13832303881645203,
+      0.3813354969024658,
+      0.9459413290023804,
+      0.25034958124160767,
+      0.12834668159484863,
+      0.5387255549430847,
+      1.1602661609649658,
+      0.15738311409950256,
+      0.1383053958415985,
+      0.8440101146697998,
+      1.5280019044876099,
+      5.152228832244873,
+      2.381092071533203,
+      9.783365249633789,
+      3.502943992614746,
+      1.3031530380249023,
+      2.739838123321533,
+      2.665372848510742,
+      1.9920650720596313,
+      9.312145233154297,
+      3.491279125213623,
+      2.1454079151153564
+    ],
+    "joint_torque_max_abs_nm_by_joint": [
+      0.438900887966156,
+      0.8663794994354248,
+      2.5726490020751953,
+      0.6291561126708984,
+      0.35726651549339294,
+      1.208465576171875,
+      2.1202280521392822,
+      0.7950401306152344,
+      0.3655003309249878,
+      1.8454103469848633,
+      8.07244873046875,
+      12.420888900756836,
+      4.01727294921875,
+      26.182971954345703,
+      11.830595016479492,
+      3.366771697998047,
+      7.5041961669921875,
+      8.267248153686523,
+      5.496047019958496,
+      26.26291275024414,
+      7.491167068481445,
+      6.709406852722168
+    ]
+  },
+  "steady_from_2s": {
+    "frames": 901,
+    "time_first_s": 2.0,
+    "time_last_s": 20.0,
+    "vertical_force_mean_n_left_right": [
+      115.6779556274414,
+      83.43696594238281
+    ],
+    "vertical_force_min_n_left_right": [
+      108.32889556884766,
+      78.8319091796875
+    ],
+    "vertical_force_max_n_left_right": [
+      123.9930419921875,
+      89.360595703125
+    ],
+    "total_vertical_force_mean_n": 199.1149444580078,
+    "loaded_frames": 901,
+    "left_load_fraction_mean_when_loaded": 0.5809498429298401,
+    "left_load_fraction_p05_p95_when_loaded": [
+      0.5672499537467957,
+      0.5941876769065857
+    ],
+    "fraction_with_each_foot_at_least_20percent_when_loaded": 1.0,
+    "sole_tilt_mean_deg_left_right": [
+      0.0300420528202103,
+      0.17253703757024474
+    ],
+    "sole_tilt_p95_deg_left_right": [
+      0.05618082333097023,
+      0.4620941688783577
+    ],
+    "sole_tilt_max_deg_left_right": [
+      0.07498353723790761,
+      0.48939673521829935
+    ],
+    "both_feet_contact_fraction": 1.0,
+    "both_feet_contact_and_tilt_under_5deg_fraction": 1.0,
+    "both_feet_contact_and_tilt_under_10deg_fraction": 1.0,
+    "robot_tilt_mean_deg": 4.064636111656384,
+    "robot_tilt_max_deg": 4.559003829956055,
+    "joint_velocity_rms_rad_s": 0.014174194075167179,
+    "joint_torque_rms_nm": 1.9300891160964966,
+    "joint_torque_rms_nm_by_joint": [
+      0.010558615438640118,
+      0.3419976830482483,
+      0.8492328524589539,
+      0.08777964860200882,
+      0.05744120106101036,
+      0.46929165720939636,
+      1.1826868057250977,
+      0.21905066072940826,
+      0.2150793969631195,
+      0.7847752571105957,
+      2.137120008468628,
+      2.4015746116638184,
+      1.261330485343933,
+      5.818994998931885,
+      0.9717651009559631,
+      1.8570942878723145,
+      1.3339544534683228,
+      1.6409332752227783,
+      0.7538224458694458,
+      2.662445545196533,
+      3.2715647220611572,
+      2.401096820831299
+    ],
+    "joint_torque_max_abs_nm_by_joint": [
+      0.017670154571533203,
+      0.3472658395767212,
+      0.8755362033843994,
+      0.20783519744873047,
+      0.1184701919555664,
+      0.5046291351318359,
+      1.2327711582183838,
+      0.2819480895996094,
+      0.2640700340270996,
+      0.8160924911499023,
+      2.6114654541015625,
+      4.105122089385986,
+      1.8857169151306152,
+      6.396461486816406,
+      1.4591569900512695,
+      2.4596974849700928,
+      2.5891799926757812,
+      2.297771453857422,
+      1.1527776718139648,
+      3.3327293395996094,
+      3.6744556427001953,
+      2.7812137603759766
+    ]
+  },
+  "task_metrics_final": {
+    "payload_height_m": 0.5938328504562378,
+    "height_error_m": 0.0005851387977600098,
+    "payload_tilt_deg": 1.547375202178955,
+    "robot_tilt_deg": 3.742457389831543,
+    "upright": 0.9978675246238708,
+    "com_margin_approx_m": 0.057967863976955414,
+    "base_height_m": 0.5102895498275757,
+    "support_reference_offset_m": 0.08334559202194214,
+    "torque_rms_nm": 1.9489628076553345,
+    "feet_contact_count": 2.0,
+    "foot_slip_m2_s2": 5.980000423733145e-07,
+    "joint_velocity_rms_rad_s": 0.005753370933234692,
+    "action_delta_rms": 0.0012700273655354977,
+    "robot_vertical_speed_m_s": 0.00025280629051849246,
+    "robot_angular_speed_rad_s": 0.005566148087382317,
+    "payload_linear_speed_m_s": 0.00112178735435009,
+    "payload_angular_speed_rad_s": 0.0018872759537771344,
+    "both_feet_contact": 1.0,
+    "airborne": 0.0,
+    "fell": 0.0,
+    "nonfinite": 0.0,
+    "left_forearm_contact": 1.0,
+    "right_forearm_contact": 1.0,
+    "forearm_contact_count": 2.0,
+    "forearm_support_force_n": 2.688413619995117,
+    "payload_forearm_supported": 1.0,
+    "payload_disallowed_contact": 0.0,
+    "support_gap_steps": 0.0,
+    "support_lost": 0.0,
+    "valid_hold": 1.0
+  },
+  "script_sha256": "27b9af4abe4ac2cdeeaaf321ce0609861dffe5b5b2afc17d426f2da783ab27e1",
+  "limitations": [
+    "One replay is not a success-rate estimate or real-robot validation.",
+    "Foot vertical forces are simulated ground reactions; joint torques are simulated actuator torques.",
+    "Sole tilt and contact presence do not measure contact area, COP, or a true support polygon.",
+    "Control-step samples can miss physics-substep peaks."
+  ]
+}
