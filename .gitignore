@@ -60,3 +60,11 @@ _netrc
 !shared_model/stance-v2-20261029/policy.pt
 .DS_Store
 Thumbs.db
+
+# Reviewed empty-hand model and evaluation evidence.
+!shared_model/empty-hand-v1-20261030/
+shared_model/empty-hand-v1-20261030/*
+!shared_model/empty-hand-v1-20261030/README.md
+!shared_model/empty-hand-v1-20261030/*.json
+!shared_model/empty-hand-v1-20261030/*.npz
+!shared_model/empty-hand-v1-20261030/policy.pt

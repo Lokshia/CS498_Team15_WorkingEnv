@@ -1,0 +1,7 @@
+{
+  "checkpoint_sha256": "6b535d6bd6f419bd3da018ed49d3b7a50529bda982ff32b1a9b504ef0d6f0703",
+  "finite_training_state": true,
+  "iterations": 300,
+  "steps": 1843200,
+  "quality": "requires separate evaluation"
+}

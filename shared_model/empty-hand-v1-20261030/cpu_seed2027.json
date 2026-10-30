@@ -1,0 +1,106 @@
+{
+  "task_schema": "k1-empty-hand-stand-v1",
+  "actor_observation_schema": "k1-imu-proprio-last-action-72-v1",
+  "critic_observation_schema": "k1-empty-hand-privileged-76-v1",
+  "actor_observation_dim": 72,
+  "critic_observation_dim": 76,
+  "action_dim": 22,
+  "control_dt_s": 0.02,
+  "payload_entity_present": false,
+  "reward_profile": "empty-hand-v1",
+  "action_contract": "original K1 joint-position scale, default-offset, clipped [-1,1]",
+  "runtime": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "cpu",
+    "gpu": null,
+    "nvidia_driver_inventory": [
+      "NVIDIA GeForce RTX 5090 Laptop GPU, 591.91"
+    ],
+    "torch_cuda": "13.0",
+    "versions": {
+      "torch": "2.11.0+cu130",
+      "mjlab": "1.6.0",
+      "mujoco": "3.11.0",
+      "mujoco-warp": "3.11.0",
+      "warp-lang": "1.15.0",
+      "rsl-rl-lib": "5.5.0",
+      "booster-mjlab": "0.1.0",
+      "numpy": "2.4.4",
+      "viser": "1.1.0"
+    },
+    "source_sha256": "7e889140c5472cb0daf878a683959bc68bdf78fc901b77a120141606eac21a13"
+  },
+  "runtime_source_sha256_at_end": "7e889140c5472cb0daf878a683959bc68bdf78fc901b77a120141606eac21a13",
+  "checkpoint": "outputs\\empty_hand_study_20261030\\train300\\policy.pt",
+  "checkpoint_sha256": "6b535d6bd6f419bd3da018ed49d3b7a50529bda982ff32b1a9b504ef0d6f0703",
+  "policy": "trained deterministic policy",
+  "seed": 2027,
+  "num_envs": 1,
+  "seconds": 20.0,
+  "joint_names": [
+    "Head_Yaw",
+    "Head_Pitch",
+    "Left_Shoulder_Pitch",
+    "Left_Shoulder_Roll",
+    "Left_Elbow_Pitch",
+    "Left_Elbow_Yaw",
+    "Right_Shoulder_Pitch",
+    "Right_Shoulder_Roll",
+    "Right_Elbow_Pitch",
+    "Right_Elbow_Yaw",
+    "Left_Hip_Pitch",
+    "Left_Hip_Roll",
+    "Left_Hip_Yaw",
+    "Left_Knee_Pitch",
+    "Left_Ankle_Pitch",
+    "Left_Ankle_Roll",
+    "Right_Hip_Pitch",
+    "Right_Hip_Roll",
+    "Right_Hip_Yaw",
+    "Right_Knee_Pitch",
+    "Right_Ankle_Pitch",
+    "Right_Ankle_Roll"
+  ],
+  "reset_joint_jitter_rad": 0.015,
+  "reset_speed_m_s": 0.02,
+  "push_speed_m_s": 0,
+  "successes": 1,
+  "completed_without_fall": 1,
+  "criteria": "Full duration; at t>=2s >=95% both feet contact+sole tilts<5deg, trunk p95<5deg, arm pose RMS<.15rad, joint speed RMS<.2rad/s; whole-episode base XY drift<.10m. No reset episode replacement.",
+  "sampling": "50Hz last physics substep, not force substep average",
+  "episodes": [
+    {
+      "slot": 0,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.00555029371753335,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.021646205335855484,
+          0.020431362092494965
+        ],
+        "foot_tilt_max_deg": [
+          0.08156467974185944,
+          0.07132624834775925
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.79737091064453,
+          95.05328369140625
+        ],
+        "left_load_share": 0.5096577405929565,
+        "trunk_tilt_mean_deg": 0.24364878237247467,
+        "trunk_tilt_p95_deg": 0.2676107585430145,
+        "joint_velocity_rms_rad_s": 0.03703305497765541,
+        "joint_torque_rms_nm": 1.835074543952942,
+        "arm_pose_rms_rad": 0.03624943271279335
+      }
+    }
+  ],
+  "limitations": [
+    "Simulation only; no hardware interface or safety acceptance.",
+    "Arms-forward initial posture, no arms-down transition or adding/removing a box."
+  ]
+}

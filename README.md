@@ -1,5 +1,11 @@
 # K1 前臂托箱训练环境 · v0.4.0 + stance-v2
 
+## 2026-10-30：真正空手的独立稳站模型（本地分支）
+
+`codex/empty-hand-stand` 增加没有箱子实体的空手任务，Actor 只用 72 维本体观测。重新训练后，普通独立评测 **32/32**，小幅速度扰动 **16/16**，CPU 回放 **1/1**；均为仿真、一个训练 seed。模型、配置和原始评测见 [空手模型目录](shared_model/empty-hand-v1-20261030/README.md)，命令见 [中文操作说明](docs/EMPTY_HAND_ZH.md)。空手 viewer 使用 8081，原托箱 viewer 可保留在 8080。
+
+从双臂已抬起的姿态开始，尚未实现抬臂过渡、放箱/卸箱或策略切换，也没有真机 adapter。这是独立任务，不是将托箱模型重量滑块改为 0。本分支尚未推送；下方旧 clone 命令仍获取已发布版本。
+
 ## 2026-10-29：平脚与直立姿态版本（本地分支）
 
 本地 `codex/flat-foot-hold` 新增脚底倾角、过度偏向单脚承重、腿姿、躯干直立和软性左右腿镜像奖励，保留原来的托箱与平顺动作要求。当前姿态演示模型在 [stance-v2 模型目录](shared_model/stance-v2-20261029/README.md)，训练与失败记录见 [直立姿态实验说明](docs/STANCE_V2_ZH.md)。同时保留 [stance-v1 平脚版本](shared_model/stance-v1-20261029/README.md) 与[第一阶段诊断](docs/STANCE_HOLD_ZH.md)作为对照。这次改动尚未推送 GitHub；下面原有的 clone 命令仍获取已发布的 smooth-v1 版本。

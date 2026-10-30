@@ -1,0 +1,526 @@
+{
+  "task_schema": "k1-empty-hand-stand-v1",
+  "actor_observation_schema": "k1-imu-proprio-last-action-72-v1",
+  "critic_observation_schema": "k1-empty-hand-privileged-76-v1",
+  "actor_observation_dim": 72,
+  "critic_observation_dim": 76,
+  "action_dim": 22,
+  "control_dt_s": 0.02,
+  "payload_entity_present": false,
+  "reward_profile": "empty-hand-v1",
+  "action_contract": "original K1 joint-position scale, default-offset, clipped [-1,1]",
+  "runtime": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "nvidia_driver_inventory": [
+      "NVIDIA GeForce RTX 5090 Laptop GPU, 591.91"
+    ],
+    "torch_cuda": "13.0",
+    "versions": {
+      "torch": "2.11.0+cu130",
+      "mjlab": "1.6.0",
+      "mujoco": "3.11.0",
+      "mujoco-warp": "3.11.0",
+      "warp-lang": "1.15.0",
+      "rsl-rl-lib": "5.5.0",
+      "booster-mjlab": "0.1.0",
+      "numpy": "2.4.4",
+      "viser": "1.1.0"
+    },
+    "source_sha256": "7e889140c5472cb0daf878a683959bc68bdf78fc901b77a120141606eac21a13"
+  },
+  "runtime_source_sha256_at_end": "7e889140c5472cb0daf878a683959bc68bdf78fc901b77a120141606eac21a13",
+  "checkpoint": "outputs\\empty_hand_study_20261030\\train300\\policy.pt",
+  "checkpoint_sha256": "6b535d6bd6f419bd3da018ed49d3b7a50529bda982ff32b1a9b504ef0d6f0703",
+  "policy": "trained deterministic policy",
+  "seed": 5011,
+  "num_envs": 16,
+  "seconds": 20.0,
+  "joint_names": [
+    "Head_Yaw",
+    "Head_Pitch",
+    "Left_Shoulder_Pitch",
+    "Left_Shoulder_Roll",
+    "Left_Elbow_Pitch",
+    "Left_Elbow_Yaw",
+    "Right_Shoulder_Pitch",
+    "Right_Shoulder_Roll",
+    "Right_Elbow_Pitch",
+    "Right_Elbow_Yaw",
+    "Left_Hip_Pitch",
+    "Left_Hip_Roll",
+    "Left_Hip_Yaw",
+    "Left_Knee_Pitch",
+    "Left_Ankle_Pitch",
+    "Left_Ankle_Roll",
+    "Right_Hip_Pitch",
+    "Right_Hip_Roll",
+    "Right_Hip_Yaw",
+    "Right_Knee_Pitch",
+    "Right_Ankle_Pitch",
+    "Right_Ankle_Roll"
+  ],
+  "reset_joint_jitter_rad": 0.015,
+  "reset_speed_m_s": 0.02,
+  "push_speed_m_s": 0,
+  "successes": 16,
+  "completed_without_fall": 16,
+  "criteria": "Full duration; at t>=2s >=95% both feet contact+sole tilts<5deg, trunk p95<5deg, arm pose RMS<.15rad, joint speed RMS<.2rad/s; whole-episode base XY drift<.10m. No reset episode replacement.",
+  "sampling": "50Hz last physics substep, not force substep average",
+  "episodes": [
+    {
+      "slot": 0,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.00572598073631525,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.06511352211236954,
+          0.02110016532242298
+        ],
+        "foot_tilt_max_deg": [
+          0.16432450711727142,
+          0.0656106024980545
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.1577377319336,
+          94.9237289428711
+        ],
+        "left_load_share": 0.5109246373176575,
+        "trunk_tilt_mean_deg": 0.24835415184497833,
+        "trunk_tilt_p95_deg": 0.2797648012638092,
+        "joint_velocity_rms_rad_s": 0.036855876445770264,
+        "joint_torque_rms_nm": 1.837715744972229,
+        "arm_pose_rms_rad": 0.03518582880496979
+      }
+    },
+    {
+      "slot": 1,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.005306457169353962,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.049690425395965576,
+          0.03234561160206795
+        ],
+        "foot_tilt_max_deg": [
+          0.09278740733861923,
+          0.11014342308044434
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.1302261352539,
+          94.9831314086914
+        ],
+        "left_load_share": 0.5107029676437378,
+        "trunk_tilt_mean_deg": 0.24674464762210846,
+        "trunk_tilt_p95_deg": 0.2839302718639374,
+        "joint_velocity_rms_rad_s": 0.0361454114317894,
+        "joint_torque_rms_nm": 1.8377916812896729,
+        "arm_pose_rms_rad": 0.035670772194862366
+      }
+    },
+    {
+      "slot": 2,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.0065851230174303055,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.055037494748830795,
+          0.035857904702425
+        ],
+        "foot_tilt_max_deg": [
+          0.21489134430885315,
+          0.11703392118215561
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.09405517578125,
+          94.97000122070312
+        ],
+        "left_load_share": 0.5106561779975891,
+        "trunk_tilt_mean_deg": 0.25345003604888916,
+        "trunk_tilt_p95_deg": 0.284618616104126,
+        "joint_velocity_rms_rad_s": 0.03861880302429199,
+        "joint_torque_rms_nm": 1.838574767112732,
+        "arm_pose_rms_rad": 0.03569426015019417
+      }
+    },
+    {
+      "slot": 3,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.006788359023630619,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.05083634331822395,
+          0.029486307874321938
+        ],
+        "foot_tilt_max_deg": [
+          0.12820424139499664,
+          0.10087054967880249
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.06350708007812,
+          94.9130859375
+        ],
+        "left_load_share": 0.5107223987579346,
+        "trunk_tilt_mean_deg": 0.24971072375774384,
+        "trunk_tilt_p95_deg": 0.2783624827861786,
+        "joint_velocity_rms_rad_s": 0.03714824840426445,
+        "joint_torque_rms_nm": 1.837925672531128,
+        "arm_pose_rms_rad": 0.036131568253040314
+      }
+    },
+    {
+      "slot": 4,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.00705552427098155,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.030798954889178276,
+          0.022783862426877022
+        ],
+        "foot_tilt_max_deg": [
+          0.08846931904554367,
+          0.0656106024980545
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.9724349975586,
+          95.07581329345703
+        ],
+        "left_load_share": 0.5100513696670532,
+        "trunk_tilt_mean_deg": 0.24276012182235718,
+        "trunk_tilt_p95_deg": 0.26466989517211914,
+        "joint_velocity_rms_rad_s": 0.03731535002589226,
+        "joint_torque_rms_nm": 1.8362035751342773,
+        "arm_pose_rms_rad": 0.03607388585805893
+      }
+    },
+    {
+      "slot": 5,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.011482186615467072,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.02352159470319748,
+          0.022559193894267082
+        ],
+        "foot_tilt_max_deg": [
+          0.06852804124355316,
+          0.09065408259630203
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.97832489013672,
+          95.01372528076172
+        ],
+        "left_load_share": 0.5102216601371765,
+        "trunk_tilt_mean_deg": 0.2404538244009018,
+        "trunk_tilt_p95_deg": 0.26466989517211914,
+        "joint_velocity_rms_rad_s": 0.039959512650966644,
+        "joint_torque_rms_nm": 1.8389626741409302,
+        "arm_pose_rms_rad": 0.036566685885190964
+      }
+    },
+    {
+      "slot": 6,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.006852320395410061,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.021661119535565376,
+          0.02179265208542347
+        ],
+        "foot_tilt_max_deg": [
+          0.09278740733861923,
+          0.07401873916387558
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.86199188232422,
+          95.02041625976562
+        ],
+        "left_load_share": 0.5099101662635803,
+        "trunk_tilt_mean_deg": 0.2349676936864853,
+        "trunk_tilt_p95_deg": 0.25793036818504333,
+        "joint_velocity_rms_rad_s": 0.03638065606355667,
+        "joint_torque_rms_nm": 1.8351197242736816,
+        "arm_pose_rms_rad": 0.03601227328181267
+      }
+    },
+    {
+      "slot": 7,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.009876111522316933,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.03077678754925728,
+          0.02357204258441925
+        ],
+        "foot_tilt_max_deg": [
+          0.09487278014421463,
+          0.11190582811832428
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.09830474853516,
+          94.9555892944336
+        ],
+        "left_load_share": 0.5106820464134216,
+        "trunk_tilt_mean_deg": 0.2316533476114273,
+        "trunk_tilt_p95_deg": 0.2616959810256958,
+        "joint_velocity_rms_rad_s": 0.03660523518919945,
+        "joint_torque_rms_nm": 1.8390072584152222,
+        "arm_pose_rms_rad": 0.03654114529490471
+      }
+    },
+    {
+      "slot": 8,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.005318216979503632,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.229458287358284,
+          0.021016281098127365
+        ],
+        "foot_tilt_max_deg": [
+          0.2631871700286865,
+          0.07912936806678772
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.08174896240234,
+          94.85020446777344
+        ],
+        "left_load_share": 0.5109155178070068,
+        "trunk_tilt_mean_deg": 0.309722900390625,
+        "trunk_tilt_p95_deg": 0.3789758086204529,
+        "joint_velocity_rms_rad_s": 0.03725415840744972,
+        "joint_torque_rms_nm": 1.8463176488876343,
+        "arm_pose_rms_rad": 0.035928141325712204
+      }
+    },
+    {
+      "slot": 9,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.003985926974564791,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.02526990696787834,
+          0.02086336351931095
+        ],
+        "foot_tilt_max_deg": [
+          0.11364090442657471,
+          0.07912936806678772
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.00868225097656,
+          95.02835083007812
+        ],
+        "left_load_share": 0.5102636218070984,
+        "trunk_tilt_mean_deg": 0.2324882298707962,
+        "trunk_tilt_p95_deg": 0.2571706473827362,
+        "joint_velocity_rms_rad_s": 0.03804731369018555,
+        "joint_torque_rms_nm": 1.8381267786026,
+        "arm_pose_rms_rad": 0.0364808589220047
+      }
+    },
+    {
+      "slot": 10,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.008404656313359737,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.027796629816293716,
+          0.021702105179429054
+        ],
+        "foot_tilt_max_deg": [
+          0.1312212198972702,
+          0.09487278014421463
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.24136352539062,
+          94.94633483886719
+        ],
+        "left_load_share": 0.51106858253479,
+        "trunk_tilt_mean_deg": 0.2627117931842804,
+        "trunk_tilt_p95_deg": 0.3152790069580078,
+        "joint_velocity_rms_rad_s": 0.04186354577541351,
+        "joint_torque_rms_nm": 1.8488317728042603,
+        "arm_pose_rms_rad": 0.03769511729478836
+      }
+    },
+    {
+      "slot": 11,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.006449812091886997,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.029241012409329414,
+          0.022860342636704445
+        ],
+        "foot_tilt_max_deg": [
+          0.09891171008348465,
+          0.09891171008348465
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.07655334472656,
+          94.94767761230469
+        ],
+        "left_load_share": 0.510653018951416,
+        "trunk_tilt_mean_deg": 0.235639289021492,
+        "trunk_tilt_p95_deg": 0.26466989517211914,
+        "joint_velocity_rms_rad_s": 0.04064678028225899,
+        "joint_torque_rms_nm": 1.841541051864624,
+        "arm_pose_rms_rad": 0.03668099269270897
+      }
+    },
+    {
+      "slot": 12,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.0058182827197015285,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.06615445762872696,
+          0.033191826194524765
+        ],
+        "foot_tilt_max_deg": [
+          0.21939688920974731,
+          0.10467831790447235
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.14595794677734,
+          94.9638442993164
+        ],
+        "left_load_share": 0.5108000636100769,
+        "trunk_tilt_mean_deg": 0.2556164264678955,
+        "trunk_tilt_p95_deg": 0.284618616104126,
+        "joint_velocity_rms_rad_s": 0.03705188259482384,
+        "joint_torque_rms_nm": 1.83833646774292,
+        "arm_pose_rms_rad": 0.03601158782839775
+      }
+    },
+    {
+      "slot": 13,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.007530221249908209,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.08364143967628479,
+          0.02619723230600357
+        ],
+        "foot_tilt_max_deg": [
+          0.21028928458690643,
+          0.09278740733861923
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.14779663085938,
+          94.96430969238281
+        ],
+        "left_load_share": 0.51079261302948,
+        "trunk_tilt_mean_deg": 0.2784857749938965,
+        "trunk_tilt_p95_deg": 0.36153605580329895,
+        "joint_velocity_rms_rad_s": 0.039785951375961304,
+        "joint_torque_rms_nm": 1.8390944004058838,
+        "arm_pose_rms_rad": 0.0357661210000515
+      }
+    },
+    {
+      "slot": 14,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.009194300509989262,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.08572295308113098,
+          0.028121795505285263
+        ],
+        "foot_tilt_max_deg": [
+          0.22899729013442993,
+          0.09891171008348465
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.02242279052734,
+          95.03145599365234
+        ],
+        "left_load_share": 0.5103061199188232,
+        "trunk_tilt_mean_deg": 0.27721142768859863,
+        "trunk_tilt_p95_deg": 0.3626168966293335,
+        "joint_velocity_rms_rad_s": 0.03986724466085434,
+        "joint_torque_rms_nm": 1.8421088457107544,
+        "arm_pose_rms_rad": 0.036623962223529816
+      }
+    },
+    {
+      "slot": 15,
+      "recorded_seconds": 20.0,
+      "completed_without_fall": true,
+      "success": true,
+      "max_xy_drift_m": 0.009048692882061005,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.09854190051555634,
+          0.030721044167876244
+        ],
+        "foot_tilt_max_deg": [
+          0.23821108043193817,
+          0.1312212198972702
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          99.12308502197266,
+          94.98717498779297
+        ],
+        "left_load_share": 0.51067054271698,
+        "trunk_tilt_mean_deg": 0.291782945394516,
+        "trunk_tilt_p95_deg": 0.38052162528038025,
+        "joint_velocity_rms_rad_s": 0.04594317451119423,
+        "joint_torque_rms_nm": 1.8506301641464233,
+        "arm_pose_rms_rad": 0.03718150779604912
+      }
+    }
+  ],
+  "limitations": [
+    "Simulation only; no hardware interface or safety acceptance.",
+    "Arms-forward initial posture, no arms-down transition or adding/removing a box."
+  ]
+}
