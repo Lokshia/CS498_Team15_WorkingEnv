@@ -40,13 +40,8 @@ class MassAdjustableViewer(RecordingViserPlayViewer):
         self._owned_connect_callbacks = []
         self._owned_disconnect_callbacks = []
 
-    def setup(self):
-        # These private hooks are pinned to Viser 1.1.0. Its public GUI reset
-        # does not unregister mjviser's camera-connect callback. Track only our
-        # own additions so unrelated server callbacks remain intact.
-        with self._server._client_lock:
-            old_connect = tuple(self._server._client_connect_cb)
-            old_disconnect = tuple(self._server._client_disconnect_cb)
+    def _add_payload_controls(self):
+        """Panel hook; subclasses can select a whole task instead of only mass."""
         if getattr(self, "support_mode", "pregrasp") == "forearms":
             support_description = "自由箱体：仅靠前臂/手部接触承托，无 CONNECT/WELD 或粘附；可能滑落。预览不因跌倒终止或自动重置，可手动 Reset。"
         else:
@@ -69,7 +64,15 @@ class MassAdjustableViewer(RecordingViserPlayViewer):
         def _(_event):
             self.request_mass(self._weight_input.value)
 
+    def setup(self):
+        # These private hooks are pinned to Viser 1.1.0. Its public GUI reset
+        # does not unregister mjviser's camera-connect callback. Track only our
+        # own additions so unrelated server callbacks remain intact.
+        with self._server._client_lock:
+            old_connect = tuple(self._server._client_connect_cb)
+            old_disconnect = tuple(self._server._client_disconnect_cb)
         try:
+            self._add_payload_controls()
             super().setup()
             # Dynamic mesh instances start at the origin. Upstream only syncs
             # a paused scene when flagged dirty, so publish the initial FK now

@@ -2,6 +2,8 @@
 
 ## 2026-10-30：真正空手的独立稳站模型（本地分支）
 
+统一操作入口：运行 `.\.venv\Scripts\python.exe -m lifting_lab.mode_viewer --port 8082`，在同一个 viewer 选择空手/托箱、输入重量、应用并重置，再点 Play。[中文操作方法](docs/LOAD_CONTROLS_ZH.md)。切换会重建场景并换对应策略，不模拟连续接箱/卸箱。
+
 `codex/empty-hand-stand` 增加没有箱子实体的空手任务，Actor 只用 72 维本体观测。重新训练后，普通独立评测 **32/32**，小幅速度扰动 **16/16**，CPU 回放 **1/1**；均为仿真、一个训练 seed。模型、配置和原始评测见 [空手模型目录](shared_model/empty-hand-v1-20261030/README.md)，命令见 [中文操作说明](docs/EMPTY_HAND_ZH.md)。空手 viewer 使用 8081，原托箱 viewer 可保留在 8080。
 
 从双臂已抬起的姿态开始，尚未实现抬臂过渡、放箱/卸箱或策略切换，也没有真机 adapter。这是独立任务，不是将托箱模型重量滑块改为 0。本分支尚未推送；下方旧 clone 命令仍获取已发布版本。
