@@ -1,0 +1,98 @@
+{
+  "schema": "team15-proprio-deploy-combined-v2",
+  "all_passed": true,
+  "hardware_ready": false,
+  "scope": "Official K1 geometry, corrected centered free-box inertia, custom explicit-address deployment simulator; actor receives onboard IMU/joint/previous-action only",
+  "conditions": [
+    {
+      "mass_kg": 0.25,
+      "seconds": 20,
+      "episodes": 6,
+      "hold_successes": 6,
+      "strict_standing_passes": 6,
+      "all_passed": true,
+      "report": "deploy_0p25kg/report.json",
+      "sha256": "75ec85440d856f34717e73d7b9cba3b57f2e6f14b915d0ddc214c7549586fc83",
+      "seeds": [
+        21031,
+        21032,
+        21033,
+        21034,
+        21035,
+        21036
+      ],
+      "max_payload_tilt_deg": 5.2882729307698835,
+      "minimum_flat_contact_fraction": 1.0
+    },
+    {
+      "mass_kg": 0.5,
+      "seconds": 20,
+      "episodes": 6,
+      "hold_successes": 6,
+      "strict_standing_passes": 6,
+      "all_passed": true,
+      "report": "deploy_0p5kg/report.json",
+      "sha256": "7bc192340cff4fa460ad4db27d5db6a72431a9a6439a67d0b2b571012c3c4518",
+      "seeds": [
+        21031,
+        21032,
+        21033,
+        21034,
+        21035,
+        21036
+      ],
+      "max_payload_tilt_deg": 5.657534468843737,
+      "minimum_flat_contact_fraction": 1.0
+    },
+    {
+      "mass_kg": 1.0,
+      "seconds": 20,
+      "episodes": 6,
+      "hold_successes": 6,
+      "strict_standing_passes": 6,
+      "all_passed": true,
+      "report": "deploy_1kg/report.json",
+      "sha256": "39024bb95fbfbddedc7b83a5b6309ba067792db2abaddde3041e7f00eca1fc3b",
+      "seeds": [
+        21031,
+        21032,
+        21033,
+        21034,
+        21035,
+        21036
+      ],
+      "max_payload_tilt_deg": 9.62375425188189,
+      "minimum_flat_contact_fraction": 1.0
+    },
+    {
+      "mass_kg": 0.5,
+      "seconds": 60,
+      "episodes": 3,
+      "hold_successes": 3,
+      "strict_standing_passes": 3,
+      "all_passed": true,
+      "report": "deploy_0p5kg_60s/report.json",
+      "sha256": "7e00a963d7aed1d71db0c84d96e29d16e5229d8d017e2d77ec39c977a73fbd3a",
+      "seeds": [
+        22031,
+        22032,
+        22033
+      ],
+      "max_payload_tilt_deg": 5.083273277488548,
+      "minimum_flat_contact_fraction": 1.0
+    }
+  ],
+  "total_episodes": 21,
+  "hold_successes": 21,
+  "strict_standing_passes": 21,
+  "source_checkpoint_sha256": "b0722baf7d79d513d54cb8afec74860ac4aed5296bbd8049d73ec9e4afcc1382",
+  "retrained": false,
+  "root_cause": "Payload local inertial position had inherited body placement [.17,0,.8]; corrected to local COM [0,0,0].",
+  "historical_failure_note": "historical_bad_com records the invalid inertia configuration. Superseded by corrected physics; not evidence that the correctly configured policy failed.",
+  "limitations": [
+    "Each condition starts with raised arms and a box already on forearms.",
+    "Small randomized common XY/yaw/initial horizontal velocity only; no physical loading transitions or external-push robustness proven.",
+    "1 kg max tilt is near the 10 degree threshold; default demo is 0.5 kg.",
+    "No physical robot was controlled."
+  ]
+}

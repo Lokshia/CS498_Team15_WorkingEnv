@@ -1,0 +1,41 @@
+{
+  "schema": "team15-proprio-deploy-package-v2",
+  "created_utc": "2026-10-30T10:25:18.715156+00:00",
+  "purpose": "No-vision loaded-box custom task, simulator tests and read-only ROS diagnostics for TA handoff",
+  "task": "team15_proprio_hold_sim",
+  "hardware_ready": false,
+  "hardware_commands_available": false,
+  "source_checkpoint_sha256": "b0722baf7d79d513d54cb8afec74860ac4aed5296bbd8049d73ec9e4afcc1382",
+  "source_onnx_sha256": "c75c00f943ddca0a94ed6722a9848a2443909150aaffc63d253f184b4b55b921",
+  "upstream_booster_deploy": "7bb1462e2ac742eba5c01659b815e2e99fbe617f",
+  "upstream_booster_assets": "12a97516f57469078707afb587a5f84c1cb110d1",
+  "source_training_repository": "https://github.com/Lokshia/CS498_Team15_WorkingEnv",
+  "source_working_tree_base": "69dca156b6f57fb4cb9466d16db7eb861aab62f5",
+  "unpublished_local_changes": true,
+  "simulation_passed": true,
+  "validated_simulation_episodes": 21,
+  "validated_mass_points_kg": [
+    0.25,
+    0.5,
+    1.0
+  ],
+  "corrected_payload_local_com_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "policy_retrained_for_this_fix": false,
+  "revision_reason": "Fix payload local inertial origin; keep actor, rewards, robot geometry, friction and acceptance thresholds unchanged.",
+  "status": "simulation_candidate_not_hardware_approved",
+  "no_vision": true,
+  "actor_uses_payload_state": false,
+  "training_critic_state_used_at_runtime": false,
+  "shadow_mode": "read-only /low_state; previous action zero every frame; not closed-loop validation",
+  "includes_third_party_robot_assets": false,
+  "limitations": [
+    "Physical joint/IMU calibration, motor-side gains and torque protection unverified.",
+    "Raised-arm entry, physical loading/unloading and failure/exit procedures require TA integration.",
+    "Standalone MuJoCo adapter extends controller state indexing for the extra free box; no upstream file edits.",
+    "Training-viewer success cannot substitute for deployment-controller results."
+  ]
+}

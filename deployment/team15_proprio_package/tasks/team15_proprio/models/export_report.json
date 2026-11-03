@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "scope": "actor export and numerical parity only; not learned policy quality, Sim2Sim or hardware acceptance",
+  "model": "proprio_hold",
+  "count": 534,
+  "groups": {
+    "source_cpu_rollout": {
+      "count": 128,
+      "start": 0,
+      "stop": 128,
+      "onnx_max_abs_error": 2.086162567138672e-07,
+      "torchscript_max_abs_error": 0.0,
+      "reference_output_fraction_inside_clip": 1.0
+    },
+    "normalized_random": {
+      "count": 256,
+      "start": 128,
+      "stop": 384,
+      "onnx_max_abs_error": 4.172325134277344e-07,
+      "torchscript_max_abs_error": 0.0,
+      "reference_output_fraction_inside_clip": 0.9840198863636364
+    },
+    "finite_boundary": {
+      "count": 6,
+      "start": 384,
+      "stop": 390,
+      "onnx_max_abs_error": 6.765127182006836e-06,
+      "torchscript_max_abs_error": 0.0,
+      "reference_output_fraction_inside_clip": 0.553030303030303
+    },
+    "coordinate_stress": {
+      "count": 144,
+      "start": 390,
+      "stop": 534,
+      "onnx_max_abs_error": 4.76837158203125e-07,
+      "torchscript_max_abs_error": 0.0,
+      "reference_output_fraction_inside_clip": 0.9977904040404041
+    }
+  },
+  "capture": {
+    "source": "fresh CPU proprioceptive-hold simulation; original RSL-RL actor inference",
+    "requested_frames": 128,
+    "captured_frames": 128,
+    "terminated_after_frame": null,
+    "seed": 2027,
+    "payload_mass_kg": 0.5,
+    "control_dt_s": 0.02,
+    "scope": "input sample capture only; short survival or export parity is not a policy-quality evaluation",
+    "original_episode_only": true,
+    "existing_diagnostic_trace_used_as_full_observation": false
+  },
+  "reference": "original RSL-RL MLPModel.forward(stochastic_output=False), clamp[-1,1]; actor field only",
+  "atol": 1e-05,
+  "rtol": 1e-05,
+  "onnx_checker": "passed",
+  "opset": 17,
+  "onnx_max_abs_error": 6.765127182006836e-06,
+  "torchscript_max_abs_error": 0.0,
+  "onnx_sha256": "c75c00f943ddca0a94ed6722a9848a2443909150aaffc63d253f184b4b55b921",
+  "torchscript_sha256": "36a9af5047367610ad71e6a6089cd6f2b4efe7ee734a14b9eaf52e08e32c62b1",
+  "contract_sha256": "c22b6e5138c5ce085afebab39304cf4649e02d1bd39b78bd15c0f9a50107e2d7",
+  "test_vectors_sha256": "9df22b6bafcc4d2b843ef10c5ecda169adcf439cd4dbc73b238df321ca07d485",
+  "source_checkpoint_sha256": "b0722baf7d79d513d54cb8afec74860ac4aed5296bbd8049d73ec9e4afcc1382",
+  "source_experiment_sha256": "d9d193847d213d4c86bb29bafac377cd57536b2a76888e39c5e783db28873352",
+  "hardware_ready": false,
+  "booster_deploy_loaded_box_validated": false,
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "onnx": "1.21.0",
+    "onnxruntime": "1.31.1",
+    "rsl-rl-lib": "5.5.0",
+    "numpy": "2.4.4"
+  },
+  "python": "3.13.14",
+  "platform": "Windows-11-10.0.26200-SP0"
+}

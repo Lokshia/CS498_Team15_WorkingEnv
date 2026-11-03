@@ -32,3 +32,8 @@ _netrc
 *.tar.gz
 .DS_Store
 Thumbs.db
+
+# Reviewed immutable TA handoff artifacts.
+!deployment/team15_proprio_package/tasks/team15_proprio/models/proprio_hold.onnx
+!deployment/team15_proprio_package/demo/demo_0p5kg.mp4
+!handoff/Team15_no_vision_booster_deploy_VALIDATED_20261030.zip

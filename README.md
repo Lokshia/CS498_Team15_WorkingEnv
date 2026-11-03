@@ -1,3 +1,11 @@
+> **TA 现场测试：无视觉托箱部署包**
+>
+> 本分支 `codex/validated-no-vision-deploy` 发布可独立安装的部署任务、已训练 ONNX/TorchScript、评测轨迹和中文步骤。
+>
+> [下载完整交付 ZIP](handoff/Team15_no_vision_booster_deploy_VALIDATED_20261030.zip) · [先看交付说明](handoff/README_ZH.md) · [TA 英文说明](deployment/team15_proprio_package/TA_FIRST_READ_EN.md)
+>
+> **通过的是仿真：21/21 次。真机当前只有只读传感器/推理检查，没有启用电机接管。** 下方原项目安装说明与这个独立部署包不同；部署请按交付说明操作。
+
 # K1 前臂托箱训练环境 · v0.4.0
 
 四位队友共用的 mjlab / MuJoCo-Warp 环境。新默认演示把自由方块放在近水平的两条前臂上，靠仿真碰撞体之间的接触和摩擦承重，可以在浏览器改重量，也支持 CUDA。**方块没有绑在手上；它可以滑动、倾斜、掉落，机器人也可能倒下。没有训练好的平衡策略，也不学习从地面拾取。**

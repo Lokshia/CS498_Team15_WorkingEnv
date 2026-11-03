@@ -1,0 +1,25 @@
+{
+  "checkpoint_sha256": "b0722baf7d79d513d54cb8afec74860ac4aed5296bbd8049d73ec9e4afcc1382",
+  "source_checkpoint": "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\proprio_hold_study_20261030\\train200\\model_100.pt",
+  "selected_iteration_zero_based": 100,
+  "selected_updates": 101,
+  "selected_new_hold_steps": 620544,
+  "whole_attempted_ppo_steps": 1228800,
+  "separate_smoke_steps": 7680,
+  "source_empty_hand_pretraining_steps": 1843200,
+  "source_training_seed": 11,
+  "selection_eval_seed": 8011,
+  "verification_eval_seed": 9011,
+  "cpu_demo_verification_seed": 2027,
+  "hardware_ready": false,
+  "tested_passed_masses_kg": [
+    0.25,
+    0.5
+  ],
+  "tested_failed_mass_kg": 1.0,
+  "limitations": [
+    "20-second trials, one training seed, fixed friction, no box pose jitter.",
+    "Box starts on already raised forearms; loading/unloading and real robot not tested.",
+    "Passing the two tested masses does not validate every intermediate mass."
+  ]
+}

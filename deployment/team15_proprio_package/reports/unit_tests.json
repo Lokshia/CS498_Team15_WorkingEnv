@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "tests_run": 44,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 7.006787799997255,
+  "scope": "CPU adapter, mass/inertia regression, synthetic and mocked ROS checks; no real robot",
+  "source_tests": {
+    "tests/test_proprio_deploy.py": "f0d046e111a83b293ead25c9c978431a44ddc33a14895d175745e0fa3ff9a305",
+    "tests/test_proprio_shadow.py": "ed8429f444520b0836a9175c20f7c4f768642ac2bce191429a0d96ad624963c9",
+    "tests/test_proprio_shadow_live.py": "3fd708efbf0d890459b558e0b352b214a34aaf449b0fc92049ab80fd8f6bc77a"
+  }
+}

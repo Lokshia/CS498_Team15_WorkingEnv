@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "tests_run": 3,
+  "exit_code": 0,
+  "command": [
+    "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\.venv\\Scripts\\python.exe",
+    "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\deployment\\booster_proprio\\tests\\test_payload_inertia.py",
+    "--deploy-root",
+    "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030",
+    "--assets-root",
+    "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_assets_reference_20261030",
+    "-v"
+  ],
+  "source_sha256": "c3fb7cc399eebcb54d4a5ac2cc3306d1520496800a8e52836495cb7b99757e9f",
+  "stdout": "",
+  "stderr": "test_center_of_mass_and_inertial_orientation (__main__.PayloadInertiaTests.test_center_of_mass_and_inertial_orientation) ... ok\ntest_force_through_geometric_center_produces_no_rotation (__main__.PayloadInertiaTests.test_force_through_geometric_center_produces_no_rotation) ... ok\ntest_uniform_box_mass_and_diagonal_inertia (__main__.PayloadInertiaTests.test_uniform_box_mass_and_diagonal_inertia) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.265s\n\nOK\n",
+  "hardware_started": false
+}

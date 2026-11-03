@@ -1,0 +1,8 @@
+# Tested simulation environment: Windows / Python 3.13.14.
+# Install torch==2.11.0 from the official CPU wheel index separately.
+# Do not use this lock to replace the laboratory's ROS Python environment.
+numpy==2.4.4
+scipy==1.17.1
+mujoco==3.11.0
+onnxruntime==1.31.1
+PyYAML==6.0.3
