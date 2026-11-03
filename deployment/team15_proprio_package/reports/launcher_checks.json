@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "list",
+      "args": [
+        "scripts/deploy.py",
+        "--list"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "output": "Available tasks:\n  k1_mj2\t:\ttasks.beyond_mimic.robots.k1.K1MJ2ControllerCfg\n  k1_fight\t:\ttasks.beyond_mimic.robots.k1.K1FightControllerCfg\n  t1_motion_tracking\t:\ttasks.beyond_mimic.robots.t1.T1MotionTrackingControllerCfg\n  t2_dance\t:\ttasks.beyond_mimic.robots.t2.T2DanceControllerCfg\n  k1_walk\t:\ttasks.locomotion.robots.k1.K1WalkTaskCfg\n  t1_walk\t:\ttasks.locomotion.robots.t1.T1WalkControllerCfg1\n  t2_walk\t:\ttasks.locomotion.robots.t2.T2WalkTaskCfg\n  team15_proprio_hold_sim\t:\ttasks.team15_proprio.task.ProprioHoldControllerCfg\n"
+    },
+    {
+      "name": "reject_hardware",
+      "args": [
+        "scripts/deploy.py",
+        "--task",
+        "team15_proprio_hold_sim"
+      ],
+      "exit_code": 1,
+      "passed": true,
+      "output": "Traceback (most recent call last):\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\scripts\\deploy.py\", line 73, in <module>\n    main()\n    ~~~~^^\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\scripts\\deploy.py\", line 38, in main\n    raise e\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\scripts\\deploy.py\", line 36, in main\n    __import__(full_name)\n    ~~~~~~~~~~^^^^^^^^^^^\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\tasks\\team15_proprio\\__init__.py\", line 3, in <module>\n    enforce_simulation_cli()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\tasks\\team15_proprio\\contract.py\", line 95, in enforce_simulation_cli\n    raise RuntimeError(REAL_ROBOT_BLOCK_REASON)\nRuntimeError: Team15 task is SIMULATION ONLY. No reviewed hardware adapter is included: joint signs/IMU frame, motor-side Kd and torque limits, raised-arm entry and exit transitions are not hardware-validated. Run python -m tasks.team15_proprio.simulate --mass-kg 0.5 first and have the laboratory review a separate hardware configuration. There is deliberately no --allow-hardware bypass.\n"
+    },
+    {
+      "name": "reject_wrong_sim_entry",
+      "args": [
+        "scripts/deploy.py",
+        "--task",
+        "team15_proprio_hold_sim",
+        "--mujoco"
+      ],
+      "exit_code": 1,
+      "passed": true,
+      "output": "Traceback (most recent call last):\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\scripts\\deploy.py\", line 73, in <module>\n    main()\n    ~~~~^^\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\scripts\\deploy.py\", line 38, in main\n    raise e\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\scripts\\deploy.py\", line 36, in main\n    __import__(full_name)\n    ~~~~~~~~~~^^^^^^^^^^^\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\tasks\\team15_proprio\\__init__.py\", line 3, in <module>\n    enforce_simulation_cli()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_proprio_fixed_com_20261030\\tasks\\team15_proprio\\contract.py\", line 96, in enforce_simulation_cli\n    raise RuntimeError(\"This loaded-box task needs its explicit-address simulator. Run python -m tasks.team15_proprio.simulate --mass-kg 0.5 instead.\")\nRuntimeError: This loaded-box task needs its explicit-address simulator. Run python -m tasks.team15_proprio.simulate --mass-kg 0.5 instead.\n"
+    },
+    {
+      "name": "help",
+      "args": [
+        "-m",
+        "tasks.team15_proprio.simulate",
+        "--help"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "output": "usage: simulate.py [-h] [--mass-kg MASS_KG] [--paused]\n\nRun the new actor with one physical free box in official K1 simulation.\n\noptions:\n  -h, --help         show this help message and exit\n  --mass-kg MASS_KG\n  --paused\n"
+    },
+    {
+      "name": "reject_nan_mass",
+      "args": [
+        "-m",
+        "tasks.team15_proprio.simulate",
+        "--mass-kg",
+        "nan"
+      ],
+      "exit_code": 2,
+      "passed": true,
+      "output": "usage: simulate.py [-h] [--mass-kg MASS_KG] [--paused]\nsimulate.py: error: --mass-kg must be finite and at least 0.001 kg\n"
+    }
+  ],
+  "hardware_started": false,
+  "scope": "COM-corrected installed task on clean pinned upstream checkout"
+}

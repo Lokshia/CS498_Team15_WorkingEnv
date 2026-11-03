@@ -1,0 +1,394 @@
+{
+  "task_schema": "k1-proprioceptive-forearm-hold-v1",
+  "actor_observation_schema": "k1-imu-proprio-last-action-72-v1",
+  "critic_observation_schema": "k1-hold-privileged-97-v1",
+  "actor_observation_dim": 72,
+  "critic_observation_dim": 97,
+  "action_dim": 22,
+  "control_dt_s": 0.02,
+  "payload_entity_present": true,
+  "support_mode": "forearms",
+  "reward_profile": "stance-v2",
+  "mass_observed": false,
+  "no_vision": true,
+  "actor_uses_payload_state": false,
+  "hardware_ready": false,
+  "action_contract": "original K1 joint-position scale, default-offset, clipped [-1,1]",
+  "runtime": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "nvidia_driver_inventory": [
+      "NVIDIA GeForce RTX 5090 Laptop GPU, 591.91"
+    ],
+    "torch_cuda": "13.0",
+    "versions": {
+      "torch": "2.11.0+cu130",
+      "mjlab": "1.6.0",
+      "mujoco": "3.11.0",
+      "mujoco-warp": "3.11.0",
+      "warp-lang": "1.15.0",
+      "rsl-rl-lib": "5.5.0",
+      "booster-mjlab": "0.1.0",
+      "numpy": "2.4.4",
+      "viser": "1.1.0"
+    },
+    "source_sha256": "d4862edfe17d66a305f22574ee35dc658038aad9ebf83e6b03b1d0613c9fa890"
+  },
+  "runtime_source_sha256_at_end": "d4862edfe17d66a305f22574ee35dc658038aad9ebf83e6b03b1d0613c9fa890",
+  "checkpoint": "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\proprio_hold_study_20261030\\train200\\model_100.pt",
+  "checkpoint_sha256": "b0722baf7d79d513d54cb8afec74860ac4aed5296bbd8049d73ec9e4afcc1382",
+  "policy": "trained deterministic proprioceptive actor",
+  "seed": 9011,
+  "num_envs": 8,
+  "seconds": 20.0,
+  "joint_names": [
+    "Head_Yaw",
+    "Head_Pitch",
+    "Left_Shoulder_Pitch",
+    "Left_Shoulder_Roll",
+    "Left_Elbow_Pitch",
+    "Left_Elbow_Yaw",
+    "Right_Shoulder_Pitch",
+    "Right_Shoulder_Roll",
+    "Right_Elbow_Pitch",
+    "Right_Elbow_Yaw",
+    "Left_Hip_Pitch",
+    "Left_Hip_Roll",
+    "Left_Hip_Yaw",
+    "Left_Knee_Pitch",
+    "Left_Ankle_Pitch",
+    "Left_Ankle_Roll",
+    "Right_Hip_Pitch",
+    "Right_Hip_Roll",
+    "Right_Hip_Yaw",
+    "Right_Knee_Pitch",
+    "Right_Ankle_Pitch",
+    "Right_Ankle_Roll"
+  ],
+  "conditions": {
+    "payload_mass_kg": 0.25,
+    "payload_mass_range_kg": null,
+    "reset_speed_m_s": 0.02,
+    "payload_xy_jitter_m": 0.0,
+    "payload_yaw_jitter_rad": 0.0
+  },
+  "successes": 8,
+  "hold_successes": 8,
+  "strict_standing_successes": 8,
+  "completed_without_termination": 8,
+  "criteria": "Full original episode; every frame box tilt<10deg, height error<.05m, no fall/nonfinite/forbidden contact; forearm support gap<=6 steps. Strict success additionally requires t>=2s >=95% both feet contact and both sole tilts<5deg, trunk p95<5deg, arm pose RMS<.15rad, joint speed RMS<.2rad/s, whole-episode base drift<.10m. No reset-episode replacement.",
+  "sampling": "50Hz final physics substep, not force substep average",
+  "episodes": [
+    {
+      "slot": 0,
+      "recorded_seconds": 20.0,
+      "completed_without_termination": true,
+      "hold_success": true,
+      "strict_standing_success": true,
+      "success": true,
+      "max_xy_drift_m": 0.011877438053488731,
+      "all_step_max_payload_tilt_deg": 1.9080332517623901,
+      "all_step_max_abs_height_error_m": 0.0074814558029174805,
+      "all_step_max_support_gap": 3,
+      "forbidden_contact_seen": false,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.021035989746451378,
+          0.051443345844745636
+        ],
+        "foot_tilt_max_deg": [
+          0.08392936736345291,
+          0.1297215074300766
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.11670684814453,
+          98.57257843017578
+        ],
+        "left_load_share": 0.4988303780555725,
+        "trunk_tilt_mean_deg": 1.4800655841827393,
+        "trunk_tilt_p95_deg": 1.5570828914642334,
+        "joint_velocity_rms_rad_s": 0.03671634569764137,
+        "joint_torque_rms_nm": 1.882552146911621,
+        "arm_pose_rms_rad": 0.02688932605087757,
+        "payload_supported_fraction": 0.9445061043285239,
+        "payload_tilt_max_deg": 0.6781084537506104,
+        "payload_height_mean_m": 0.5958717465400696,
+        "payload_height_error_max_m": 0.003509223461151123
+      }
+    },
+    {
+      "slot": 1,
+      "recorded_seconds": 20.0,
+      "completed_without_termination": true,
+      "hold_success": true,
+      "strict_standing_success": true,
+      "success": true,
+      "max_xy_drift_m": 0.012974352575838566,
+      "all_step_max_payload_tilt_deg": 2.097325325012207,
+      "all_step_max_abs_height_error_m": 0.007959127426147461,
+      "all_step_max_support_gap": 3,
+      "forbidden_contact_seen": false,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.019888417795300484,
+          0.05678926408290863
+        ],
+        "foot_tilt_max_deg": [
+          0.07401873916387558,
+          0.1532333940267563
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.04594421386719,
+          98.6620101928711
+        ],
+        "left_load_share": 0.49841219186782837,
+        "trunk_tilt_mean_deg": 1.4723682403564453,
+        "trunk_tilt_p95_deg": 1.5528037548065186,
+        "joint_velocity_rms_rad_s": 0.03640095517039299,
+        "joint_torque_rms_nm": 1.8821371793746948,
+        "arm_pose_rms_rad": 0.02687017247080803,
+        "payload_supported_fraction": 0.9578246392896781,
+        "payload_tilt_max_deg": 0.6988559365272522,
+        "payload_height_mean_m": 0.5958173274993896,
+        "payload_height_error_max_m": 0.0035578012466430664
+      }
+    },
+    {
+      "slot": 2,
+      "recorded_seconds": 20.0,
+      "completed_without_termination": true,
+      "hold_success": true,
+      "strict_standing_success": true,
+      "success": true,
+      "max_xy_drift_m": 0.011862742714583874,
+      "all_step_max_payload_tilt_deg": 1.8911367654800415,
+      "all_step_max_abs_height_error_m": 0.007433772087097168,
+      "all_step_max_support_gap": 3,
+      "forbidden_contact_seen": false,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.020917711779475212,
+          0.03021598421037197
+        ],
+        "foot_tilt_max_deg": [
+          0.08156467974185944,
+          0.1219465509057045
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.16588592529297,
+          98.53196716308594
+        ],
+        "left_load_share": 0.49906137585639954,
+        "trunk_tilt_mean_deg": 1.5051319599151611,
+        "trunk_tilt_p95_deg": 1.567354679107666,
+        "joint_velocity_rms_rad_s": 0.038345981389284134,
+        "joint_torque_rms_nm": 1.8823871612548828,
+        "arm_pose_rms_rad": 0.027027666568756104,
+        "payload_supported_fraction": 0.9478357380688124,
+        "payload_tilt_max_deg": 0.7561464905738831,
+        "payload_height_mean_m": 0.5960009098052979,
+        "payload_height_error_max_m": 0.00362551212310791
+      }
+    },
+    {
+      "slot": 3,
+      "recorded_seconds": 20.0,
+      "completed_without_termination": true,
+      "hold_success": true,
+      "strict_standing_success": true,
+      "success": true,
+      "max_xy_drift_m": 0.013020203448832035,
+      "all_step_max_payload_tilt_deg": 2.122002124786377,
+      "all_step_max_abs_height_error_m": 0.00817883014678955,
+      "all_step_max_support_gap": 3,
+      "forbidden_contact_seen": false,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.020459571853280067,
+          0.029043972492218018
+        ],
+        "foot_tilt_max_deg": [
+          0.08156467974185944,
+          0.08392936736345291
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.05047607421875,
+          98.57937622070312
+        ],
+        "left_load_share": 0.49865084886550903,
+        "trunk_tilt_mean_deg": 1.4924207925796509,
+        "trunk_tilt_p95_deg": 1.5696005821228027,
+        "joint_velocity_rms_rad_s": 0.040142662823200226,
+        "joint_torque_rms_nm": 1.8824763298034668,
+        "arm_pose_rms_rad": 0.02691539190709591,
+        "payload_supported_fraction": 0.9345172031076582,
+        "payload_tilt_max_deg": 0.8620734214782715,
+        "payload_height_mean_m": 0.5959426760673523,
+        "payload_height_error_max_m": 0.003996849060058594
+      }
+    },
+    {
+      "slot": 4,
+      "recorded_seconds": 20.0,
+      "completed_without_termination": true,
+      "hold_success": true,
+      "strict_standing_success": true,
+      "success": true,
+      "max_xy_drift_m": 0.011534683406352997,
+      "all_step_max_payload_tilt_deg": 1.8161767721176147,
+      "all_step_max_abs_height_error_m": 0.007288336753845215,
+      "all_step_max_support_gap": 3,
+      "forbidden_contact_seen": false,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.019257323816418648,
+          0.026228824630379677
+        ],
+        "foot_tilt_max_deg": [
+          0.08392936736345291,
+          0.09065408259630203
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.05997467041016,
+          98.53359985351562
+        ],
+        "left_load_share": 0.4987921118736267,
+        "trunk_tilt_mean_deg": 1.5036336183547974,
+        "trunk_tilt_p95_deg": 1.570473074913025,
+        "joint_velocity_rms_rad_s": 0.03856252133846283,
+        "joint_torque_rms_nm": 1.882292628288269,
+        "arm_pose_rms_rad": 0.026947565376758575,
+        "payload_supported_fraction": 0.9334073251942286,
+        "payload_tilt_max_deg": 0.7694854140281677,
+        "payload_height_mean_m": 0.5959858894348145,
+        "payload_height_error_max_m": 0.0038369297981262207
+      }
+    },
+    {
+      "slot": 5,
+      "recorded_seconds": 20.0,
+      "completed_without_termination": true,
+      "hold_success": true,
+      "strict_standing_success": true,
+      "success": true,
+      "max_xy_drift_m": 0.012084674090147018,
+      "all_step_max_payload_tilt_deg": 1.9384589195251465,
+      "all_step_max_abs_height_error_m": 0.0077059268951416016,
+      "all_step_max_support_gap": 3,
+      "forbidden_contact_seen": false,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.02089143544435501,
+          0.030011873692274094
+        ],
+        "foot_tilt_max_deg": [
+          0.07401873916387558,
+          0.10087054967880249
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.07137298583984,
+          98.59126281738281
+        ],
+        "left_load_share": 0.4986690282821655,
+        "trunk_tilt_mean_deg": 1.5027996301651,
+        "trunk_tilt_p95_deg": 1.575822114944458,
+        "joint_velocity_rms_rad_s": 0.03789876773953438,
+        "joint_torque_rms_nm": 1.8825536966323853,
+        "arm_pose_rms_rad": 0.027030615136027336,
+        "payload_supported_fraction": 0.9478357380688124,
+        "payload_tilt_max_deg": 0.7517343759536743,
+        "payload_height_mean_m": 0.5960006713867188,
+        "payload_height_error_max_m": 0.0037392377853393555
+      }
+    },
+    {
+      "slot": 6,
+      "recorded_seconds": 20.0,
+      "completed_without_termination": true,
+      "hold_success": true,
+      "strict_standing_success": true,
+      "success": true,
+      "max_xy_drift_m": 0.011849009431898594,
+      "all_step_max_payload_tilt_deg": 1.938963770866394,
+      "all_step_max_abs_height_error_m": 0.0076285600662231445,
+      "all_step_max_support_gap": 3,
+      "forbidden_contact_seen": false,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.021808965131640434,
+          0.05331080034375191
+        ],
+        "foot_tilt_max_deg": [
+          0.07912936806678772,
+          0.09278740733861923
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.11872863769531,
+          98.59146118164062
+        ],
+        "left_load_share": 0.4987820088863373,
+        "trunk_tilt_mean_deg": 1.4739203453063965,
+        "trunk_tilt_p95_deg": 1.5623525381088257,
+        "joint_velocity_rms_rad_s": 0.03689171001315117,
+        "joint_torque_rms_nm": 1.882285237312317,
+        "arm_pose_rms_rad": 0.026910075917840004,
+        "payload_supported_fraction": 0.9522752497225305,
+        "payload_tilt_max_deg": 0.8247196078300476,
+        "payload_height_mean_m": 0.5958505868911743,
+        "payload_height_error_max_m": 0.0038604140281677246
+      }
+    },
+    {
+      "slot": 7,
+      "recorded_seconds": 20.0,
+      "completed_without_termination": true,
+      "hold_success": true,
+      "strict_standing_success": true,
+      "success": true,
+      "max_xy_drift_m": 0.011608041822910309,
+      "all_step_max_payload_tilt_deg": 1.8381341695785522,
+      "all_step_max_abs_height_error_m": 0.00727391242980957,
+      "all_step_max_support_gap": 3,
+      "forbidden_contact_seen": false,
+      "steady": {
+        "foot_tilt_mean_deg": [
+          0.02257600426673889,
+          0.05648360773921013
+        ],
+        "foot_tilt_max_deg": [
+          0.08156467974185944,
+          0.09278740733861923
+        ],
+        "flat_contact_fraction": 1.0,
+        "ground_reaction_mean_n": [
+          98.1512451171875,
+          98.57221221923828
+        ],
+        "left_load_share": 0.49891236424446106,
+        "trunk_tilt_mean_deg": 1.4775002002716064,
+        "trunk_tilt_p95_deg": 1.5617260932922363,
+        "joint_velocity_rms_rad_s": 0.0378255620598793,
+        "joint_torque_rms_nm": 1.882866382598877,
+        "arm_pose_rms_rad": 0.026979878544807434,
+        "payload_supported_fraction": 0.951165371809101,
+        "payload_tilt_max_deg": 0.8011302947998047,
+        "payload_height_mean_m": 0.5958865880966187,
+        "payload_height_error_max_m": 0.0038945674896240234
+      }
+    }
+  ],
+  "limitations": [
+    "Simulation only; no hardware control or safety acceptance.",
+    "Box starts supported on raised forearms; load/unload and arm-raising transitions untested.",
+    "This is one checkpoint's evaluation, not evidence across independent training seeds."
+  ]
+}

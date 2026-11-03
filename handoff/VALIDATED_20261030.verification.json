@@ -1,0 +1,17 @@
+{
+  "archive_sha256": "6d759b186aa54bdeef5509061643bc25aeabb1e88be0858de425a4edc992d981",
+  "zip_crc_passed": true,
+  "manifest_entries_verified": 73,
+  "fresh_pinned_checkout_install_passed": true,
+  "portable_inertia_tests_passed": 3,
+  "packaged_shadow_tests_passed": 17,
+  "packaged_native_simulation": {
+    "mass_kg": 0.5,
+    "seconds": 20,
+    "episodes": 1,
+    "strict_passes": 1,
+    "all_passed": true,
+    "source_integrity_passed": true
+  },
+  "hardware_ready": false
+}

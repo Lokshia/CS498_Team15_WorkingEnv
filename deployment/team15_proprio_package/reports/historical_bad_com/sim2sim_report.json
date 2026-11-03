@@ -1,0 +1,41 @@
+{
+  "schema": "team15-proprio-deploy-combined-v1",
+  "all_passed": false,
+  "hardware_ready": false,
+  "scope": "official K1 mesh geometry with free-box overlay and custom explicit-address deployment simulator",
+  "source_checkpoint_sha256": "b0722baf7d79d513d54cb8afec74860ac4aed5296bbd8049d73ec9e4afcc1382",
+  "conditions": [
+    {
+      "mass_kg": 0.25,
+      "episodes": 3,
+      "hold_successes": 0,
+      "strict_standing_passes": 0,
+      "all_passed": false,
+      "report": "deploy_0p25.json",
+      "sha256": "6667deee0fc6d68f98fd80631f845c60ef15971418f2197e54c4cbe097977974",
+      "termination_times_s": [
+        0.64,
+        0.72,
+        0.74
+      ]
+    },
+    {
+      "mass_kg": 0.5,
+      "episodes": 3,
+      "hold_successes": 0,
+      "strict_standing_passes": 0,
+      "all_passed": false,
+      "report": "deploy_0p5.json",
+      "sha256": "933594351fc468177e4df26137104cb17ddf0f38c8f8857484602afa53dcae4c",
+      "termination_times_s": [
+        0.74,
+        0.74,
+        0.68
+      ]
+    }
+  ],
+  "total_episodes": 6,
+  "hold_successes": 0,
+  "strict_standing_passes": 0,
+  "conclusion": "All loaded deployment simulation episodes failed. Package is for reproduction/diagnostics, not robot actuation."
+}

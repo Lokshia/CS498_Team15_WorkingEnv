@@ -1,0 +1,47 @@
+{
+  "schema": "team15-readonly-shadow-v1",
+  "passed": true,
+  "commands_sent": 0,
+  "hardware_control_tested": false,
+  "source": "replay",
+  "previous_action_mode": "zero_each_frame_cold_start_only",
+  "received_messages": 3,
+  "samples": 3,
+  "error": null,
+  "limitations": [
+    "No motor command, mode RPC or real closed-loop control is performed.",
+    "Previous action is reset to zero every frame: diagnostic inputs, not an executed policy history.",
+    "Serial joint order and IMU conventions match pinned code, not verified physical calibration.",
+    "Freshness uses local receive time, not sensor timestamp; timing is not a hard real-time guarantee."
+  ],
+  "model_sha256": "c75c00f943ddca0a94ed6722a9848a2443909150aaffc63d253f184b4b55b921",
+  "assumed_serial_joint_names": [
+    "aahead_yaw_joint",
+    "aahead_pitch_joint",
+    "aaleft_shoulder_pitch_joint",
+    "left_shoulder_roll_joint",
+    "left_elbow_pitch_joint",
+    "left_elbow_yaw_joint",
+    "aaright_shoulder_pitch_joint",
+    "right_shoulder_roll_joint",
+    "right_elbow_pitch_joint",
+    "right_elbow_yaw_joint",
+    "left_hip_pitch_joint",
+    "left_hip_roll_joint",
+    "left_hip_yaw_joint",
+    "left_knee_pitch_joint",
+    "left_ankle_pitch_joint",
+    "left_ankle_roll_joint",
+    "right_hip_pitch_joint",
+    "right_hip_roll_joint",
+    "right_hip_yaw_joint",
+    "right_knee_pitch_joint",
+    "right_ankle_pitch_joint",
+    "right_ankle_roll_joint"
+  ],
+  "inference_ms_p50_p95_max": [
+    0.07910002022981644,
+    0.41192003991454834,
+    0.44890004210174084
+  ]
+}
