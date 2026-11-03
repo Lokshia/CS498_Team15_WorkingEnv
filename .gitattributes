@@ -5,3 +5,4 @@
 /deployment/team15_proprio_package/** -text -whitespace
 /handoff/*.zip binary
 /handoff/*.verification.json -text -whitespace
+/deployment/hardware_bridge/** -text -whitespace

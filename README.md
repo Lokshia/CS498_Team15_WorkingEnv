@@ -1,3 +1,9 @@
+> **新增：真机控制适配候选（尚未在真实机器人验证）**
+>
+> [下载与文件位置](handoff/HARDWARE_CANDIDATE_ZH.md) · [TA 现场提问清单](deployment/hardware_bridge/docs/TA_QUESTIONS_ZH.md) · [控制入口说明](deployment/hardware_bridge/README_ZH.md)
+>
+> 分支 `codex/proprio-hardware-adapter`：76 项软件测试、新动作链 3 次 20 秒部署仿真通过。真实标定/参数仍需 TA 确认，缺项拒绝启动。
+
 > **TA 现场测试：无视觉托箱部署包**
 >
 > 本分支 `codex/validated-no-vision-deploy` 发布可独立安装的部署任务、已训练 ONNX/TorchScript、评测轨迹和中文步骤。

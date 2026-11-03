@@ -1,0 +1,5 @@
+# Use the laboratory's ROS-compatible Python; rclpy/booster_interface come from ROS.
+# Pure CPU actor inference. No PyTorch, MuJoCo, training stack or CUDA required here.
+# Tested locally with numpy 2.4.4 / onnxruntime 1.31.1; rerun preflight on the robot.
+numpy>=1.26,<3
+onnxruntime>=1.20,<2
