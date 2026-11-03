@@ -1,0 +1,1218 @@
+{
+  "schema": "team15-native-task-loaded-simulation-v1",
+  "task": "k1_team15_hold",
+  "real_robot_validated": false,
+  "ros_commands_sent": 0,
+  "source_sha256": {
+    "__init__.py": "f467970f8f99fb647759f805c93aa2b8a619e32d42306dc70606624116af9a49",
+    "check.py": "fb892570157164bcb7aa6844d25b847a2c41364f95baa92e7a2e392342a20295",
+    "contract.py": "a2bcd7ccf7a6cab753153babedbdf5d0b49857971ac5fea47076bc1fcb492f52",
+    "INSTALL_RECEIPT.json": "fa9dbb029eb7ceea1cf8e313f149786bf6f9413b781cfb1b9e9ae0cd74477fab",
+    "models/proprio_hold.contract.json": "c22b6e5138c5ce085afebab39304cf4649e02d1bd39b78bd15c0f9a50107e2d7",
+    "models/proprio_hold.onnx": "c75c00f943ddca0a94ed6722a9848a2443909150aaffc63d253f184b4b55b921",
+    "models/proprio_hold.test_vectors.npz": "9df22b6bafcc4d2b843ef10c5ecda169adcf439cd4dbc73b238df321ca07d485",
+    "models/target_envelope.sources.json": "d5344531e2105a89ecd70f95b6458986accc5c529069fd999193b59e694d97f4",
+    "policy.py": "3470fc6cdc612827452c72183d7217c906941b926faab197962f79bd15913bf6",
+    "task.py": "50a227eaade2c4517f510a829b1ead0e702864116c16d7a1e87600d758a3fdc4",
+    "validation.py": "c611fcb3c60034ba04d8f2b80ca82eba7a04cfbccb08cc522f725371f66bf7a8"
+  },
+  "limitations": [
+    "Same new task Policy in explicit-address free-box simulator.",
+    "Original deploy.py and ROS control were not run on a robot.",
+    "Starts at raised-arm pose with box supported; preparation/loading not tested.",
+    "Uses unchanged frozen strict scoring; every original episode reported."
+  ],
+  "episodes": [
+    {
+      "seed": 32031,
+      "payload_mass_kg": 0.5,
+      "seconds_requested": 20.0,
+      "steps_expected": 1000,
+      "steps_completed": 1000,
+      "failure": null,
+      "initial_qpos": [
+        0.0,
+        0.0,
+        0.5181737009342726,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.5707963267948966,
+        0.0,
+        -1.5107963267948965,
+        0.0,
+        1.5707963267948966,
+        0.0,
+        1.5107963267948965,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        0.17,
+        0.0,
+        0.6076980509378873,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_common_xy_m": [
+        0.0,
+        0.0
+      ],
+      "initial_common_yaw_rad": 0.0,
+      "initial_common_xy_velocity_m_s": [
+        0.0,
+        0.0
+      ],
+      "payload_reference_height_m": 0.6076980509378873,
+      "commanded_targets_within_xml_limits": true,
+      "target_limit_exceedance_steps_per_joint": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "target_limit_max_exceedance_rad_per_joint": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "projection": {
+        "enabled": true,
+        "projected_target_steps": 2,
+        "max_target_projection_rad": 0.02048945426940918,
+        "max_target_projection_by_joint_rad": {
+          "aahead_yaw_joint": 0.0,
+          "aahead_pitch_joint": 0.0,
+          "aaleft_shoulder_pitch_joint": 0.0,
+          "left_shoulder_roll_joint": 0.0,
+          "left_elbow_pitch_joint": 0.0,
+          "left_elbow_yaw_joint": 0.0,
+          "aaright_shoulder_pitch_joint": 0.0,
+          "right_shoulder_roll_joint": 0.02048945426940918,
+          "right_elbow_pitch_joint": 0.0,
+          "right_elbow_yaw_joint": 0.0,
+          "left_hip_pitch_joint": 0.0,
+          "left_hip_roll_joint": 0.0,
+          "left_hip_yaw_joint": 0.0,
+          "left_knee_pitch_joint": 0.0,
+          "left_ankle_pitch_joint": 0.0,
+          "left_ankle_roll_joint": 0.0,
+          "right_hip_pitch_joint": 0.0,
+          "right_hip_roll_joint": 0.0,
+          "right_hip_yaw_joint": 0.0,
+          "right_knee_pitch_joint": 0.0,
+          "right_ankle_pitch_joint": 0.0,
+          "right_ankle_roll_joint": 0.0
+        },
+        "previous_action_semantics": "effective action from previously returned joint target; not publish acknowledgment"
+      },
+      "full_horizon_survival": true,
+      "hold_success": true,
+      "strict_standing_pass": true,
+      "max_drift_m": 0.011657992702383312,
+      "all_step_max_payload_tilt_deg": 5.083273277488548,
+      "all_step_max_abs_height_error_m": 0.010495974715289624,
+      "all_step_max_support_gap": 1,
+      "forbidden_contact_seen": false,
+      "steady_samples": 900,
+      "flat_contact_fraction": 1.0,
+      "foot_tilt_mean_deg": [
+        0.006615085135042674,
+        0.0012666222330824067
+      ],
+      "foot_tilt_max_deg": [
+        0.006909967786235807,
+        0.00131875945767512
+      ],
+      "foot_vertical_force_mean_n": [
+        98.25541465702715,
+        99.57433466941113
+      ],
+      "trunk_tilt_p95_deg": 1.3634669687306313,
+      "arm_error_rms_rad": 0.026401477123677186,
+      "joint_velocity_rms_rad_s": 0.001122357497822522,
+      "joint_torque_rms_nm": 1.9005651627544042,
+      "payload_supported_fraction": 1.0,
+      "payload_tilt_max_deg": 4.20360659203727,
+      "payload_height_error_max_m": 0.010495974715289624,
+      "actual_joint_limit_max_excess_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "seed": 32032,
+      "payload_mass_kg": 0.5,
+      "seconds_requested": 20.0,
+      "steps_expected": 1000,
+      "steps_completed": 1000,
+      "failure": null,
+      "initial_qpos": [
+        -0.025105906692328817,
+        0.022014966331281277,
+        0.5181737009342726,
+        0.9999752941520829,
+        0.0,
+        0.0,
+        -0.007029301918068131,
+        0.0,
+        0.0,
+        0.0,
+        -1.5707963267948966,
+        0.0,
+        -1.5107963267948965,
+        0.0,
+        1.5707963267948966,
+        0.0,
+        1.5107963267948965,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        0.14487729353861636,
+        0.019625062725191923,
+        0.6076980509378873,
+        0.9999752941520829,
+        0.0,
+        0.0,
+        -0.007029301918068131
+      ],
+      "initial_qvel": [
+        0.018821475572674665,
+        -0.009034418624093989,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.018821475572674665,
+        -0.009034418624093989,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_common_xy_m": [
+        -0.025105906692328817,
+        0.022014966331281277
+      ],
+      "initial_common_yaw_rad": -0.014058719613856518,
+      "initial_common_xy_velocity_m_s": [
+        0.018821475572674665,
+        -0.009034418624093989
+      ],
+      "payload_reference_height_m": 0.6076980509378873,
+      "commanded_targets_within_xml_limits": true,
+      "target_limit_exceedance_steps_per_joint": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "target_limit_max_exceedance_rad_per_joint": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "projection": {
+        "enabled": true,
+        "projected_target_steps": 2,
+        "max_target_projection_rad": 0.0229947566986084,
+        "max_target_projection_by_joint_rad": {
+          "aahead_yaw_joint": 0.0,
+          "aahead_pitch_joint": 0.0,
+          "aaleft_shoulder_pitch_joint": 0.0,
+          "left_shoulder_roll_joint": 0.0,
+          "left_elbow_pitch_joint": 0.0,
+          "left_elbow_yaw_joint": 0.0,
+          "aaright_shoulder_pitch_joint": 0.0,
+          "right_shoulder_roll_joint": 0.0229947566986084,
+          "right_elbow_pitch_joint": 0.0,
+          "right_elbow_yaw_joint": 0.0,
+          "left_hip_pitch_joint": 0.0,
+          "left_hip_roll_joint": 0.0,
+          "left_hip_yaw_joint": 0.0,
+          "left_knee_pitch_joint": 0.0,
+          "left_ankle_pitch_joint": 0.0,
+          "left_ankle_roll_joint": 0.0,
+          "right_hip_pitch_joint": 0.0,
+          "right_hip_roll_joint": 0.0,
+          "right_hip_yaw_joint": 0.0,
+          "right_knee_pitch_joint": 0.0,
+          "right_ankle_pitch_joint": 0.0,
+          "right_ankle_roll_joint": 0.0
+        },
+        "previous_action_semantics": "effective action from previously returned joint target; not publish acknowledgment"
+      },
+      "full_horizon_survival": true,
+      "hold_success": true,
+      "strict_standing_pass": true,
+      "max_drift_m": 0.010939913671342314,
+      "all_step_max_payload_tilt_deg": 5.157386929203198,
+      "all_step_max_abs_height_error_m": 0.01095589090515714,
+      "all_step_max_support_gap": 1,
+      "forbidden_contact_seen": false,
+      "steady_samples": 900,
+      "flat_contact_fraction": 1.0,
+      "foot_tilt_mean_deg": [
+        0.006625467994993096,
+        0.0012658125556660365
+      ],
+      "foot_tilt_max_deg": [
+        0.0069856451602018045,
+        0.0013200348383387058
+      ],
+      "foot_vertical_force_mean_n": [
+        98.25480573242747,
+        99.57306992840446
+      ],
+      "trunk_tilt_p95_deg": 1.368641127257013,
+      "arm_error_rms_rad": 0.0264294685369262,
+      "joint_velocity_rms_rad_s": 0.0017073896368956323,
+      "joint_torque_rms_nm": 1.9005581287228794,
+      "payload_supported_fraction": 1.0,
+      "payload_tilt_max_deg": 4.199991301332695,
+      "payload_height_error_max_m": 0.010505860978061166,
+      "actual_joint_limit_max_excess_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "seed": 32033,
+      "payload_mass_kg": 0.5,
+      "seconds_requested": 20.0,
+      "steps_expected": 1000,
+      "steps_completed": 1000,
+      "failure": null,
+      "initial_qpos": [
+        0.042471550618453494,
+        -0.008468032668423366,
+        0.5181737009342726,
+        0.9998632816719473,
+        0.0,
+        0.0,
+        0.016535354976664002,
+        0.0,
+        0.0,
+        0.0,
+        -1.5707963267948966,
+        0.0,
+        -1.5107963267948965,
+        0.0,
+        1.5707963267948966,
+        0.0,
+        1.5107963267948965,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        0.21237858851062408,
+        -0.002846780609626901,
+        0.6076980509378873,
+        0.9998632816719473,
+        0.0,
+        0.0,
+        0.016535354976664002
+      ],
+      "initial_qvel": [
+        0.008148958229610686,
+        -0.015033575033880102,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.008148958229610686,
+        -0.015033575033880102,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_common_xy_m": [
+        0.042471550618453494,
+        -0.008468032668423366
+      ],
+      "initial_common_yaw_rad": 0.033072217159810874,
+      "initial_common_xy_velocity_m_s": [
+        0.008148958229610686,
+        -0.015033575033880102
+      ],
+      "payload_reference_height_m": 0.6076980509378873,
+      "commanded_targets_within_xml_limits": true,
+      "target_limit_exceedance_steps_per_joint": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "target_limit_max_exceedance_rad_per_joint": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "projection": {
+        "enabled": true,
+        "projected_target_steps": 2,
+        "max_target_projection_rad": 0.02113819122314453,
+        "max_target_projection_by_joint_rad": {
+          "aahead_yaw_joint": 0.0,
+          "aahead_pitch_joint": 0.0,
+          "aaleft_shoulder_pitch_joint": 0.0,
+          "left_shoulder_roll_joint": 0.0,
+          "left_elbow_pitch_joint": 0.0,
+          "left_elbow_yaw_joint": 0.0,
+          "aaright_shoulder_pitch_joint": 0.0,
+          "right_shoulder_roll_joint": 0.02113819122314453,
+          "right_elbow_pitch_joint": 0.0,
+          "right_elbow_yaw_joint": 0.0,
+          "left_hip_pitch_joint": 0.0,
+          "left_hip_roll_joint": 0.0,
+          "left_hip_yaw_joint": 0.0,
+          "left_knee_pitch_joint": 0.0,
+          "left_ankle_pitch_joint": 0.0,
+          "left_ankle_roll_joint": 0.0,
+          "right_hip_pitch_joint": 0.0,
+          "right_hip_roll_joint": 0.0,
+          "right_hip_yaw_joint": 0.0,
+          "right_knee_pitch_joint": 0.0,
+          "right_ankle_pitch_joint": 0.0,
+          "right_ankle_roll_joint": 0.0
+        },
+        "previous_action_semantics": "effective action from previously returned joint target; not publish acknowledgment"
+      },
+      "full_horizon_survival": true,
+      "hold_success": true,
+      "strict_standing_pass": true,
+      "max_drift_m": 0.011205242748499242,
+      "all_step_max_payload_tilt_deg": 5.110074614297098,
+      "all_step_max_abs_height_error_m": 0.010484933578867373,
+      "all_step_max_support_gap": 1,
+      "forbidden_contact_seen": false,
+      "steady_samples": 900,
+      "flat_contact_fraction": 1.0,
+      "foot_tilt_mean_deg": [
+        0.00661673663753847,
+        0.0012642449427463036
+      ],
+      "foot_tilt_max_deg": [
+        0.006936854557011588,
+        0.0013142605049581294
+      ],
+      "foot_vertical_force_mean_n": [
+        98.25459074733367,
+        99.57399986833319
+      ],
+      "trunk_tilt_p95_deg": 1.3693449665957085,
+      "arm_error_rms_rad": 0.02640827381843047,
+      "joint_velocity_rms_rad_s": 0.001693514272293743,
+      "joint_torque_rms_nm": 1.9003147290583924,
+      "payload_supported_fraction": 1.0,
+      "payload_tilt_max_deg": 4.200718217907827,
+      "payload_height_error_max_m": 0.010484933578867373,
+      "actual_joint_limit_max_excess_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "model_audit": {
+    "nq": 36,
+    "nv": 34,
+    "nu": 22,
+    "equality_constraints": 0,
+    "joint_names": [
+      "aahead_yaw_joint",
+      "aahead_pitch_joint",
+      "aaleft_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_elbow_pitch_joint",
+      "left_elbow_yaw_joint",
+      "aaright_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_elbow_pitch_joint",
+      "right_elbow_yaw_joint",
+      "left_hip_pitch_joint",
+      "left_hip_roll_joint",
+      "left_hip_yaw_joint",
+      "left_knee_pitch_joint",
+      "left_ankle_pitch_joint",
+      "left_ankle_roll_joint",
+      "right_hip_pitch_joint",
+      "right_hip_roll_joint",
+      "right_hip_yaw_joint",
+      "right_knee_pitch_joint",
+      "right_ankle_pitch_joint",
+      "right_ankle_roll_joint"
+    ],
+    "robot_mass_kg": 19.666,
+    "payload_mass_kg": 0.5,
+    "payload_half_size_m": [
+      0.1,
+      0.2,
+      0.06
+    ],
+    "payload_inertia_kg_m2": [
+      0.007266666666666668,
+      0.002266666666666667,
+      0.008333333333333335
+    ],
+    "payload_local_center_of_mass_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "payload_local_inertial_orientation_wxyz": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "payload_expected_uniform_box_inertia_kg_m2": [
+      0.007266666666666668,
+      0.002266666666666667,
+      0.008333333333333335
+    ],
+    "payload_qpos_address": 29,
+    "joint_qpos_addresses": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "joint_dof_addresses": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "joint_ranges_rad": [
+      [
+        -1.012,
+        1.012
+      ],
+      [
+        -0.314,
+        0.794
+      ],
+      [
+        -2.932,
+        1.196
+      ],
+      [
+        -1.642,
+        1.629
+      ],
+      [
+        -1.885,
+        1.885
+      ],
+      [
+        -2.242,
+        0.816
+      ],
+      [
+        -2.932,
+        1.196
+      ],
+      [
+        -1.642,
+        1.629
+      ],
+      [
+        -1.885,
+        1.885
+      ],
+      [
+        -0.816,
+        2.242
+      ],
+      [
+        -2.958,
+        2.226
+      ],
+      [
+        -0.375,
+        1.536
+      ],
+      [
+        -1.012,
+        1.012
+      ],
+      [
+        0.0,
+        2.321
+      ],
+      [
+        -0.87,
+        0.345
+      ],
+      [
+        -0.345,
+        0.345
+      ],
+      [
+        -2.958,
+        2.226
+      ],
+      [
+        -1.536,
+        0.375
+      ],
+      [
+        -1.012,
+        1.012
+      ],
+      [
+        0.0,
+        2.321
+      ],
+      [
+        -0.87,
+        0.345
+      ],
+      [
+        -0.345,
+        0.345
+      ]
+    ],
+    "actuator_joint_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "xml_actuator_force_limits": [
+      [
+        -6.0,
+        6.0
+      ],
+      [
+        -6.0,
+        6.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -68.0,
+        68.0
+      ],
+      [
+        -43.0,
+        43.0
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -112.0,
+        112.0
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -68.0,
+        68.0
+      ],
+      [
+        -43.0,
+        43.0
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -112.0,
+        112.0
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -38.3,
+        38.3
+      ]
+    ],
+    "configured_effort_limits": [
+      6.0,
+      6.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      68.0,
+      76.0,
+      38.3,
+      112.0,
+      38.3,
+      38.3,
+      68.0,
+      76.0,
+      38.3,
+      112.0,
+      38.3,
+      38.3
+    ],
+    "policy_dt_s": 0.02,
+    "physics_dt_s": 0.005,
+    "decimation": 4,
+    "simulation_kp": [
+      4.0,
+      4.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      80.0,
+      80.0,
+      80.0,
+      80.0,
+      50.0,
+      50.0,
+      80.0,
+      80.0,
+      80.0,
+      80.0,
+      50.0,
+      50.0
+    ],
+    "simulation_kd": [
+      0.25,
+      0.25,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      2.0,
+      2.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      2.0,
+      2.0
+    ],
+    "integrator": 0,
+    "impratio": 10.0,
+    "ground_friction": [
+      0.4,
+      0.005,
+      0.0001
+    ],
+    "sole_friction": [
+      [
+        1.0,
+        0.005,
+        0.0001
+      ],
+      [
+        1.0,
+        0.005,
+        0.0001
+      ]
+    ],
+    "payload_friction": [
+      0.7,
+      0.005,
+      0.0001
+    ],
+    "support_friction": [
+      [
+        1.0,
+        0.005,
+        0.0001
+      ],
+      [
+        1.0,
+        0.005,
+        0.0001
+      ]
+    ],
+    "scene": {
+      "source_asset": "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_assets_reference_20261030\\robots\\K1\\K1_22dof.xml",
+      "source_xml_sha256": "21d0812cd62085f4e9b01ab523bd3bfeae7a230898d3851f5f855c9ae3f44edc",
+      "vendor_xml_unchanged": true,
+      "overlay": "named original collision geoms; added independent free box and explicit forearm/box friction pairs",
+      "robot_geometry_unchanged": true,
+      "payload_body_name": "team15_payload",
+      "payload_geom_name": "team15_payload_box",
+      "payload_joint_name": "team15_payload_free",
+      "robot_root_joint_name": "world_joint",
+      "support_geom_names": [
+        "team15_left_forearm_contact",
+        "team15_right_forearm_contact"
+      ],
+      "allowed_auxiliary_geom_names": [],
+      "foot_geom_names": [
+        "team15_left_foot_contact",
+        "team15_right_foot_contact"
+      ],
+      "ground_geom_name": "ground",
+      "payload_mass_kg": 0.5,
+      "payload_full_size_m": [
+        0.2,
+        0.4,
+        0.12
+      ],
+      "payload_diagonal_inertia_kg_m2": [
+        0.007266666666666668,
+        0.002266666666666667,
+        0.008333333333333335
+      ],
+      "payload_local_center_of_mass_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "payload_local_inertial_orientation_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_height_reference_m": 0.6076980509378873,
+      "initial_payload_center_m": [
+        0.17,
+        0.0,
+        0.6076980509378873
+      ],
+      "initial_foot_clearance_m": 0.0001,
+      "initial_root_height_correction_m": -1.1388188569244617e-16,
+      "initial_payload_collision_clearances_m": {
+        "ground": 0.1,
+        "team15_official_geom_2": 0.010000000000000009,
+        "team15_official_geom_3": 0.06364229521669715,
+        "team15_official_geom_6": 0.08186306500480962,
+        "team15_official_geom_8": 0.08958287396423234,
+        "team15_official_geom_11": 0.040499882747902595,
+        "team15_official_geom_13": 0.03599997678632154,
+        "team15_left_forearm_contact": 8.051546260028047e-05,
+        "team15_official_geom_18": 0.04049988274812584,
+        "team15_official_geom_20": 0.036000021510058273,
+        "team15_right_forearm_contact": 0.0,
+        "team15_official_geom_25": 0.08473122744803153,
+        "team15_official_geom_27": 0.1,
+        "team15_official_geom_29": 0.1,
+        "team15_official_geom_30": 0.1,
+        "team15_left_foot_contact": 0.1,
+        "team15_official_geom_36": 0.08473122744803153,
+        "team15_official_geom_38": 0.1,
+        "team15_official_geom_40": 0.1,
+        "team15_official_geom_41": 0.1,
+        "team15_right_foot_contact": 0.1
+      },
+      "initial_collision_clearance_query_upper_bound_m": 0.1,
+      "box_forearm_effective_sliding_friction": 0.7,
+      "box_forearm_pair_condim": 3,
+      "box_forearm_pair_solref": [
+        0.0105,
+        1.0
+      ],
+      "foot_ground_effective_sliding_friction": 1.0,
+      "attachment_constraints": 0,
+      "robot_plus_box_free_joints": 2,
+      "robot_mass_kg": 19.666,
+      "differences_from_training": [
+        "Official mesh forearms remain, versus training cylinder forearms and end balls; no end-ball auxiliary support here.",
+        "Official box foot colliders remain, versus training meshes.",
+        "Official contacts use their original solref .001; only forearm/payload explicit pairs have .0105.",
+        "Official explicit PD torque motors / Euler differ from training implicit position actuators / implicitfast.",
+        "Official robot mass 19.666 kg versus training 19.7968997 kg; XML motor limits remain unchanged."
+      ],
+      "physics_dt_s": 0.005,
+      "control_dt_s": 0.02
+    },
+    "note": "Official robot asset plus documented payload/contact overlay and 22-joint index adapter; not an unchanged upstream controller."
+  },
+  "source_unchanged": true,
+  "all_passed": true
+}

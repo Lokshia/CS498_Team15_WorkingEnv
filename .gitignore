@@ -44,3 +44,10 @@ Thumbs.db
 !deployment/hardware_bridge/validation/**
 !deployment/hardware_bridge/validation/software_tests.log
 !handoff/Team15_hardware_control_candidate_20261103.zip
+
+# Native booster_deploy task and its checked model/evidence.
+!deployment/booster_deploy_task/tasks/team15_hold/models/proprio_hold.onnx
+!deployment/booster_deploy_task/validation/
+!deployment/booster_deploy_task/validation/**
+!handoff/Team15_native_booster_deploy_task_20261103.zip
+recordings/

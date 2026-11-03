@@ -6,3 +6,4 @@
 /handoff/*.zip binary
 /handoff/*.verification.json -text -whitespace
 /deployment/hardware_bridge/** -text -whitespace
+/deployment/booster_deploy_task/** -text -whitespace

@@ -1,0 +1,33 @@
+{
+  "native_tests_run": 14,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": true,
+  "command": "TEAM15_UPSTREAM_ROOT=<booster_deploy> python -m unittest discover -s deployment/booster_deploy_task/tests -p test_*.py -q",
+  "python": "3.13.14 (main, Jun 11 2026, 04:04:46) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_3_10_syntax_check_passed": true,
+  "actual_arm64_or_ros_runtime_tested": false,
+  "recording_tests": "fake ros2 executable; not live bag capture",
+  "source_sha256": {
+    "install.py": "c201f2a667d5a75741489399f9a406b37e99f70862ca4093d960da2322190986",
+    "tests/run_empty_sim.py": "e944af8e4be755cce27fa4a289b8ca39623401ab845196dca7b0d34f2da1cad9",
+    "tests/run_loaded_sim.py": "fbe80debdd4a85546de68e25eca13ffeed290ecf840746d4ec9ba0aa3550ef31",
+    "tests/test_install.py": "df4cf5901f5b1836a184991f455b676cc484ff51a6eef7009c46092f7a27135f",
+    "tests/test_native_policy.py": "d371b45361b78bcd390e981736ec1284d39d54cdc7d3bf904d81aef35434b04c",
+    "tests/test_record_rosbag.py": "fa52e16a086e3b78327a82f19360b212fb7c16b02cfdd7905603470228101bd8",
+    "tasks/team15_hold/check.py": "fb892570157164bcb7aa6844d25b847a2c41364f95baa92e7a2e392342a20295",
+    "tasks/team15_hold/contract.py": "a2bcd7ccf7a6cab753153babedbdf5d0b49857971ac5fea47076bc1fcb492f52",
+    "tasks/team15_hold/policy.py": "3470fc6cdc612827452c72183d7217c906941b926faab197962f79bd15913bf6",
+    "tasks/team15_hold/task.py": "50a227eaade2c4517f510a829b1ead0e702864116c16d7a1e87600d758a3fdc4",
+    "tasks/team15_hold/validation.py": "c611fcb3c60034ba04d8f2b80ca82eba7a04cfbccb08cc522f725371f66bf7a8",
+    "tasks/team15_hold/__init__.py": "f467970f8f99fb647759f805c93aa2b8a619e32d42306dc70606624116af9a49"
+  },
+  "loaded_trials_passed": 3,
+  "loaded_trials_total": 3,
+  "loaded_seconds_each": 20,
+  "loaded_mass_kg": 0.5,
+  "single_empty_trial_basic_upright_passed": true,
+  "hardware_validated": false
+}

@@ -1,0 +1,17 @@
+{
+  "archive": "Team15_native_booster_deploy_task_20261103.zip",
+  "sha256": "20405e0a72ba99b42cc78e8341801e3b8ac6b9c1636e72165c7eff91a43b33c5",
+  "bytes": 3783668,
+  "manifest_entries_verified_after_extraction": 23,
+  "files": 24,
+  "native_tests_passed": 14,
+  "onnx_test_vectors_passed": 534,
+  "loaded_simulation": "0.5 kg; 3 original 20 s trials; all strict criteria passed",
+  "empty_simulation": "one 20 s no-box basic upright diagnostic passed",
+  "hardware_validated": false,
+  "live_ros_bag_capture_tested": false,
+  "extracted_install_into_clean_upstream_passed": true,
+  "extracted_original_deploy_list_passed": true,
+  "extracted_onnx_vectors_passed": 534,
+  "upstream_tracked_files_changed": false
+}

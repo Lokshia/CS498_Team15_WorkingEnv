@@ -1,0 +1,24 @@
+# Subscription QoS for recording live data; compatible with reliable and
+# best-effort publishers, and volatile/transient-local durability.
+# Best effort avoids requesting reliable delivery from a best-effort publisher.
+# It does not guarantee zero dropped samples or retrieve earlier retained data.
+/low_state:
+  history: keep_last
+  depth: 1000
+  reliability: best_effort
+  durability: volatile
+/joint_ctrl:
+  history: keep_last
+  depth: 1000
+  reliability: best_effort
+  durability: volatile
+/remote_controller_state:
+  history: keep_last
+  depth: 100
+  reliability: best_effort
+  durability: volatile
+/rosout:
+  history: keep_last
+  depth: 100
+  reliability: best_effort
+  durability: volatile

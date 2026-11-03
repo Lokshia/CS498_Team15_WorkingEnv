@@ -1,4 +1,10 @@
-> **新增：真机控制适配候选（尚未在真实机器人验证）**
+> **现场优先使用：原版 booster_deploy 的 task 插件**
+>
+> [安装与运行说明](deployment/booster_deploy_task/README_ZH.md) · [完整 task ZIP](handoff/Team15_native_booster_deploy_task_20261103.zip) · [ROS bag 录制](deployment/booster_deploy_task/docs/RECORDING_ZH.md)
+>
+> 注册 `k1_team15_hold` 后，仍用原版 `python3 scripts/deploy.py --task k1_team15_hold`；不修改官方控制器或 walking task。下面独立 hardware_bridge 是另一条旧方案，不是这份 task 的入口。新 task 的现场准备、实机电机运动与托箱尚未验证。
+
+> **另一条方案：独立真机控制适配候选（尚未在真实机器人验证）**
 >
 > [下载与文件位置](handoff/HARDWARE_CANDIDATE_ZH.md) · [TA 现场提问清单](deployment/hardware_bridge/docs/TA_QUESTIONS_ZH.md) · [控制入口说明](deployment/hardware_bridge/README_ZH.md)
 >

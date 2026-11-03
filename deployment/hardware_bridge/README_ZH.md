@@ -1,5 +1,7 @@
 # 无视觉托箱：真机控制适配候选
 
+> 当前现场使用原版 `booster_deploy/scripts/deploy.py --task`。对应插件与 ROS bag 步骤在 [原生 task 包](../booster_deploy_task/README_ZH.md)。此目录保留为独立控制器方案；它的配置模板不是原生 task 的前置要求。
+
 这个目录增加了**实际 ROS 2 电机发布、模式切换和中止路径**。默认只做本地预检；现场配置未填完整时拒绝运行。原来已验证的 `team15_proprio_package/` 和 ZIP 保持原样。
 
 **状态：代码和模拟接口可测试，尚未连接真实机器人。** 软件测试及部署仿真不能证明真实机器人会稳定托箱。仍需 TA 提供这台机器的标定、参数和准备/停止方案，再做现场验证。
@@ -8,6 +10,22 @@
 - [可以直接发给 TA 的英文清单](docs/TA_QUESTIONS_EN.md)
 - [必填现场参数模板](profiles/site.template.json)
 - [模型接口与原始仿真结果](../team15_proprio_package/README_ZH.md)
+
+## 现场接口已对上时，先读真实状态
+
+本次提供的机器人输出已确认 `aarch64`、Python 3.10.12、ROS 2 Humble，以及 `LowState` / `LowCmd` / `MotorCmd` / `RpcService` 字段符合本适配器使用的协议。它没有提供实际 serial 数组长度、关节当前值或现场标定。`/joint_ctrl` 当时没有发布者，不代表已经核实固件内部的全部控制权。
+
+这个只读采集不需要先填完电机参数，也不需要安装 numpy、ONNX Runtime 或模型环境。在机器人已加载 ROS 的终端运行：
+
+```bash
+python3 deployment/hardware_bridge/collect_robot_state.py --seconds 5 --output robot_state_probe.json
+```
+
+脚本只订阅 `/low_state`，不会创建指令发布器、RPC 客户端或切换模式。它记录实际 serial/parallel 数量、IMU、关节状态和接收频率；接收时间不能替代传感器源时间戳。输出文件必须是新文件。
+
+官方已有的默认值已单独整理在 [K1 上游参考配置](profiles/k1.upstream-reference.json)，与 [逐项来源记录](profiles/k1.upstream-reference.sources.json) 配套阅读。它包含已知话题、官方关节顺序、默认运行增益和官方代码采用的坐标假设，不能把这些代码假设写成已完成现场标定。官方准备姿态及准备增益另存在来源记录中，不会覆盖托箱模型的参考姿态或被混用为运行增益。
+
+复制参考配置可以减少重复填写，但它仍是**待审核参考**，不能直接 `--live`。现场未知项保留为空；新加的控制阈值也不属于机器人已经报告的原厂参数。详见 [接口核对记录](docs/ROBOT_INTERFACE_STATUS_ZH.md)。原全空模板保留供确实需要从头配置的场合使用。
 
 ## 控制流程
 

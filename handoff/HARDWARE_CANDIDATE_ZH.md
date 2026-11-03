@@ -1,5 +1,7 @@
 # 给 TA：新增真机控制适配候选
 
+> **当前现场已改用原版 deploy.py task 流程。** 请优先使用 [原生 task 安装包](Team15_native_booster_deploy_task_20261103.zip) 和 [操作说明](../deployment/booster_deploy_task/README_ZH.md)。下面是保留的独立 bridge 方案，不是新 task 的启动方法。
+
 [下载完整新包](Team15_hardware_control_candidate_20261103.zip)。保留解压后的 `deployment/` 目录结构；模型/合同在 `team15_proprio_package/`，新的控制入口在 `hardware_bridge/`。
 
 ```text
