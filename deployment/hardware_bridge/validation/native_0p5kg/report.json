@@ -1,0 +1,1147 @@
+{
+  "schema": "team15-hardware-bridge-native-validation-v1",
+  "hardware_validated": false,
+  "ros_commands_sent": 0,
+  "exports": {
+    "test_vectors": 534,
+    "max_abs_error": 6.765127182006836e-06
+  },
+  "episodes": [
+    {
+      "seed": 31031,
+      "payload_mass_kg": 0.5,
+      "seconds_requested": 20.0,
+      "steps_expected": 1000,
+      "steps_completed": 1000,
+      "failure": null,
+      "initial_qpos": [
+        0.0,
+        0.0,
+        0.5181737009342726,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.5707963267948966,
+        0.0,
+        -1.5107963267948965,
+        0.0,
+        1.5707963267948966,
+        0.0,
+        1.5107963267948965,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        0.17,
+        0.0,
+        0.6076980509378873,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_qvel": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_common_xy_m": [
+        0.0,
+        0.0
+      ],
+      "initial_common_yaw_rad": 0.0,
+      "initial_common_xy_velocity_m_s": [
+        0.0,
+        0.0
+      ],
+      "payload_reference_height_m": 0.6076980509378873,
+      "commanded_targets_within_xml_limits": true,
+      "target_limit_exceedance_steps_per_joint": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "target_limit_max_exceedance_rad_per_joint": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "projection": {
+        "path": "new hardware ControlCore under simulation-only profile",
+        "per_joint_target_rate_limit_rad_s": 2.0,
+        "previous_action": "effective sent target",
+        "real_robot_validated": false
+      },
+      "full_horizon_survival": true,
+      "hold_success": true,
+      "strict_standing_pass": true,
+      "max_drift_m": 0.010298167990853382,
+      "all_step_max_payload_tilt_deg": 6.802178036603537,
+      "all_step_max_abs_height_error_m": 0.012246036595465415,
+      "all_step_max_support_gap": 1,
+      "forbidden_contact_seen": false,
+      "steady_samples": 900,
+      "flat_contact_fraction": 1.0,
+      "foot_tilt_mean_deg": [
+        0.006580237851977959,
+        0.0012500173987722832
+      ],
+      "foot_tilt_max_deg": [
+        0.0068200862556605625,
+        0.001309922232391287
+      ],
+      "foot_vertical_force_mean_n": [
+        98.2771256245294,
+        99.55307439715406
+      ],
+      "trunk_tilt_p95_deg": 1.3705209971848604,
+      "arm_error_rms_rad": 0.026273789975693764,
+      "joint_velocity_rms_rad_s": 0.0012014495539080926,
+      "joint_torque_rms_nm": 1.8986549329097957,
+      "payload_supported_fraction": 1.0,
+      "payload_tilt_max_deg": 4.1634581885903765,
+      "payload_height_error_max_m": 0.010316829426326168,
+      "actual_joint_limit_max_excess_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "seed": 31032,
+      "payload_mass_kg": 0.5,
+      "seconds_requested": 20.0,
+      "steps_expected": 1000,
+      "steps_completed": 1000,
+      "failure": null,
+      "initial_qpos": [
+        -0.027613171237307933,
+        -0.04845876106442881,
+        0.5181737009342726,
+        0.9999970272455478,
+        0.0,
+        0.0,
+        0.002438339612716979,
+        0.0,
+        0.0,
+        0.0,
+        -1.5707963267948966,
+        0.0,
+        -1.5107963267948965,
+        0.0,
+        1.5707963267948966,
+        0.0,
+        1.5107963267948965,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        0.1423848072926693,
+        -0.04762972806062392,
+        0.6076980509378873,
+        0.9999970272455478,
+        0.0,
+        0.0,
+        0.002438339612716979
+      ],
+      "initial_qvel": [
+        -0.01730717784493125,
+        0.013652057863076845,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.01730717784493125,
+        0.013652057863076845,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_common_xy_m": [
+        -0.027613171237307933,
+        -0.04845876106442881
+      ],
+      "initial_common_yaw_rad": 0.004876684057829664,
+      "initial_common_xy_velocity_m_s": [
+        -0.01730717784493125,
+        0.013652057863076845
+      ],
+      "payload_reference_height_m": 0.6076980509378873,
+      "commanded_targets_within_xml_limits": true,
+      "target_limit_exceedance_steps_per_joint": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "target_limit_max_exceedance_rad_per_joint": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "projection": {
+        "path": "new hardware ControlCore under simulation-only profile",
+        "per_joint_target_rate_limit_rad_s": 2.0,
+        "previous_action": "effective sent target",
+        "real_robot_validated": false
+      },
+      "full_horizon_survival": true,
+      "hold_success": true,
+      "strict_standing_pass": true,
+      "max_drift_m": 0.011034854997666235,
+      "all_step_max_payload_tilt_deg": 6.720597855330217,
+      "all_step_max_abs_height_error_m": 0.011436307057484552,
+      "all_step_max_support_gap": 1,
+      "forbidden_contact_seen": false,
+      "steady_samples": 900,
+      "flat_contact_fraction": 1.0,
+      "foot_tilt_mean_deg": [
+        0.006585034282040487,
+        0.0012518342981436567
+      ],
+      "foot_tilt_max_deg": [
+        0.006837214146235601,
+        0.0013036880359813229
+      ],
+      "foot_vertical_force_mean_n": [
+        98.27486234447566,
+        99.55371778274673
+      ],
+      "trunk_tilt_p95_deg": 1.370280848544506,
+      "arm_error_rms_rad": 0.02627508011310399,
+      "joint_velocity_rms_rad_s": 0.0015975248594084365,
+      "joint_torque_rms_nm": 1.8988995162660227,
+      "payload_supported_fraction": 1.0,
+      "payload_tilt_max_deg": 4.165456138515437,
+      "payload_height_error_max_m": 0.010335074487147655,
+      "actual_joint_limit_max_excess_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "seed": 31033,
+      "payload_mass_kg": 0.5,
+      "seconds_requested": 20.0,
+      "steps_expected": 1000,
+      "steps_completed": 1000,
+      "failure": null,
+      "initial_qpos": [
+        0.04256765837156953,
+        0.04643059691706265,
+        0.5181737009342726,
+        0.9999534114970132,
+        0.0,
+        0.0,
+        0.009652711302272384,
+        0.0,
+        0.0,
+        0.0,
+        -1.5707963267948966,
+        0.0,
+        -1.5107963267948965,
+        0.0,
+        1.5707963267948966,
+        0.0,
+        1.5107963267948965,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        -0.4,
+        0.0,
+        0.0,
+        0.8,
+        -0.4,
+        0.0,
+        0.21253597892750464,
+        0.04971236586000969,
+        0.6076980509378873,
+        0.9999534114970132,
+        0.0,
+        0.0,
+        0.009652711302272384
+      ],
+      "initial_qvel": [
+        0.01570754160043707,
+        -0.009836386512087207,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.01570754160043707,
+        -0.009836386512087207,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_common_xy_m": [
+        0.04256765837156953,
+        0.04643059691706265
+      ],
+      "initial_common_yaw_rad": 0.019305722413711396,
+      "initial_common_xy_velocity_m_s": [
+        0.01570754160043707,
+        -0.009836386512087207
+      ],
+      "payload_reference_height_m": 0.6076980509378873,
+      "commanded_targets_within_xml_limits": true,
+      "target_limit_exceedance_steps_per_joint": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "target_limit_max_exceedance_rad_per_joint": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "projection": {
+        "path": "new hardware ControlCore under simulation-only profile",
+        "per_joint_target_rate_limit_rad_s": 2.0,
+        "previous_action": "effective sent target",
+        "real_robot_validated": false
+      },
+      "full_horizon_survival": true,
+      "hold_success": true,
+      "strict_standing_pass": true,
+      "max_drift_m": 0.010202687745414551,
+      "all_step_max_payload_tilt_deg": 6.871932367400927,
+      "all_step_max_abs_height_error_m": 0.014277672364557348,
+      "all_step_max_support_gap": 1,
+      "forbidden_contact_seen": false,
+      "steady_samples": 900,
+      "flat_contact_fraction": 1.0,
+      "foot_tilt_mean_deg": [
+        0.006596624631220822,
+        0.0012513933320458797
+      ],
+      "foot_tilt_max_deg": [
+        0.006886873078261257,
+        0.0013019001141084418
+      ],
+      "foot_vertical_force_mean_n": [
+        98.27465760377248,
+        99.55439322508194
+      ],
+      "trunk_tilt_p95_deg": 1.3700618438499512,
+      "arm_error_rms_rad": 0.026311981395519983,
+      "joint_velocity_rms_rad_s": 0.0014808626669639727,
+      "joint_torque_rms_nm": 1.8989737410851748,
+      "payload_supported_fraction": 1.0,
+      "payload_tilt_max_deg": 4.170827361172108,
+      "payload_height_error_max_m": 0.010365231986522505,
+      "actual_joint_limit_max_excess_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "source_hashes": {
+    "hardware_bridge\\team15_hardware\\config.py": "5256c7698960f7166c6769481ff6d78ce6437035a7ac8db8f4996591c34dcfa9",
+    "hardware_bridge\\team15_hardware\\core.py": "988eaa9a3310929b7e71c2299077eabbcce30a233fa2467b1f7e5d910b4c5499",
+    "hardware_bridge\\team15_hardware\\ros_transport.py": "504b2bf9299471c550576e7b61f730fe8ad78b00dfe3999e29f87f91d28d3c28",
+    "hardware_bridge\\team15_hardware\\runtime.py": "3b85602cddabce984cbb1c8782d96cebfd8ec3d22b30679ed4eaf6f6583016a8",
+    "hardware_bridge\\team15_hardware\\__init__.py": "dac6f9a885e3a4625ae0fbb24ea30848532c2a87ca062189c7e50c17363f55af",
+    "hardware_bridge\\tests\\run_native_bridge.py": "018dc4d3c8ba83400cd48f4e1f07049c11632b2df64a761227968c06101ac57b",
+    "hardware_bridge\\tests\\fixtures.py": "e8d673fd92ad34e6406d143cacfba1468bed8565a33ffff22b226b67ce42d45e",
+    "team15_proprio_package\\tasks\\team15_proprio\\models\\proprio_hold.onnx": "c75c00f943ddca0a94ed6722a9848a2443909150aaffc63d253f184b4b55b921",
+    "team15_proprio_package\\scripts\\validate_package.py": "600d75f8d41ce7ffd2430baf1e89317e5ce7c8971ded2db8520910d9c8cb1c06"
+  },
+  "limitations": [
+    "No ROS or real motors. Simulation-only gains and calibrated identity mapping.",
+    "Arms already raised and box supported. No physical preparation or loading validation.",
+    "2 rad/s rate limit is a simulation test value, not a motor recommendation.",
+    "Unchanged frozen strict scoring and original full episodes."
+  ],
+  "model_audit": {
+    "nq": 36,
+    "nv": 34,
+    "nu": 22,
+    "equality_constraints": 0,
+    "joint_names": [
+      "aahead_yaw_joint",
+      "aahead_pitch_joint",
+      "aaleft_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_elbow_pitch_joint",
+      "left_elbow_yaw_joint",
+      "aaright_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_elbow_pitch_joint",
+      "right_elbow_yaw_joint",
+      "left_hip_pitch_joint",
+      "left_hip_roll_joint",
+      "left_hip_yaw_joint",
+      "left_knee_pitch_joint",
+      "left_ankle_pitch_joint",
+      "left_ankle_roll_joint",
+      "right_hip_pitch_joint",
+      "right_hip_roll_joint",
+      "right_hip_yaw_joint",
+      "right_knee_pitch_joint",
+      "right_ankle_pitch_joint",
+      "right_ankle_roll_joint"
+    ],
+    "robot_mass_kg": 19.666,
+    "payload_mass_kg": 0.5,
+    "payload_half_size_m": [
+      0.1,
+      0.2,
+      0.06
+    ],
+    "payload_inertia_kg_m2": [
+      0.007266666666666668,
+      0.002266666666666667,
+      0.008333333333333335
+    ],
+    "payload_local_center_of_mass_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "payload_local_inertial_orientation_wxyz": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "payload_expected_uniform_box_inertia_kg_m2": [
+      0.007266666666666668,
+      0.002266666666666667,
+      0.008333333333333335
+    ],
+    "payload_qpos_address": 29,
+    "joint_qpos_addresses": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "joint_dof_addresses": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "joint_ranges_rad": [
+      [
+        -1.012,
+        1.012
+      ],
+      [
+        -0.314,
+        0.794
+      ],
+      [
+        -2.932,
+        1.196
+      ],
+      [
+        -1.642,
+        1.629
+      ],
+      [
+        -1.885,
+        1.885
+      ],
+      [
+        -2.242,
+        0.816
+      ],
+      [
+        -2.932,
+        1.196
+      ],
+      [
+        -1.642,
+        1.629
+      ],
+      [
+        -1.885,
+        1.885
+      ],
+      [
+        -0.816,
+        2.242
+      ],
+      [
+        -2.958,
+        2.226
+      ],
+      [
+        -0.375,
+        1.536
+      ],
+      [
+        -1.012,
+        1.012
+      ],
+      [
+        0.0,
+        2.321
+      ],
+      [
+        -0.87,
+        0.345
+      ],
+      [
+        -0.345,
+        0.345
+      ],
+      [
+        -2.958,
+        2.226
+      ],
+      [
+        -1.536,
+        0.375
+      ],
+      [
+        -1.012,
+        1.012
+      ],
+      [
+        0.0,
+        2.321
+      ],
+      [
+        -0.87,
+        0.345
+      ],
+      [
+        -0.345,
+        0.345
+      ]
+    ],
+    "actuator_joint_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "xml_actuator_force_limits": [
+      [
+        -6.0,
+        6.0
+      ],
+      [
+        -6.0,
+        6.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -14.0,
+        14.0
+      ],
+      [
+        -68.0,
+        68.0
+      ],
+      [
+        -43.0,
+        43.0
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -112.0,
+        112.0
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -68.0,
+        68.0
+      ],
+      [
+        -43.0,
+        43.0
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -112.0,
+        112.0
+      ],
+      [
+        -38.3,
+        38.3
+      ],
+      [
+        -38.3,
+        38.3
+      ]
+    ],
+    "configured_effort_limits": [
+      6.0,
+      6.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      14.0,
+      68.0,
+      76.0,
+      38.3,
+      112.0,
+      38.3,
+      38.3,
+      68.0,
+      76.0,
+      38.3,
+      112.0,
+      38.3,
+      38.3
+    ],
+    "policy_dt_s": 0.02,
+    "physics_dt_s": 0.005,
+    "decimation": 4,
+    "simulation_kp": [
+      4.0,
+      4.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      80.0,
+      80.0,
+      80.0,
+      80.0,
+      50.0,
+      50.0,
+      80.0,
+      80.0,
+      80.0,
+      80.0,
+      50.0,
+      50.0
+    ],
+    "simulation_kd": [
+      0.25,
+      0.25,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      2.0,
+      2.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      2.0,
+      2.0
+    ],
+    "integrator": 0,
+    "impratio": 10.0,
+    "ground_friction": [
+      0.4,
+      0.005,
+      0.0001
+    ],
+    "sole_friction": [
+      [
+        1.0,
+        0.005,
+        0.0001
+      ],
+      [
+        1.0,
+        0.005,
+        0.0001
+      ]
+    ],
+    "payload_friction": [
+      0.7,
+      0.005,
+      0.0001
+    ],
+    "support_friction": [
+      [
+        1.0,
+        0.005,
+        0.0001
+      ],
+      [
+        1.0,
+        0.005,
+        0.0001
+      ]
+    ],
+    "scene": {
+      "source_asset": "D:\\Inventories\\CS498-Team15-v040\\lifting-lab\\outputs\\booster_assets_reference_20261030\\robots\\K1\\K1_22dof.xml",
+      "source_xml_sha256": "21d0812cd62085f4e9b01ab523bd3bfeae7a230898d3851f5f855c9ae3f44edc",
+      "vendor_xml_unchanged": true,
+      "overlay": "named original collision geoms; added independent free box and explicit forearm/box friction pairs",
+      "robot_geometry_unchanged": true,
+      "payload_body_name": "team15_payload",
+      "payload_geom_name": "team15_payload_box",
+      "payload_joint_name": "team15_payload_free",
+      "robot_root_joint_name": "world_joint",
+      "support_geom_names": [
+        "team15_left_forearm_contact",
+        "team15_right_forearm_contact"
+      ],
+      "allowed_auxiliary_geom_names": [],
+      "foot_geom_names": [
+        "team15_left_foot_contact",
+        "team15_right_foot_contact"
+      ],
+      "ground_geom_name": "ground",
+      "payload_mass_kg": 0.5,
+      "payload_full_size_m": [
+        0.2,
+        0.4,
+        0.12
+      ],
+      "payload_diagonal_inertia_kg_m2": [
+        0.007266666666666668,
+        0.002266666666666667,
+        0.008333333333333335
+      ],
+      "payload_local_center_of_mass_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "payload_local_inertial_orientation_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "initial_height_reference_m": 0.6076980509378873,
+      "initial_payload_center_m": [
+        0.17,
+        0.0,
+        0.6076980509378873
+      ],
+      "initial_foot_clearance_m": 0.0001,
+      "initial_root_height_correction_m": -1.1388188569244617e-16,
+      "initial_payload_collision_clearances_m": {
+        "ground": 0.1,
+        "team15_official_geom_2": 0.010000000000000009,
+        "team15_official_geom_3": 0.06364229521669715,
+        "team15_official_geom_6": 0.08186306500480962,
+        "team15_official_geom_8": 0.08958287396423234,
+        "team15_official_geom_11": 0.040499882747902595,
+        "team15_official_geom_13": 0.03599997678632154,
+        "team15_left_forearm_contact": 8.051546260028047e-05,
+        "team15_official_geom_18": 0.04049988274812584,
+        "team15_official_geom_20": 0.036000021510058273,
+        "team15_right_forearm_contact": 0.0,
+        "team15_official_geom_25": 0.08473122744803153,
+        "team15_official_geom_27": 0.1,
+        "team15_official_geom_29": 0.1,
+        "team15_official_geom_30": 0.1,
+        "team15_left_foot_contact": 0.1,
+        "team15_official_geom_36": 0.08473122744803153,
+        "team15_official_geom_38": 0.1,
+        "team15_official_geom_40": 0.1,
+        "team15_official_geom_41": 0.1,
+        "team15_right_foot_contact": 0.1
+      },
+      "initial_collision_clearance_query_upper_bound_m": 0.1,
+      "box_forearm_effective_sliding_friction": 0.7,
+      "box_forearm_pair_condim": 3,
+      "box_forearm_pair_solref": [
+        0.0105,
+        1.0
+      ],
+      "foot_ground_effective_sliding_friction": 1.0,
+      "attachment_constraints": 0,
+      "robot_plus_box_free_joints": 2,
+      "robot_mass_kg": 19.666,
+      "differences_from_training": [
+        "Official mesh forearms remain, versus training cylinder forearms and end balls; no end-ball auxiliary support here.",
+        "Official box foot colliders remain, versus training meshes.",
+        "Official contacts use their original solref .001; only forearm/payload explicit pairs have .0105.",
+        "Official explicit PD torque motors / Euler differ from training implicit position actuators / implicitfast.",
+        "Official robot mass 19.666 kg versus training 19.7968997 kg; XML motor limits remain unchanged."
+      ],
+      "physics_dt_s": 0.005,
+      "control_dt_s": 0.02
+    },
+    "note": "Official robot asset plus documented payload/contact overlay and 22-joint index adapter; not an unchanged upstream controller."
+  },
+  "source_integrity_passed": true,
+  "all_passed": true
+}

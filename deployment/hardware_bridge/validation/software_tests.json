@@ -1,0 +1,13 @@
+{
+  "schema": "team15-hardware-bridge-software-tests-v1",
+  "tests_run": 76,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": true,
+  "duration_s": 1.9475463000053423,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.14 (main, Jun 11 2026, 04:04:46) [MSC v.1944 64 bit (AMD64)]",
+  "actual_robot_connected": false,
+  "note": "ROS transport and fault handling tested with mocks; ONNX uses actual exported model and534 test vectors."
+}

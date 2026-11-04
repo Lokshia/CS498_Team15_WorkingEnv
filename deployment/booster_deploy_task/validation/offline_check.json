@@ -1,0 +1,20 @@
+{
+  "task": "k1_team15_hold",
+  "offline_check_passed": true,
+  "test_vectors": 534,
+  "max_absolute_error": 6.765127182006836e-06,
+  "onnx_sha256": "c75c00f943ddca0a94ed6722a9848a2443909150aaffc63d253f184b4b55b921",
+  "contract_sha256": "c22b6e5138c5ce085afebab39304cf4649e02d1bd39b78bd15c0f9a50107e2d7",
+  "upstream_commit": "7bb1462e2ac742eba5c01659b815e2e99fbe617f",
+  "observation_dim": 72,
+  "action_dim": 22,
+  "policy_dt_s": 0.02,
+  "no_vision": true,
+  "no_payload_state_input": true,
+  "prepare_mode": "standing",
+  "default_exit_mode": "damping",
+  "run_gains_are_task_overrides": true,
+  "hardware_tested": false,
+  "ros_imported": false,
+  "limits": "Offline export/config check only; no real robot commands or validation."
+}

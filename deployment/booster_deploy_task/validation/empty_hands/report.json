@@ -1,0 +1,29 @@
+{
+  "schema": "team15-native-task-empty-simulation-v1",
+  "task": "k1_team15_hold",
+  "seconds_requested": 20,
+  "steps_expected": 1000,
+  "steps_completed": 1000,
+  "failure": null,
+  "no_box_present": true,
+  "nq": 29,
+  "nv": 28,
+  "basic_upright_diagnostic_passed": true,
+  "max_trunk_tilt_deg": 3.211320161819458,
+  "min_base_height_m": 0.5122888589015263,
+  "max_drift_m": 0.017821347105108173,
+  "source_sha256": {
+    "check.py": "fb892570157164bcb7aa6844d25b847a2c41364f95baa92e7a2e392342a20295",
+    "contract.py": "a2bcd7ccf7a6cab753153babedbdf5d0b49857971ac5fea47076bc1fcb492f52",
+    "policy.py": "3470fc6cdc612827452c72183d7217c906941b926faab197962f79bd15913bf6",
+    "task.py": "50a227eaade2c4517f510a829b1ead0e702864116c16d7a1e87600d758a3fdc4",
+    "validation.py": "c611fcb3c60034ba04d8f2b80ca82eba7a04cfbccb08cc522f725371f66bf7a8",
+    "__init__.py": "f467970f8f99fb647759f805c93aa2b8a619e32d42306dc70606624116af9a49"
+  },
+  "limitations": [
+    "Single original episode; starts in raised-arm nominal pose, no robot preparation.",
+    "Basic height/tilt diagnostic only; not the full loaded-box standing score.",
+    "No hardware/ROS commands; no general empty-hand robustness claim."
+  ],
+  "hardware_validated": false
+}

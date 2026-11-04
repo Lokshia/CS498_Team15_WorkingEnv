@@ -1,0 +1,11 @@
+{
+  "archive": "Team15_hardware_control_candidate_20261103.zip",
+  "sha256": "9b68c83195149844164812d813dce4150a9192910a84a7ab8b96aa01595607a1",
+  "bytes": 33741247,
+  "files": 103,
+  "hardware_validated": false,
+  "extracted_manifest_entries_verified": 102,
+  "extracted_software_tests_passed": 76,
+  "frozen_package_entries_verified": 73,
+  "real_robot_commands_sent": 0
+}
