@@ -6,6 +6,8 @@
 
 ## Integration
 
+**Site at upstream `7bb1462`?** Read the [separate reviewed 7bb compatibility addendum](compatibility_7bb/README.md) and use its explicit read-only reference. The original ZIP and cecc qualification remain unchanged.
+
 - Robot: Booster K1. Intended site environment: aarch64, Python 3.10, ROS Humble.
 - Register **`k1_team15_carry`** in the existing original `booster_deploy`; use its `scripts/deploy.py` and existing controller.
 - Reference upstream commit: `cecc00fc019de3c640af2d0421059b59a2e080c1`.

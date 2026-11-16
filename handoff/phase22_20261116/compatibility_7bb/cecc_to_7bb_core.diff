@@ -1,0 +1,51 @@
+diff --git a/booster_deploy/utils/remote_control_service.py b/booster_deploy/utils/remote_control_service.py
+index 91ac17e..06333cc 100644
+--- a/booster_deploy/utils/remote_control_service.py
++++ b/booster_deploy/utils/remote_control_service.py
+@@ -263,15 +263,6 @@ class RemoteControlService:
+                             self.config.yaw_axis: absinfo[self.config.yaw_axis],
+                         }
+                         print(f"Found suitable joystick: {device.name}")
+-                        # Pads on the generic HID gamepad driver (e.g. Xbox-style pads that report as a Sony
+-                        # "Wireless Controller") number their face buttons left, bottom, right, top as
+-                        # BTN_A, BTN_B, BTN_C, BTN_X. Only that driver reports BTN_C, so use it to map the
+-                        # physical X (left) to custom mode and A (bottom) to RL mode. The axes already
+-                        # match: ABS_Z is the right stick's horizontal axis there.
+-                        if evdev.ecodes.BTN_C in caps.get(evdev.ecodes.EV_KEY, []):
+-                            self.config.custom_mode_button = evdev.ecodes.BTN_A
+-                            self.config.rl_gait_button = evdev.ecodes.BTN_B
+-                            print("Generic HID button layout: X (left) = custom mode, A (bottom) = RL mode")
+                         joystick = device
+                         break
+ 
+diff --git a/scripts/deploy.py b/scripts/deploy.py
+index 91bd3d2..4ef6e9c 100644
+--- a/scripts/deploy.py
++++ b/scripts/deploy.py
+@@ -1,5 +1,4 @@
+ import argparse
+-import os
+ import sys
+ 
+ sys.path.append(".")
+@@ -16,10 +15,6 @@ parser.add_argument("--mujoco", action="store_true", default=False,
+ parser.add_argument(
+     "--device", type=str, default="cpu",
+     help="Device to run the evaluation on (e.g., 'cpu', 'cuda')")
+-parser.add_argument(
+-    "--checkpoint", type=str, default=None,
+-    help="Run this checkpoint (.pt or .onnx) instead of the task's own, e.g. another iteration "
+-         "or run of the same task.")
+ parser.add_argument(
+     "--exit-mode",
+     choices=("walking", "damping"),
+@@ -59,9 +54,6 @@ def main():
+ 
+     # Set device for policy
+     task_cfg.policy.device = args.device
+-    if args.checkpoint:
+-        task_cfg.policy.checkpoint_path = os.path.abspath(args.checkpoint)
+-        print(f"Using checkpoint {os.path.abspath(args.checkpoint)}")
+     if args.exit_mode is not None:
+         task_cfg.booster.exit_mode = args.exit_mode
+ 
