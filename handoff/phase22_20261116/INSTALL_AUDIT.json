@@ -1,0 +1,82 @@
+{
+  "created_utc": "2026-11-16T20:09:54.363958+00:00",
+  "hardware_validated": false,
+  "ros_used": false,
+  "controller_constructed": false,
+  "local_windows_only": true,
+  "manifest_files": 176,
+  "zip_files": 177,
+  "zip_sha256": "73325a8370c4df0b248e4a8800c20b0e33900125b93afdc861e28b71754a0add",
+  "passed": true,
+  "model_sha256": "66a259aa480bd6eb6f4fc9667ebdb3bbf1464b85f805e4cf23edcb7623edadb4",
+  "core_source_unchanged": true,
+  "exact_core_files": 8,
+  "same_install_receipt": true,
+  "registered_task": "k1_team15_carry",
+  "installed_task_files": 11,
+  "offline_max_abs_error": 3.7550926208496094e-06,
+  "native_runner": {
+    "scoped_policy_import_ok": true,
+    "controller_constructed": false,
+    "torch_version": "2.11.0+cu130",
+    "onnx_sha256": "66a259aa480bd6eb6f4fc9667ebdb3bbf1464b85f805e4cf23edcb7623edadb4",
+    "task_source_sha256": {
+      "__init__.py": "9171182d0cec3e1fc713a49524c992d9292128f1cb18c4be1f44ac9d50ae780c",
+      "check.py": "5649c22b8c7e130b59093191c17b107bf61c7d4378a39ed8f1d8e35aec77705d",
+      "command_filter.py": "082ea9214547d17f3cea0c29e52eb7b8ab271a639d48321e5b90cb357e19c3c9",
+      "contract.py": "b4f2711b9d8f3dfcffae122cd695c1933431d03ed37aabf36f21980cc3fd2d19",
+      "policy.py": "230fd7eb6565808a9d02459dff6fc6cfe7140bf2120ff146fb593e4c05f4ce69",
+      "task.py": "788be1f9fbd6493a1a555e612f58e75b99d3f15d028349df7002782aa5fa0ad6"
+    },
+    "runner_class": "CpuOnnxRunner",
+    "vector_count": 516,
+    "parity_max_absolute_error": 3.7550926208496094e-06,
+    "native_cpu_runner_ms": {
+      "p50": 0.026599998818710446,
+      "p95": 0.03845500104944223,
+      "p99": 0.10492099616385502,
+      "max": 0.2297000028192997
+    },
+    "limitations": "Native runner with its own default ORT options and I/O binding; still excludes live state processing and motor publishing."
+  },
+  "upstream_commit": "cecc00fc019de3c640af2d0421059b59a2e080c1",
+  "commands": [
+    {
+      "name": "clone",
+      "exit_code": 0,
+      "log_sha256": "de50571c27ac7eeac434c430e4a9c637eefe93759c1f1b56bdd6e8ba4d428e13"
+    },
+    {
+      "name": "checkout",
+      "exit_code": 0,
+      "log_sha256": "1aa21c31e15ed24667c30e75b245837833c5477c00ea88d2e413c6c33abd21d7"
+    },
+    {
+      "name": "install_first",
+      "exit_code": 0,
+      "log_sha256": "bc179228db205b3c3588cb0968d22b7c3e56bb067ed99f02f28dac6ab34ada26"
+    },
+    {
+      "name": "install_idempotent",
+      "exit_code": 0,
+      "log_sha256": "bc179228db205b3c3588cb0968d22b7c3e56bb067ed99f02f28dac6ab34ada26"
+    },
+    {
+      "name": "list_tasks",
+      "exit_code": 0,
+      "log_sha256": "aa21621cb3b19c43cca9a6aa95710329c0351b44a490315a5a187f00c9817250"
+    },
+    {
+      "name": "offline_check",
+      "exit_code": 0,
+      "log_sha256": "08057037cd0e29b8699ff8e33c224ede291a9912a04908e855137cdb4c888a3c"
+    },
+    {
+      "name": "preflight",
+      "exit_code": 0,
+      "log_sha256": "b4ce4574cc29c570455a8371ddc7052485992290e3a2f96813ec3d7605de8fd4"
+    }
+  ],
+  "source_audit_sha256": "33fca7f7d5d7f5a063641c5715b2a77bba5130a171087dc03c72ee948bfbc0d0",
+  "note": "Summary of the local clean-upstream installation audit; developer-local paths omitted. Windows CPU runner timing is not robot ARM64/ROS timing."
+}

@@ -1,2 +1,5 @@
 # Keep source fingerprints identical across Windows and Linux checkouts.
 * text=auto eol=lf
+
+# Keep the validated deployment archive byte-identical on all platforms.
+/handoff/phase22_20261116/*.zip binary
