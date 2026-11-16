@@ -1,0 +1,176 @@
+{
+  "created_utc": "2026-11-16T23:34:20.311134+00:00",
+  "reference_commit": "7bb1462e2ac742eba5c01659b815e2e99fbe617f",
+  "original_package_reference_commit": "cecc00fc019de3c640af2d0421059b59a2e080c1",
+  "hardware_validated": false,
+  "local_windows_only": true,
+  "ros_used": false,
+  "controller_constructed": false,
+  "commands": [
+    {
+      "name": "clone",
+      "exit_code": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "log_sha256": "de52506872fea8e9671d030520a7f649a03be9279a97a6430cf5a7e125b5794c"
+    },
+    {
+      "name": "checkout",
+      "exit_code": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "log_sha256": "ec16886eb482e66a68ce5ec3403751c1a45d9dc8f99fa0f8a253a621018757de"
+    },
+    {
+      "name": "install",
+      "exit_code": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "log_sha256": "28b883d032ecc68377bf785d00bbe74116b3519689f1e09e9949a9c19dba8f05"
+    },
+    {
+      "name": "list_tasks",
+      "exit_code": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "log_sha256": "0fbd08488907bd4687f86f57076677292e5c5ae2c217d43aeb6a779336d16c69"
+    },
+    {
+      "name": "offline_check",
+      "exit_code": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "log_sha256": "8215c9f6ceda74db77c65eb8bbba6f318e440e6fbbfda544add53b2ef94d026a"
+    },
+    {
+      "name": "original_cecc_reference_expected_rejection",
+      "exit_code": 2,
+      "expected_exit_codes": [
+        2
+      ],
+      "log_sha256": "f2ad117e97e8ac4e9811e04adfe8c8a339b53dcb8e32aac06597213beed39cf4"
+    },
+    {
+      "name": "reviewed_7bb_preflight",
+      "exit_code": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "log_sha256": "0e1a919874dbf9a286e3b3494afb314c58b4c1a16d90ea947a4abb3bea2143d2"
+    },
+    {
+      "name": "tracked_worktree_unchanged",
+      "exit_code": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source_comparison": [
+    {
+      "file": "scripts/deploy.py",
+      "cecc_sha256_lf": "ca1f7c62925c074dd9c175a699c72628c54440d69045a0cf3b0f8097774531aa",
+      "reviewed_7bb_sha256_lf": "93fcc2d5345367d7ec697632df168dd621bed39eff0f14f0a2a78513f7a257f9",
+      "identical": false
+    },
+    {
+      "file": "booster_deploy/robots/k1.py",
+      "cecc_sha256_lf": "2e95ee5b761c327eb80db3f2aa73855b782c1fb415dab5ddffa445c054c17875",
+      "reviewed_7bb_sha256_lf": "2e95ee5b761c327eb80db3f2aa73855b782c1fb415dab5ddffa445c054c17875",
+      "identical": true
+    },
+    {
+      "file": "booster_deploy/controllers/base_controller.py",
+      "cecc_sha256_lf": "6abf68b38bb0cf6631655b9e82896288466faa1a78e67098e0273b1dba52aa7e",
+      "reviewed_7bb_sha256_lf": "6abf68b38bb0cf6631655b9e82896288466faa1a78e67098e0273b1dba52aa7e",
+      "identical": true
+    },
+    {
+      "file": "booster_deploy/controllers/booster_robot_controller.py",
+      "cecc_sha256_lf": "2efec16165c72ccdcb2ef2eb28560034c819200c042eeede74e9a84cec60dbfe",
+      "reviewed_7bb_sha256_lf": "2efec16165c72ccdcb2ef2eb28560034c819200c042eeede74e9a84cec60dbfe",
+      "identical": true
+    },
+    {
+      "file": "booster_deploy/controllers/controller_cfg.py",
+      "cecc_sha256_lf": "fbff8b6940ab78a7620cc008f2b7590b9886e91dd79cc2a8d08c07a75bea2b79",
+      "reviewed_7bb_sha256_lf": "fbff8b6940ab78a7620cc008f2b7590b9886e91dd79cc2a8d08c07a75bea2b79",
+      "identical": true
+    },
+    {
+      "file": "booster_deploy/utils/registry.py",
+      "cecc_sha256_lf": "d0e40c136c26fb70ec28793d688a83fd6a5c515926cd1d5a94fda497f7c70dd7",
+      "reviewed_7bb_sha256_lf": "d0e40c136c26fb70ec28793d688a83fd6a5c515926cd1d5a94fda497f7c70dd7",
+      "identical": true
+    },
+    {
+      "file": "booster_deploy/utils/policy_runner.py",
+      "cecc_sha256_lf": "f4cf0227974b4f460764a3bb495236933b66586ad3ccf85a96eac36fb5679894",
+      "reviewed_7bb_sha256_lf": "f4cf0227974b4f460764a3bb495236933b66586ad3ccf85a96eac36fb5679894",
+      "identical": true
+    },
+    {
+      "file": "booster_deploy/utils/isaaclab/math.py",
+      "cecc_sha256_lf": "38d2d1c553fc872e661d256778943da07ebc71d4fc99c168af67d673820832b5",
+      "reviewed_7bb_sha256_lf": "38d2d1c553fc872e661d256778943da07ebc71d4fc99c168af67d673820832b5",
+      "identical": true
+    },
+    {
+      "file": "booster_deploy/utils/remote_control_service.py",
+      "cecc_sha256_lf": "6990a83f4e0024f1df987cf07928240c9785103da1417f53156378eb62c1cd43",
+      "reviewed_7bb_sha256_lf": "1939c20197a60203ffb29d4369cd04d57814c6be7caf4950a8f795503432561e",
+      "identical": false
+    }
+  ],
+  "reviewed_reference_sha256": "b0ae518c924e7b9d2492f5cb3808db60aa67b1b654740f417ef7595f3ea4de06",
+  "diff_sha256": "cc824d817b27987dbdf650ed7eecb4f34f170d2a1551d270a4a24f859df0106e",
+  "original_reference_sha256": "43de1e819fa5251bee336ea622df54808f97ce632b3bb29fdf8626f8497e12c6",
+  "passed": true,
+  "model_sha256": "66a259aa480bd6eb6f4fc9667ebdb3bbf1464b85f805e4cf23edcb7623edadb4",
+  "upstream_core_unchanged": true,
+  "core_file_count": 9,
+  "registered_task": "k1_team15_carry",
+  "vector_count": 516,
+  "maximum_absolute_error": 3.7550926208496094e-06,
+  "native_runner": {
+    "scoped_policy_import_ok": true,
+    "controller_constructed": false,
+    "torch_version": "2.11.0+cu130",
+    "onnx_sha256": "66a259aa480bd6eb6f4fc9667ebdb3bbf1464b85f805e4cf23edcb7623edadb4",
+    "task_source_sha256": {
+      "__init__.py": "9171182d0cec3e1fc713a49524c992d9292128f1cb18c4be1f44ac9d50ae780c",
+      "check.py": "5649c22b8c7e130b59093191c17b107bf61c7d4378a39ed8f1d8e35aec77705d",
+      "command_filter.py": "082ea9214547d17f3cea0c29e52eb7b8ab271a639d48321e5b90cb357e19c3c9",
+      "contract.py": "b4f2711b9d8f3dfcffae122cd695c1933431d03ed37aabf36f21980cc3fd2d19",
+      "policy.py": "230fd7eb6565808a9d02459dff6fc6cfe7140bf2120ff146fb593e4c05f4ce69",
+      "task.py": "788be1f9fbd6493a1a555e612f58e75b99d3f15d028349df7002782aa5fa0ad6"
+    },
+    "runner_class": "CpuOnnxRunner",
+    "vector_count": 516,
+    "parity_max_absolute_error": 3.7550926208496094e-06,
+    "native_cpu_runner_ms": {
+      "p50": 0.026400004571769387,
+      "p95": 0.029005002579651773,
+      "p99": 0.03070600097998976,
+      "max": 0.03319999814266339
+    },
+    "limitations": "Native runner with its own default ORT options and I/O binding; still excludes live state processing and motor publishing."
+  },
+  "original_cecc_gate_preserved": true,
+  "original_package_modified": false,
+  "limitations": [
+    "Local Windows/Python environment only; no ARM64/Python3.10/ROS or hardware operation performed.",
+    "7bb lacks cecc --checkpoint override; this task uses its configured ONNX path.",
+    "7bb lacks cecc generic-HID BTN_C face-button remapping; physical joystick layout needs site confirmation.",
+    "Read-only numerical/interface validation, not a new stability trial or hardware certification.",
+    "Actual site untracked scripts/cs498_deploy.py and CS498 contents are outside this clean upstream audit."
+  ],
+  "source_audit_sha256": "4e3711ff48cee13f205b51df61f4f484febc9b96e869fffd5b14ce65e26165f3",
+  "note": "Portable summary of the independent local 7bb compatibility audit; developer-local command paths omitted."
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "team15-pinned-upstream-core-v1",
+  "commit": "7bb1462e2ac742eba5c01659b815e2e99fbe617f",
+  "hash": "sha256 of LF-normalized text from git show pinned commit",
+  "files": {
+    "scripts/deploy.py": "93fcc2d5345367d7ec697632df168dd621bed39eff0f14f0a2a78513f7a257f9",
+    "booster_deploy/robots/k1.py": "2e95ee5b761c327eb80db3f2aa73855b782c1fb415dab5ddffa445c054c17875",
+    "booster_deploy/controllers/base_controller.py": "6abf68b38bb0cf6631655b9e82896288466faa1a78e67098e0273b1dba52aa7e",
+    "booster_deploy/controllers/booster_robot_controller.py": "2efec16165c72ccdcb2ef2eb28560034c819200c042eeede74e9a84cec60dbfe",
+    "booster_deploy/controllers/controller_cfg.py": "fbff8b6940ab78a7620cc008f2b7590b9886e91dd79cc2a8d08c07a75bea2b79",
+    "booster_deploy/utils/registry.py": "d0e40c136c26fb70ec28793d688a83fd6a5c515926cd1d5a94fda497f7c70dd7",
+    "booster_deploy/utils/policy_runner.py": "f4cf0227974b4f460764a3bb495236933b66586ad3ccf85a96eac36fb5679894",
+    "booster_deploy/utils/isaaclab/math.py": "38d2d1c553fc872e661d256778943da07ebc71d4fc99c168af67d673820832b5",
+    "booster_deploy/utils/remote_control_service.py": "1939c20197a60203ffb29d4369cd04d57814c6be7caf4950a8f795503432561e"
+  },
+  "provenance": {
+    "source": "git object contents, not working-tree files",
+    "compared_against": "cecc00fc019de3c640af2d0421059b59a2e080c1",
+    "original_package_reference_unchanged": true,
+    "hardware_validated": false
+  }
+}

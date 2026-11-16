@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-16",
+  "model": "phase22 final3450",
+  "zip_sha256": "73325a8370c4df0b248e4a8800c20b0e33900125b93afdc861e28b71754a0add",
+  "bytes": 65655119,
+  "onnx_sha256": "66a259aa480bd6eb6f4fc9667ebdb3bbf1464b85f805e4cf23edcb7623edadb4",
+  "checkpoint_sha256": "a2451e547f6bb232b36e289c4dea478fa11d23322fa44a7f0ff1bfbf67fabd10",
+  "simulation_qualified": true,
+  "hardware_validated": false,
+  "zip": "Team15_K1_Carry_phase22_TA_20261116.zip",
+  "task": "k1_team15_carry",
+  "upstream_commit": "cecc00fc019de3c640af2d0421059b59a2e080c1",
+  "local_install_audit": "INSTALL_AUDIT.json"
+}

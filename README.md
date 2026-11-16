@@ -1,3 +1,13 @@
+# 最新 TA 部署包 / Latest TA deployment handoff
+
+**2026-11-16 · phase22**：[下载与安装说明](handoff/phase22_20261116/README.md) · [完整部署 ZIP](handoff/phase22_20261116/Team15_K1_Carry_phase22_TA_20261116.zip?raw=true)。
+
+`k1_team15_carry` 沿用原版 `booster_deploy/scripts/deploy.py`。包内有任务代码、训练好的 ONNX、配套接口、检查工具、ROS bag 脚本和仿真评测。0.5 kg、0.1 m/s 等列明条件已通过仿真；最新模型尚未做真机验证。
+
+以下保留原 v0.4.0 训练环境说明，其版本和短跑结果不代表上述独立部署包。TA 请使用上面的完整 ZIP。
+
+---
+
 # K1 前臂托箱训练环境 · v0.4.0
 
 四位队友共用的 mjlab / MuJoCo-Warp 环境。新默认演示把自由方块放在近水平的两条前臂上，靠仿真碰撞体之间的接触和摩擦承重，可以在浏览器改重量，也支持 CUDA。**方块没有绑在手上；它可以滑动、倾斜、掉落，机器人也可能倒下。没有训练好的平衡策略，也不学习从地面拾取。**
